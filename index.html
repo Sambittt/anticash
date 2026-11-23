@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  ==========================================================================
+  EDIT ME: ANTICASH LANDING PAGE CUSTOMIZATION
+  ==========================================================================
+  1. DOMAIN & CANONICAL: Currently set to https://anticash.tech/
+  2. HEADLINE & TAGLINE: Found in the <section class="hero-section"> below.
+  3. "WHAT'S COMING" CARDS: 3 cards located in <section class="features-section">.
+  4. ABOUT TEASER: Located in <section class="about-teaser-section">.
+  5. CONTACT EMAIL: Look for "hello@anticash.tech" in the footer.
+  6. AD SLOTS: Marked clearly with comments <!-- ADS-READY SLOT 1 --> and <!-- ADS-READY SLOT 2 -->.
+  7. FORM ENDPOINT: Change endpoint or Web3Forms access key in script.js.
+  ==========================================================================
+-->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!-- SEO & Primary Meta Tags -->
+  <title>AntiCash — The Future of Value | Coming Soon</title>
+  <meta name="title" content="AntiCash — The Future of Value | Coming Soon">
+  <meta name="description" content="AntiCash is a modern, borderless digital value layer designed for absolute speed, uncompromising privacy, and seamless autonomy. Join the waitlist today.">
+  <meta name="keywords" content="AntiCash, anticash.tech, digital cash, future of finance, privacy finance, web3, fintech, borderless value">
+  <meta name="author" content="AntiCash">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://anticash.tech/">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://anticash.tech/">
+  <meta property="og:title" content="AntiCash — The Future of Value | Coming Soon">
+  <meta property="og:description" content="Say goodbye to outdated financial boundaries. AntiCash is coming. Be the first to know when we launch.">
+  <meta property="og:image" content="https://anticash.tech/favicon.svg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://anticash.tech/">
+  <meta name="twitter:title" content="AntiCash — The Future of Value | Coming Soon">
+  <meta name="twitter:description" content="Say goodbye to outdated financial boundaries. AntiCash is coming. Be the first to know when we launch.">
+  <meta name="twitter:image" content="https://anticash.tech/favicon.svg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="theme-color" content="#070a11">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Schema.org Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "AntiCash",
+    "url": "https://anticash.tech/",
+    "description": "AntiCash is building the next-generation digital value network.",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://anticash.tech/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+</head>
+<body>
+  <!-- Accessibility Skip Link -->
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+  <!-- Subtle Ambient Animated Background -->
+  <div class="bg-ambient" aria-hidden="true">
+    <div class="ambient-orb ambient-orb-1"></div>
+    <div class="ambient-orb ambient-orb-2"></div>
+    <canvas id="particleCanvas"></canvas>
+  </div>
+
+  <!-- Header & Navigation -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo" aria-label="AntiCash Homepage">
+        <span class="brand-icon">
+          <!-- Vector Icon Monogram -->
+          <svg width="28" height="28" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="100" height="100" rx="24" fill="#111827" stroke="#1e293b" stroke-width="2"/>
+            <path d="M 28 72 L 47 25 C 48 22.5 52 22.5 53 25 L 72 72" stroke="#00f5a0" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M 33 53 L 67 53" stroke="#00d2ff" stroke-width="6" stroke-linecap="round" />
+            <circle cx="50" cy="38" r="4" fill="#00f5a0" />
+          </svg>
+        </span>
+        <span>Anti<span class="brand-text-accent">Cash</span></span>
+      </a>
+
+      <nav aria-label="Primary Navigation">
+        <ul class="nav-links">
+          <li><a href="#features" class="nav-link">What's Coming</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="#signup" class="btn-nav">Get Notified</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content Wrapper -->
+  <main id="main-content">
+    
+    <!-- ====================================================================
+         SECTION 1: HERO
+         ==================================================================== -->
+    <section class="hero-section" id="signup">
+      <div class="container hero-content">
+        
+        <!-- EDIT ME: Status / Launch Badge -->
+        <div class="hero-badge" role="status">
+          <span class="hero-badge-pulse" aria-hidden="true"></span>
+          <span>Coming Soon • Launching 2026</span>
+        </div>
+
+        <!-- EDIT ME: Main Headline -->
+        <h1 class="hero-title">
+          The Future Beyond <br>
+          <span class="hero-gradient-text">Physical Cash.</span>
+        </h1>
+
+        <!-- EDIT ME: Tagline Placeholder -->
+        <p class="hero-tagline">
+          AntiCash is a frictionless, privacy-first digital layer designed to liberate value exchange. No outdated banking delays, no hidden rent-seeking fees, no surveillance.
+        </p>
+
+        <!-- Email Signup Box -->
+        <div class="signup-box-wrapper">
+          <form class="signup-form" id="newsletterForm" novalidate aria-label="Waitlist email signup form">
+            <div class="signup-input-wrap">
+              <label for="emailInput" class="visually-hidden" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0;">Email address</label>
+              <input 
+                type="email" 
+                id="emailInput" 
+                name="email" 
+                class="signup-input" 
+                placeholder="Enter your email address..." 
+                autocomplete="email"
+                required
+              >
+            </div>
+            <button type="submit" class="btn-primary" id="submitBtn">
+              <span>Get Notified</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+          </form>
+
+          <!-- Accessible Form Feedback Area -->
+          <div id="formFeedback" class="form-feedback" aria-live="polite"></div>
+
+          <p class="signup-guarantee">
+            🔒 Zero spam. Unsubscribe with a single click anytime.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         ADS-READY SLOT 1: BELOW HERO
+         - Fixed min-height guarantees zero Cumulative Layout Shift (CLS).
+         - Replace placeholder comment with your ad code (AdSense, etc.)
+         ==================================================================== -->
+    <div class="container">
+      <aside class="ad-slot-wrapper ad-slot-hero" aria-label="Advertisement Banner">
+        <div class="ad-slot-container">
+          <!-- EDIT ME: Paste your top banner ad tag here (e.g. Google AdSense 728x90 or responsive tag) -->
+          <!-- Example: <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXX" data-ad-slot="XXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins> -->
+          <span class="ad-placeholder-label">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            Advertisement Slot (728x90 / Responsive)
+          </span>
+        </div>
+      </aside>
+    </div>
+
+    <!-- ====================================================================
+         SECTION 2: WHAT'S COMING (3 FEATURE CARDS)
+         ==================================================================== -->
+    <section class="features-section" id="features">
+      <div class="container">
+        
+        <header class="section-header">
+          <!-- EDIT ME: Section Subtitle & Title -->
+          <p class="section-label">Architecture</p>
+          <h2 class="section-title">Rebuilding Value from First Principles</h2>
+          <p class="section-subtitle">
+            Modern finance was built on 50-year-old rails. AntiCash establishes an autonomous, instantaneous paradigm.
+          </p>
+        </header>
+
+        <!-- 3 Feature Cards Grid -->
+        <div class="features-grid">
+          
+          <!-- EDIT ME: Card 1 -->
+          <article class="feature-card">
+            <div class="card-icon-wrap" aria-hidden="true">
+              <!-- Lightning / Speed Icon -->
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+              </svg>
+            </div>
+            <h3 class="card-title">Instant & Borderless</h3>
+            <p class="card-desc">
+              Transmit and settle value across global jurisdictions within milliseconds. No banking holidays, no wire cutoffs, and no artificial transaction bottlenecks.
+            </p>
+          </article>
+
+          <!-- EDIT ME: Card 2 -->
+          <article class="feature-card">
+            <div class="card-icon-wrap" aria-hidden="true">
+              <!-- Shield / Privacy Icon -->
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
+            </div>
+            <h3 class="card-title">Zero Surveillance</h3>
+            <p class="card-desc">
+              Your financial transactions belong to you. We leverage zero-knowledge proofs and cryptographic custody to ensure your privacy is never monetized.
+            </p>
+          </article>
+
+          <!-- EDIT ME: Card 3 -->
+          <article class="feature-card">
+            <div class="card-icon-wrap" aria-hidden="true">
+              <!-- Feather / Frictionless Icon -->
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M16 8l-8 8"></path>
+                <path d="M8 8l8 8"></path>
+              </svg>
+            </div>
+            <h3 class="card-title">Zero Hidden Fees</h3>
+            <p class="card-desc">
+              Say goodbye to 3% swipe fees, international exchange markups, and predatory account maintenance charges. Total transparency by design.
+            </p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         ADS-READY SLOT 2: BETWEEN SECTIONS
+         - Fixed min-height guarantees zero Cumulative Layout Shift (CLS).
+         - Replace placeholder comment with your ad code (AdSense, etc.)
+         ==================================================================== -->
+    <div class="container">
+      <aside class="ad-slot-wrapper ad-slot-mid" aria-label="Advertisement Banner">
+        <div class="ad-slot-container">
+          <!-- EDIT ME: Paste your mid-page ad unit tag here (e.g. 300x250, 728x90, or responsive ad) -->
+          <!-- Example: <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXX" data-ad-slot="XXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins> -->
+          <span class="ad-placeholder-label">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            Advertisement Slot (Medium Rectangle / Responsive)
+          </span>
+        </div>
+      </aside>
+    </div>
+
+    <!-- ====================================================================
+         SECTION 3: ABOUT TEASER
+         ==================================================================== -->
+    <section class="about-teaser-section">
+      <div class="container">
+        <div class="about-teaser-box">
+          <!-- EDIT ME: About Teaser Headline -->
+          <h2 class="about-teaser-title">Why We Are Building AntiCash</h2>
+          <!-- EDIT ME: About Teaser Paragraph -->
+          <p class="about-teaser-text">
+            Physical cash gave humanity freedom, privacy, and sovereignty. Traditional digital banking stripped all three away in exchange for convenience. AntiCash exists to restore true financial sovereignty to the digital age without sacrificing speed or simplicity.
+          </p>
+          <a href="about.html" class="link-arrow">
+            <span>Read our story & mission</span>
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ====================================================================
+       SECTION 4: FOOTER
+       ==================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="index.html" class="brand-logo" aria-label="AntiCash Homepage">
+            <span class="brand-icon">
+              <svg width="24" height="24" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect width="100" height="100" rx="24" fill="#111827" stroke="#1e293b" stroke-width="2"/>
+                <path d="M 28 72 L 47 25 C 48 22.5 52 22.5 53 25 L 72 72" stroke="#00f5a0" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M 33 53 L 67 53" stroke="#00d2ff" stroke-width="6" stroke-linecap="round" />
+              </svg>
+            </span>
+            <span>Anti<span class="brand-text-accent">Cash</span></span>
+          </a>
+          <!-- EDIT ME: Footer Tagline -->
+          <p class="footer-brand-desc">
+            Redefining the nature of digital exchange. Independent, fast, and secure.
+          </p>
+        </div>
+
+        <nav aria-label="Footer Navigation">
+          <ul class="footer-links">
+            <li><a href="about.html" class="footer-link">About Us</a></li>
+            <li><a href="privacy.html" class="footer-link">Privacy Policy</a></li>
+            <!-- EDIT ME: Replace email placeholder below -->
+            <li><a href="mailto:hello@anticash.tech" class="footer-link">Contact (hello@anticash.tech)</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© <span id="currentYear">2026</span> AntiCash (anticash.tech). All rights reserved.</p>
+        <p>Built for the open, decentralized web.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ====================================================================
+       COOKIE / CONSENT BANNER (Non-intrusive bottom corner)
+       ==================================================================== -->
+  <aside id="cookieBanner" class="cookie-banner" role="dialog" aria-labelledby="cookieTitle" aria-describedby="cookieDesc">
+    <div class="cookie-content">
+      <div class="cookie-header" id="cookieTitle">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00f5a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 8v4"></path>
+          <path d="M12 16h.01"></path>
+        </svg>
+        <span>Cookies & Privacy Notice</span>
+      </div>
+      <!-- EDIT ME: Cookie Banner Text -->
+      <p class="cookie-text" id="cookieDesc">
+        We use essential cookies to ensure site functionality and third-party advertising cookies to support our platform. Review our <a href="privacy.html">Privacy Policy</a> to learn more.
+      </p>
+      <div class="cookie-actions">
+        <button type="button" class="btn-cookie-accept" id="cookieAccept">Accept</button>
+        <button type="button" class="btn-cookie-decline" id="cookieDecline">Decline</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Vanilla JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
