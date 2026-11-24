@@ -1,93 +1,79 @@
 /**
- * ==========================================================================
- * EDIT ME: ANTICASH REWARDS & OFFERWALL CONFIGURATION
- * ==========================================================================
- * This file controls your reward conversion rates, minimum withdrawal threshold,
- * admin owner UID, and partner offerwall networks.
- * ==========================================================================
+ * AntiCash Application Configuration
+ * All monetary amounts are stored in integer paise (100 paise = 1 Indian Rupee).
  */
 
+export const MIN_WITHDRAWAL_PAISE = 30000; // 30,000 paise = 300 INR
+
 export const APP_CONFIG = {
-  // Brand info
   appName: "AntiCash",
   domain: "anticash.tech",
-  supportEmail: "support@anticash.tech", // EDIT ME: Your support email
+  supportEmail: "support@anticash.tech",
   
-  // EDIT ME: Admin Owner UID
-  // Once you sign in with Google the first time, copy your UID from Firebase Console
-  // (or from your user profile on the Dashboard) and paste it here.
-  // Only this UID can access the /admin page and approve/reject withdrawals.
+  // EDIT ME: Replace with your Firebase Auth UID from Firebase Console
   ownerUid: "EDIT_ME_OWNER_UID",
 
-  // Point Conversion Rates
-  // Example: 10 Points = 1 INR (100 Points = ₹10, 500 Points = ₹50, 1000 Points = ₹100)
-  pointsPerInr: 10,
+  // Minimum threshold in paise
+  minWithdrawalPaise: MIN_WITHDRAWAL_PAISE,
 
-  // Minimum Points Required to Request a Withdrawal
-  // 500 points = ₹50 minimum withdrawal threshold
-  minWithdrawalPoints: 500,
-
-  // Hold period (in days) before pending points are confirmed (handled by Cloud Function)
-  holdPeriodDays: 7,
-
-  /**
-   * ========================================================================
-   * EDIT ME: PARTNER OFFERWALL NETWORKS
-   * ========================================================================
-   * You can configure multiple offerwall networks below (AdGate, OfferToro,
-   * CPALead, Wannads, Monlix, Lootably, etc.).
-   * 
-   * Modes:
-   * - "button": Opens the network's offer link in a new tab with ?[userIdParam]=[uid]
-   * - "iframe": Embeds the network inside a responsive container on the Tasks page
-   * 
-   * When active is false, the tasks page shows an "Offers are being set up" banner.
-   * Set active: true once you register and obtain your partner URL.
-   * ========================================================================
-   */
+  // Offerwall Networks Configuration
   networks: [
     {
       id: "network_sample_1",
-      name: "Partner Offerwall Alpha",
-      badge: "Surveys & Quick Tasks",
-      description: "Answer consumer opinion surveys and test mobile apps to earn points.",
+      name: "Partner Offerwall 1",
+      badge: "Surveys and app tests",
+      description: "Answer market research questionnaires and try mobile applications.",
       type: "button", // "button" or "iframe"
-      url: "https://example-offerwall.com/offers", // EDIT ME: Replace with your offerwall URL
-      userIdParam: "uid", // Parameter name that accepts the user's UID (e.g. ?uid=USER_ID)
-      active: false // Set to true when you have connected this network
+      url: "https://example-offerwall.com/offers", // EDIT ME: Replace with your network URL
+      userIdParam: "uid", // Parameter name for passing user UID
+      active: false
     },
     {
       id: "network_sample_2",
-      name: "Partner Offerwall Beta",
-      badge: "App Trials & Video Offers",
-      description: "Discover new games, register for verified apps, and complete trial tasks.",
+      name: "Partner Offerwall 2",
+      badge: "Fast tasks",
+      description: "Short promotional tasks and brand surveys.",
       type: "iframe", // "button" or "iframe"
-      url: "https://example-offerwall.com/embed", // EDIT ME: Replace with your offerwall embed URL
-      userIdParam: "subId", // Parameter name (e.g. ?subId=USER_ID)
-      active: false // Set to true when you have connected this network
+      url: "https://example-offerwall.com/embed", // EDIT ME: Replace with your embed URL
+      userIdParam: "subId",
+      active: false
     }
   ]
 };
 
+const inrFormatter = new Intl.NumberFormat("en-IN", {
+  style: "currency",
+  currency: "INR",
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2
+});
+
 /**
- * Utility: Convert points to formatted Rupee string (₹)
+ * Format integer paise into Indian Rupee display (e.g. 125050 -> ₹1,250.50)
+ * @param {number} paise 
+ * @returns {string}
  */
-export function pointsToInr(points) {
-  const pts = Number(points) || 0;
-  const inr = pts / APP_CONFIG.pointsPerInr;
-  return `₹${inr.toFixed(2)}`;
+export function formatRupees(paise) {
+  const p = Number(paise) || 0;
+  return inrFormatter.format(p / 100);
 }
 
 /**
- * Utility: Calculate progress percentage towards minimum withdrawal
+ * Calculate progress toward the minimum withdrawal amount
+ * @param {number} confirmedBalancePaise 
  */
-export function getWithdrawalProgress(confirmedPoints) {
-  const pts = Number(confirmedPoints) || 0;
-  const min = APP_CONFIG.minWithdrawalPoints;
-  const percent = Math.min(100, Math.round((pts / min) * 100));
+export function getWithdrawalProgress(confirmedBalancePaise) {
+  const current = Math.max(0, Number(confirmedBalancePaise) || 0);
+  const target = APP_CONFIG.minWithdrawalPaise;
+  const percent = Math.min(100, Math.round((current / target) * 100));
+  const paiseNeeded = Math.max(0, target - current);
+  
   return {
     percent,
-    pointsNeeded: Math.max(0, min - pts),
-    inrNeeded: pointsToInr(Math.max(0, min - pts))
+    currentFormatted: formatRupees(current),
+    targetFormatted: formatRupees(target),
+    paiseNeeded,
+    formattedNeeded: formatRupees(paiseNeeded),
+    isReady: current >= target
   };
 }

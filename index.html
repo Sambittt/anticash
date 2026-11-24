@@ -3,233 +3,152 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-  <title>AntiCash — Complete Partner Offers & Earn Real UPI Rewards in India</title>
-  <meta name="title" content="AntiCash — Complete Partner Offers & Earn Real UPI Rewards in India">
-  <meta name="description" content="AntiCash is a transparent rewards platform in India. Complete partner surveys and app offers to earn points redeemable directly via UPI or gift cards.">
+  <title>AntiCash — Complete offers. Get paid to your UPI.</title>
+  <meta name="description" content="Earn money by completing surveys, testing mobile applications, and participating in partner market research. Direct UPI payouts in India.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://anticash.tech/">
 
-  <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://anticash.tech/">
-  <meta property="og:title" content="AntiCash — Earn Real Rewards in India">
-  <meta property="og:description" content="Complete surveys and app offers from verified partners. Withdraw points as UPI or gift cards. No gimmicks, transparent confirmation periods.">
-  <meta property="og:image" content="https://anticash.tech/favicon.svg">
+  <meta property="og:title" content="AntiCash — Complete offers. Get paid to your UPI.">
+  <meta property="og:description" content="Earn money by completing surveys, testing mobile applications, and participating in partner market research.">
 
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <meta name="theme-color" content="#07090e">
+  <meta name="theme-color" content="#F7F5F0">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <!-- Header -->
   <header class="site-header">
-    <div class="container nav-wrapper">
-      <a href="index.html" class="brand-logo" aria-label="AntiCash Homepage">
-        <span class="brand-icon">
-          <svg width="28" height="28" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <rect width="100" height="100" rx="24" fill="#111827" stroke="#1e293b" stroke-width="2"/>
-            <path d="M 28 72 L 47 25 C 48 22.5 52 22.5 53 25 L 72 72" stroke="#00f5a0" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M 33 53 L 67 53" stroke="#00d2ff" stroke-width="6" stroke-linecap="round" />
-          </svg>
-        </span>
-        <span>Anti<span class="brand-text-accent">Cash</span></span>
-        <span class="brand-badge">India</span>
-      </a>
+    <div class="container header-inner">
+      <a href="index.html" class="wordmark">AntiCash</a>
 
-      <nav aria-label="Primary Navigation">
-        <ul class="nav-links">
-          <li><a href="index.html" class="nav-link active">Home</a></li>
-          <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
-          <li><a href="tasks.html" class="nav-link">Tasks</a></li>
-          <li><a href="withdraw.html" class="nav-link">Withdraw</a></li>
-          <li><a href="about.html" class="nav-link">About</a></li>
+      <nav aria-label="Primary navigation">
+        <ul class="nav-menu">
+          <li><a href="earn.html" class="nav-menu-link">Earn</a></li>
+          <li><a href="dashboard.html" class="nav-menu-link">Wallet</a></li>
+          <li><a href="withdraw.html" class="nav-menu-link">Withdraw</a></li>
+          <li><a href="contact.html" class="nav-menu-link">Help</a></li>
         </ul>
       </nav>
 
-      <div class="nav-auth-area" id="navUserArea">
-        <!-- Injected via auth.js (Google Sign-In button or User Profile/Points badge) -->
+      <div class="header-auth-slot" id="navUserArea">
+        <!-- Injected via auth.js -->
       </div>
     </div>
   </header>
 
   <main id="main-content">
-    <!-- Hero Section -->
-    <section class="hero-section">
-      <div class="container hero-content">
-        <div class="badge-tag">
-          <span>🇮🇳 Built for Users in India</span>
-        </div>
+    <section class="container hero-layout">
+      <h1 class="hero-heading">Complete offers. Get paid to your UPI.</h1>
+      <p class="hero-description">
+        Earn money by completing surveys, testing mobile applications, and participating in partner market research. Payouts are transferred directly to your Indian UPI virtual payment address.
+      </p>
 
-        <h1 class="hero-title">
-          Complete Partner Tasks. <br>
-          <span class="gradient-text">Earn Real UPI Rewards.</span>
-        </h1>
+      <div class="hero-actions-group">
+        <button type="button" class="btn-primary" id="heroSigninBtn">
+          <span>Sign in with Google</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+        <a href="#payout-rules" class="btn-secondary">How payouts work</a>
+      </div>
 
-        <p class="hero-subtitle">
-          AntiCash connects you with advertiser offerwalls, market research surveys, and app discovery campaigns. Turn your completed tasks into points redeemable directly via UPI or gift cards.
-        </p>
-
-        <div class="hero-actions">
-          <button type="button" class="btn-primary" id="heroLoginBtn">
-            <span>Get Started with Google</span>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
-          </button>
-          <a href="#how-it-works" class="btn-secondary">
-            <span>How It Works</span>
-          </a>
-        </div>
-
-        <!-- Honest Disclaimer Notice -->
-        <div class="notice-box" style="text-align: left; max-width: 720px; margin: 2rem auto 0;">
-          <span class="notice-icon">⚠️</span>
-          <div class="notice-body">
-            <strong>Honesty & Transparency Notice:</strong> AntiCash is a rewards platform for spare-time tasks, not a job or guaranteed income. Points are granted by third-party advertising networks only after verified completion. Confirmation can take several days, and tasks found incomplete or fraudulent by partners are subject to reversal.
-          </div>
-        </div>
+      <div class="notice">
+        <strong>Important terms:</strong> AntiCash is a rewards service for discretionary tasks, not employment or guaranteed earnings. Earnings depend on available partner campaigns. All payouts require partner verification and unconfirmed or fraudulent tasks can be reversed.
       </div>
     </section>
 
-    <!-- How It Works Section -->
-    <section class="section" id="how-it-works" style="background: var(--bg-surface); border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle);">
-      <div class="container">
-        <header class="section-header">
-          <p class="section-label">Straightforward Process</p>
-          <h2 class="section-title">How AntiCash Works</h2>
-          <p class="section-subtitle">
-            Three simple, honest steps to participate in partner research and app testing.
+    <section class="container" id="payout-rules" style="padding-bottom: 4rem;">
+      <h2 style="font-size: 1.375rem; font-weight: 700; margin-bottom: 0.5rem;">How payouts work</h2>
+      <p style="color: var(--color-text-secondary); font-size: 0.9375rem; margin-bottom: 1.25rem;">
+        Clear guidelines on task confirmation, payment thresholds, and account rules.
+      </p>
+
+      <table class="rules-table" aria-label="Payout rules summary">
+        <thead>
+          <tr>
+            <th scope="col" style="width: 25%;">Rule</th>
+            <th scope="col">Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Minimum withdrawal</strong></td>
+            <td>₹300.00. Once your confirmed balance reaches ₹300, you can request a payout directly to your UPI ID.</td>
+          </tr>
+          <tr>
+            <td><strong>Payout method</strong></td>
+            <td>Direct Indian UPI transfer to your VPA (Google Pay, PhonePe, Paytm, BHIM, or any bank UPI).</td>
+          </tr>
+          <tr>
+            <td><strong>Confirmation timeline</strong></td>
+            <td>Earnings initially appear as pending. Partner networks verify quality and completions in cycles (typically up to 7 days) before moving funds to your confirmed balance.</td>
+          </tr>
+          <tr>
+            <td><strong>Reversals and cancels</strong></td>
+            <td>If a partner network cancels a task due to incomplete requirements, rapid uninstalls, or proxy usage, corresponding pending funds are deducted.</td>
+          </tr>
+          <tr>
+            <td><strong>Account limits</strong></td>
+            <td>One account per person. The use of VPNs, proxies, emulators, or multiple accounts results in immediate termination and forfeiture of balances.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 style="font-size: 1.375rem; font-weight: 700; margin-top: 3.5rem; margin-bottom: 0.5rem;">Frequently asked questions</h2>
+      <div class="faq-accordion">
+        <div class="faq-entry">
+          <h3 class="faq-title">What is the difference between pending and confirmed balance?</h3>
+          <p class="faq-body">
+            When you complete an offer, the partner reports the transaction and the amount appears in your pending balance. Advertisers hold completions for a quality check period (usually up to 7 days) to ensure answers were valid. Once the hold period ends without dispute, the funds move to your confirmed balance and can be withdrawn.
           </p>
-        </header>
-
-        <div class="steps-grid">
-          <article class="step-card">
-            <div class="step-number">1</div>
-            <h3 class="step-title">Sign In with Google</h3>
-            <p class="step-desc">
-              Create your account in seconds using your Google account. We enforce a strict <strong>one account per person</strong> rule to maintain partner network trust and prevent automated abuse.
-            </p>
-          </article>
-
-          <article class="step-card">
-            <div class="step-number">2</div>
-            <h3 class="step-title">Complete Partner Tasks</h3>
-            <p class="step-desc">
-              Select from available offerwalls: answer opinion surveys, test new Android apps, or watch partner media. Follow all task criteria carefully without VPNs or proxies.
-            </p>
-          </article>
-
-          <article class="step-card">
-            <div class="step-number">3</div>
-            <h3 class="step-title">Confirmation & Withdrawal</h3>
-            <p class="step-desc">
-              Points initially appear as <em>Pending</em> while the advertiser reviews your submission. Once confirmed, withdraw your balance directly to your Indian UPI ID or choose gift cards.
-            </p>
-          </article>
         </div>
-      </div>
-    </section>
 
-    <!-- Transparent FAQ Section -->
-    <section class="section">
-      <div class="container">
-        <header class="section-header">
-          <p class="section-label">Got Questions?</p>
-          <h2 class="section-title">Transparent Frequently Asked Questions</h2>
-          <p class="section-subtitle">
-            We believe in complete openness about earnings, verification timelines, and rules.
+        <div class="faq-entry">
+          <h3 class="faq-title">How do I receive payments?</h3>
+          <p class="faq-body">
+            Navigate to the Withdraw page, enter your verified Indian UPI ID (e.g. name@bank), and submit. Payouts are reviewed and sent directly to your bank account via UPI within 24 to 48 business hours.
           </p>
-        </header>
+        </div>
 
-        <div class="faq-grid">
-          <div class="faq-item">
-            <h3 class="faq-question">What is the minimum withdrawal amount?</h3>
-            <p class="faq-answer">
-              The minimum threshold is <strong>500 points (equal to ₹50)</strong>. Once your confirmed balance reaches 500 points, you can submit a withdrawal request directly to any valid Indian UPI ID (Google Pay, PhonePe, Paytm, BHIM, etc.) or select a gift card voucher.
-            </p>
-          </div>
+        <div class="faq-entry">
+          <h3 class="faq-title">Why was my offer completion delayed or reversed?</h3>
+          <p class="faq-body">
+            Advertisers audit submissions against strict quality controls. If a user speeds through questions, provides conflicting demographic data, or fails to fulfill all app testing steps, the partner will reject the transaction.
+          </p>
+        </div>
 
-          <div class="faq-item">
-            <h3 class="faq-question">What is the difference between Pending and Confirmed points?</h3>
-            <p class="faq-answer">
-              When you finish an offer, the partner network notifies us and points enter your account as <strong>Pending</strong>. Advertiser partners require a verification hold period (typically up to 7 days) to ensure the survey was answered legitimately or that the app was tested according to their requirements. Once verified, points automatically become <strong>Confirmed</strong> and eligible for withdrawal.
-            </p>
-          </div>
-
-          <div class="faq-item">
-            <h3 class="faq-question">Why can partner confirmations take days?</h3>
-            <p class="faq-answer">
-              Advertisers process completions in batch cycles to screen out automated bots, fake survey inputs, and quick uninstalls. They only release funds once quality checks are satisfied. We pass the rewards to you the moment partners confirm the completion.
-            </p>
-          </div>
-
-          <div class="faq-item">
-            <h3 class="faq-question">Can points ever be reversed or deducted?</h3>
-            <p class="faq-answer">
-              Yes. If an advertising partner detects that an offer was not completed according to their terms (for example, providing inconsistent survey answers, using a VPN, or submitting fraudulent information), the partner cancels the payout. When a partner issues a chargeback/reversal, corresponding points are subtracted.
-            </p>
-          </div>
-
-          <div class="faq-item">
-            <h3 class="faq-question">Can I use a VPN, multiple accounts, or bots?</h3>
-            <p class="faq-answer">
-              <strong>Strictly NO.</strong> Partner networks utilize advanced anti-fraud filters. If VPNs, proxies, Tor, emulators, or multiple accounts are detected, the system immediately flags and bans the account. All pending and confirmed points will be permanently forfeited.
-            </p>
-          </div>
-
-          <div class="faq-item">
-            <h3 class="faq-question">Are rewards taxable in India?</h3>
-            <p class="faq-answer">
-              Yes. You are solely responsible for declaring your earnings and paying any applicable taxes according to Indian Income Tax regulations.
-            </p>
-          </div>
+        <div class="faq-entry">
+          <h3 class="faq-title">Are taxes deducted from withdrawals?</h3>
+          <p class="faq-body">
+            You are personally responsible for reporting your earnings and paying any applicable income tax in accordance with Indian tax laws.
+          </p>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- Footer -->
   <footer class="site-footer">
-    <div class="container">
-      <div class="footer-top">
-        <div class="footer-brand">
-          <a href="index.html" class="brand-logo" aria-label="AntiCash Homepage">
-            <span class="brand-icon">
-              <svg width="24" height="24" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <rect width="100" height="100" rx="24" fill="#111827" stroke="#1e293b" stroke-width="2"/>
-                <path d="M 28 72 L 47 25 C 48 22.5 52 22.5 53 25 L 72 72" stroke="#00f5a0" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M 33 53 L 67 53" stroke="#00d2ff" stroke-width="6" stroke-linecap="round" />
-              </svg>
-            </span>
-            <span>Anti<span class="brand-text-accent">Cash</span></span>
-          </a>
-          <p class="footer-brand-desc">
-            A transparent rewards platform for users in India. Complete partner tasks and redeem points via UPI.
-          </p>
-        </div>
-
-        <nav aria-label="Footer Navigation">
-          <ul class="footer-links">
-            <li><a href="dashboard.html" class="footer-link">Dashboard</a></li>
-            <li><a href="tasks.html" class="footer-link">Tasks</a></li>
-            <li><a href="withdraw.html" class="footer-link">Withdraw</a></li>
-            <li><a href="about.html" class="footer-link">About Us</a></li>
-            <li><a href="contact.html" class="footer-link">Contact</a></li>
-            <li><a href="privacy.html" class="footer-link">Privacy Policy</a></li>
-            <li><a href="terms.html" class="footer-link">Terms of Service</a></li>
-          </ul>
-        </nav>
+    <div class="container footer-inner">
+      <div>
+        <span class="footer-brand">AntiCash</span>
+        <p class="footer-disclaimer">Direct UPI rewards for completing verified advertiser offers in India.</p>
       </div>
 
-      <div class="footer-bottom">
-        <p>© <span id="currentYear">2026</span> AntiCash (anticash.tech). All rights reserved.</p>
-        <p>Rewards subject to partner offer availability and verification. No guaranteed earnings.</p>
-      </div>
+      <ul class="footer-nav-list">
+        <li><a href="terms.html" class="footer-nav-link">Terms</a></li>
+        <li><a href="privacy.html" class="footer-nav-link">Privacy</a></li>
+        <li><a href="contact.html" class="footer-nav-link">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="container footer-bottom-line">
+      <span>AntiCash (anticash.tech).</span>
+      <span>Offers subject to advertiser availability. No guaranteed income.</span>
     </div>
   </footer>
 
@@ -238,9 +157,9 @@
 
     document.addEventListener("DOMContentLoaded", () => {
       initAuth();
-      const heroBtn = document.getElementById("heroLoginBtn");
-      if (heroBtn) {
-        heroBtn.addEventListener("click", () => {
+      const signinBtn = document.getElementById("heroSigninBtn");
+      if (signinBtn) {
+        signinBtn.addEventListener("click", () => {
           if (currentUser) {
             window.location.href = "dashboard.html";
           } else {
@@ -248,8 +167,6 @@
           }
         });
       }
-      const year = document.getElementById("currentYear");
-      if (year) year.textContent = new Date().getFullYear();
     });
   </script>
 </body>

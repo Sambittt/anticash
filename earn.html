@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Earn Money — AntiCash</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="theme-color" content="#F7F5F0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="wordmark">AntiCash</a>
+
+      <nav aria-label="Primary navigation">
+        <ul class="nav-menu">
+          <li><a href="earn.html" class="nav-menu-link active">Earn</a></li>
+          <li><a href="dashboard.html" class="nav-menu-link">Wallet</a></li>
+          <li><a href="withdraw.html" class="nav-menu-link">Withdraw</a></li>
+          <li><a href="contact.html" class="nav-menu-link">Help</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-auth-slot" id="navUserArea">
+        <!-- Injected via auth.js -->
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" class="container" style="padding-top: 2.5rem; padding-bottom: 4rem;">
+    <div style="max-width: 800px; margin-bottom: 2rem;">
+      <h1 style="font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.35rem;">Partner offers</h1>
+      <p style="color: var(--color-text-secondary); font-size: 0.9375rem; line-height: 1.6;">
+        Complete surveys, test new applications, and participate in market research. Earnings are reported in real time and verified by partner advertisers before confirmation.
+      </p>
+    </div>
+
+    <div class="notice notice-warning">
+      <strong>Task requirements:</strong> Do not use VPNs, proxies, or emulators. Inconsistent survey responses or rapid uninstalls lead to task cancellations and balance deductions.
+    </div>
+
+    <!-- Offerwall Container -->
+    <div id="offerwallContainer">
+      <div class="card" style="text-align: center; padding: 3rem 1.5rem;">
+        <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">Offerwall integrations are currently being set up</h2>
+        <p style="color: var(--color-text-secondary); max-width: 500px; margin: 0 auto 1.5rem; font-size: 0.875rem;">
+          We are currently connecting and verifying partner survey and application networks. Please check back later.
+        </p>
+        <a href="dashboard.html" class="btn-secondary btn-sm">Return to wallet</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom-line" style="margin-top: 0; padding-top: 0; border-top: none;">
+      <span>AntiCash (anticash.tech).</span>
+      <span><a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a></span>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { initAuth, requireAuth, onUserChange } from "./auth.js";
+    import { APP_CONFIG } from "./app-config.js";
+
+    document.addEventListener("DOMContentLoaded", () => {
+      initAuth();
+      requireAuth();
+
+      onUserChange((user) => {
+        if (!user) return;
+        renderOfferwalls(user);
+      });
+
+      function renderOfferwalls(user) {
+        const container = document.getElementById("offerwallContainer");
+        if (!container) return;
+
+        const activeNetworks = (APP_CONFIG.networks || []).filter(n => n.active);
+
+        if (activeNetworks.length === 0) {
+          container.innerHTML = `
+            <div class="card" style="text-align: center; padding: 3rem 1.5rem;">
+              <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">Offerwall integrations are currently being set up</h2>
+              <p style="color: var(--color-text-secondary); max-width: 520px; margin: 0 auto 1.25rem; font-size: 0.875rem;">
+                We are actively integrating with verified market research and application testing partners. Available tasks will appear here once connected.
+              </p>
+              <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-text-tertiary);">User ID: ${user.uid}</div>
+            </div>
+          `;
+          return;
+        }
+
+        let html = `<div class="offer-network-list">`;
+        activeNetworks.forEach((net) => {
+          const param = net.userIdParam || "uid";
+          const separator = net.url.includes("?") ? "&" : "?";
+          const fullUrl = `${net.url}${separator}${encodeURIComponent(param)}=${encodeURIComponent(user.uid)}`;
+
+          if (net.type === "iframe") {
+            html += `
+              <div class="card" style="grid-column: 1 / -1; padding: 1.25rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+                  <div>
+                    <span class="network-badge">${escapeHtml(net.badge || "Partner Network")}</span>
+                    <h3 style="font-size: 1.125rem; font-weight: 600;">${escapeHtml(net.name)}</h3>
+                  </div>
+                  <a href="${fullUrl}" target="_blank" rel="noopener noreferrer" class="btn-secondary btn-sm">Open in new tab</a>
+                </div>
+                <div style="width: 100%; min-height: 650px; background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-card); overflow: hidden;">
+                  <iframe src="${fullUrl}" title="${escapeHtml(net.name)}" style="width: 100%; height: 700px; border: none;" loading="lazy"></iframe>
+                </div>
+              </div>
+            `;
+          } else {
+            html += `
+              <div class="network-item">
+                <div>
+                  <span class="network-badge">${escapeHtml(net.badge || "Offerwall")}</span>
+                  <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 0.5rem;">${escapeHtml(net.name)}</h3>
+                  <p style="color: var(--color-text-secondary); font-size: 0.875rem; line-height: 1.55;">
+                    ${escapeHtml(net.description || "Complete available surveys and app offers.")}
+                  </p>
+                </div>
+                <div>
+                  <a href="${fullUrl}" target="_blank" rel="noopener noreferrer" class="btn-primary" style="width: 100%;">
+                    <span>Open offers</span>
+                  </a>
+                </div>
+              </div>
+            `;
+          }
+        });
+
+        html += `</div>`;
+        container.innerHTML = html;
+      }
+
+      function escapeHtml(str) {
+        const div = document.createElement("div");
+        div.textContent = str;
+        return div.innerHTML;
+      }
+    });
+  </script>
+</body>
+</html>

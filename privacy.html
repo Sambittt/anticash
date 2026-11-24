@@ -3,140 +3,97 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
   <title>Privacy Policy — AntiCash</title>
-  <meta name="title" content="Privacy Policy — AntiCash">
-  <meta name="description" content="AntiCash privacy policy, data collection disclosures, third-party offerwall partners, and security practices.">
+  <meta name="description" content="AntiCash privacy policy, data collection disclosures, third-party offerwall networks, and security practices.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://anticash.tech/privacy.html">
-
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <meta name="theme-color" content="#07090e">
+  <meta name="theme-color" content="#F7F5F0">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <!-- Header -->
   <header class="site-header">
-    <div class="container nav-wrapper">
-      <a href="index.html" class="brand-logo" aria-label="AntiCash Homepage">
-        <span class="brand-icon">
-          <svg width="28" height="28" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <rect width="100" height="100" rx="24" fill="#111827" stroke="#1e293b" stroke-width="2"/>
-            <path d="M 28 72 L 47 25 C 48 22.5 52 22.5 53 25 L 72 72" stroke="#00f5a0" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M 33 53 L 67 53" stroke="#00d2ff" stroke-width="6" stroke-linecap="round" />
-          </svg>
-        </span>
-        <span>Anti<span class="brand-text-accent">Cash</span></span>
-        <span class="brand-badge">India</span>
-      </a>
+    <div class="container header-inner">
+      <a href="index.html" class="wordmark">AntiCash</a>
 
-      <nav aria-label="Primary Navigation">
-        <ul class="nav-links">
-          <li><a href="index.html" class="nav-link">Home</a></li>
-          <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
-          <li><a href="tasks.html" class="nav-link">Tasks</a></li>
-          <li><a href="withdraw.html" class="nav-link">Withdraw</a></li>
-          <li><a href="privacy.html" class="nav-link active">Privacy</a></li>
+      <nav aria-label="Primary navigation">
+        <ul class="nav-menu">
+          <li><a href="earn.html" class="nav-menu-link">Earn</a></li>
+          <li><a href="dashboard.html" class="nav-menu-link">Wallet</a></li>
+          <li><a href="withdraw.html" class="nav-menu-link">Withdraw</a></li>
+          <li><a href="privacy.html" class="nav-menu-link active">Privacy</a></li>
         </ul>
       </nav>
 
-      <div class="nav-auth-area" id="navUserArea">
+      <div class="header-auth-slot" id="navUserArea">
         <!-- Injected via auth.js -->
       </div>
     </div>
   </header>
 
-  <main id="main-content" class="container prose-container">
-    <header class="prose-header">
-      <h1 style="font-size: clamp(2.2rem, 5vw, 3.2rem); font-weight: 800; margin-bottom: 0.5rem;">
-        Privacy <span class="gradient-text">Policy</span>
-      </h1>
-      <p style="color: var(--text-muted); font-size: 0.95rem;">
-        Effective Date: November 24, 2026 • Website: https://anticash.tech
-      </p>
-    </header>
+  <main id="main-content" class="container prose-section">
+    <h1 class="prose-title">Privacy Policy</h1>
+    <p class="prose-subtitle">Effective date: November 24, 2026 · Website: https://anticash.tech</p>
 
-    <article class="prose-body">
+    <div class="prose-content">
       <section>
-        <h2>1. Overview</h2>
-        <p>
-          At <strong>AntiCash</strong> ("we", "us", or "our"), accessible from <strong>anticash.tech</strong>, your privacy is fundamental. This Privacy Policy outlines what information we collect when you use our rewards platform, how it is processed, and your rights under applicable Indian data privacy regulations and international standards.
-        </p>
-      </section>
-
-      <section>
-        <h2>2. Information We Collect</h2>
-        <p>We collect only the minimal information strictly required to operate your account and process UPI rewards:</p>
+        <h2>1. Information we collect</h2>
+        <p>We collect minimal information necessary to authenticate accounts and disburse UPI payments:</p>
         <ul>
-          <li><strong>Google Account Information:</strong> When you sign in using Google Auth, Firebase provides us with your email address, display name, and unique user identifier (UID). We do not receive or store your Google account password.</li>
-          <li><strong>Payment Information (UPI ID / Email):</strong> When you submit a withdrawal request, we collect the UPI ID (e.g. <code>user@bank</code>) or gift card delivery email address solely to disburse your funds.</li>
-          <li><strong>IP Address & Device Telemetry:</strong> When third-party offerwall networks send completion postbacks, we log the user's source IP address and completion timestamp to prevent fraud and multi-account abuse.</li>
-          <li><strong>Points & Transaction Records:</strong> We maintain a ledger of your task completions, pending points, confirmed points, and withdrawal history in Google Cloud Firestore.</li>
+          <li><strong>Authentication data:</strong> When you sign in with Google, Firebase provides your email address, display name, and unique user identifier (UID). We never receive or store your Google password.</li>
+          <li><strong>Payment details:</strong> When requesting a payout, we record your provided UPI virtual payment address solely to send funds.</li>
+          <li><strong>Transaction history:</strong> Records of your completed tasks, pending balance, confirmed balance, and withdrawal requests are retained in Google Cloud Firestore.</li>
+          <li><strong>Technical logs:</strong> When an offerwall sends a postback, we log the user source IP address and timestamp to verify completion legitimacy and prevent proxy abuse.</li>
         </ul>
       </section>
 
       <section>
-        <h2>3. Third-Party Offerwall Partners</h2>
+        <h2>2. Third-party offerwall networks</h2>
         <p>
-          AntiCash connects with independent digital advertising partners and market research panels (offerwalls). When you browse or launch a task from our Tasks page:
+          AntiCash integrates with independent market research and application testing panels. When you open a task from our Earn page:
         </p>
         <ul>
-          <li>We transmit your pseudonymous AntiCash UID as a tracking sub-identifier (e.g. <code>?uid=YOUR_UID</code>) so the partner network can notify our servers when you finish the task.</li>
-          <li>We never share your email address, legal name, or UPI ID with offerwall networks.</li>
-          <li>Partner networks operate under their own independent privacy policies. We encourage you to review their terms before participating in surveys or downloading third-party applications.</li>
+          <li>We forward your pseudonymous user UID so the partner can notify our backend when you finish the task.</li>
+          <li>We do not share your email address or UPI address with offerwall networks.</li>
+          <li>Offerwall networks operate under their own independent privacy notices. Review their specific disclosures before submitting survey responses or testing third-party software.</li>
         </ul>
       </section>
 
       <section>
-        <h2>4. Prohibition of Google AdSense in Rewards Flow</h2>
-        <div class="notice-box">
-          <span class="notice-icon">🛡️</span>
-          <div class="notice-body">
-            <strong>Advertising Policy Disclosure:</strong> AntiCash strictly adheres to advertising network guidelines. We do NOT use Google AdSense anywhere in the rewards flow, and we never reward or pay users for viewing or clicking Google ads. All rewards are derived exclusively from verified task completions on compliant, third-party offerwall platforms.
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <h2>5. Cookies & Local Browser Storage</h2>
+        <h2>3. Advertising policy disclosure</h2>
         <p>
-          We use session cookies and local storage exclusively for essential user authentication (Firebase Auth tokens) and remembering your navigation preferences. We do not sell user behavioral data to data brokers.
+          AntiCash does not use Google AdSense anywhere in the rewards flow. Users are never paid or rewarded for clicking or viewing Google advertisements. All rewards are derived exclusively from verified completions on compliant affiliate offerwall platforms.
         </p>
       </section>
 
       <section>
-        <h2>6. Security & Data Retention</h2>
+        <h2>4. Data security</h2>
         <p>
-          Your account data and transaction history are stored securely on Google Cloud Platform (Firebase Auth and Firestore). All database write permissions for balances and transactions are strictly locked down by server-side Firestore Security Rules and can only be modified through secure Cloud Functions.
+          Account records are stored on Google Cloud infrastructure. All database writes for user balances and transactions are locked down by server-side Firestore security rules and can only be executed by Cloud Functions.
         </p>
       </section>
 
       <section>
-        <h2>7. Account Deletion & Rights</h2>
+        <h2>5. Account deletion requests</h2>
         <p>
-          You have the right to request access to your personal data or ask for the deletion of your AntiCash account and associated records. To submit a request, contact our support team at <a href="mailto:support@anticash.tech" style="color: var(--accent-primary);">support@anticash.tech</a> using the Google email associated with your account.
+          You may request access to your data or request deletion of your account by emailing <a href="mailto:support@anticash.tech">support@anticash.tech</a> from the Google email address associated with your profile.
         </p>
       </section>
-    </article>
+    </div>
   </main>
 
   <footer class="site-footer">
-    <div class="container footer-bottom">
-      <p>© <span id="currentYear">2026</span> AntiCash (anticash.tech). All rights reserved.</p>
-      <p><a href="privacy.html" class="footer-link">Privacy Policy</a> • <a href="terms.html" class="footer-link">Terms of Service</a></p>
+    <div class="container footer-bottom-line" style="margin-top: 0; padding-top: 0; border-top: none;">
+      <span>AntiCash (anticash.tech).</span>
+      <span><a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a></span>
     </div>
   </footer>
 
   <script type="module">
     import { initAuth } from "./auth.js";
-    document.addEventListener("DOMContentLoaded", () => {
-      initAuth();
-      const year = document.getElementById("currentYear");
-      if (year) year.textContent = new Date().getFullYear();
-    });
+    document.addEventListener("DOMContentLoaded", () => initAuth());
   </script>
 </body>
 </html>

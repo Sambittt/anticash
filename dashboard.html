@@ -3,230 +3,180 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-  <title>Dashboard — AntiCash</title>
+  <title>Wallet Statement — AntiCash</title>
   <meta name="robots" content="noindex, nofollow">
-
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <meta name="theme-color" content="#07090e">
+  <meta name="theme-color" content="#F7F5F0">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <!-- Header -->
   <header class="site-header">
-    <div class="container nav-wrapper">
-      <a href="index.html" class="brand-logo" aria-label="AntiCash Homepage">
-        <span class="brand-icon">
-          <svg width="28" height="28" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <rect width="100" height="100" rx="24" fill="#111827" stroke="#1e293b" stroke-width="2"/>
-            <path d="M 28 72 L 47 25 C 48 22.5 52 22.5 53 25 L 72 72" stroke="#00f5a0" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M 33 53 L 67 53" stroke="#00d2ff" stroke-width="6" stroke-linecap="round" />
-          </svg>
-        </span>
-        <span>Anti<span class="brand-text-accent">Cash</span></span>
-      </a>
+    <div class="container header-inner">
+      <a href="index.html" class="wordmark">AntiCash</a>
 
-      <nav aria-label="Primary Navigation">
-        <ul class="nav-links">
-          <li><a href="index.html" class="nav-link">Home</a></li>
-          <li><a href="dashboard.html" class="nav-link active">Dashboard</a></li>
-          <li><a href="tasks.html" class="nav-link">Tasks</a></li>
-          <li><a href="withdraw.html" class="nav-link">Withdraw</a></li>
+      <nav aria-label="Primary navigation">
+        <ul class="nav-menu">
+          <li><a href="earn.html" class="nav-menu-link">Earn</a></li>
+          <li><a href="dashboard.html" class="nav-menu-link active">Wallet</a></li>
+          <li><a href="withdraw.html" class="nav-menu-link">Withdraw</a></li>
+          <li><a href="contact.html" class="nav-menu-link">Help</a></li>
         </ul>
       </nav>
 
-      <div class="nav-auth-area" id="navUserArea">
+      <div class="header-auth-slot" id="navUserArea">
         <!-- Injected via auth.js -->
       </div>
     </div>
   </header>
 
-  <main id="main-content" class="container dashboard-header">
-    
-    <div class="dashboard-user-greeting">
-      <h1 class="greeting-title" id="greetingName">Welcome back!</h1>
-      <p class="greeting-sub" id="greetingEmail">Loading your account details...</p>
+  <main id="main-content" class="container statement-header">
+    <div style="margin-bottom: 2rem;">
+      <h1 style="font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.25rem;" id="statementUserTitle">Account Wallet</h1>
+      <p style="font-size: 0.875rem; color: var(--color-text-secondary);" id="statementUserSub">Loading balance records...</p>
     </div>
 
-    <!-- Stats Cards Grid -->
-    <div class="stats-grid">
-      <!-- 1. Confirmed Points -->
-      <article class="stat-card">
-        <div>
-          <span class="stat-label">
-            <span>Confirmed Balance</span>
-            <span>✅</span>
-          </span>
-          <div class="stat-value" id="confirmedPointsVal">0</div>
-          <div class="stat-inr" id="confirmedInrVal">₹0.00</div>
-        </div>
-        <p class="stat-desc">
-          Ready for withdrawal via UPI or gift card vouchers.
-        </p>
-      </article>
+    <!-- Bank Statement Top Row -->
+    <div class="statement-top-grid">
+      <div class="metric-card">
+        <div class="metric-label">Available balance</div>
+        <div class="metric-figure" id="valConfirmedBalance">₹0.00</div>
+        <div class="metric-subtext">Confirmed and eligible for UPI withdrawal.</div>
+      </div>
 
-      <!-- 2. Pending Points -->
-      <article class="stat-card">
-        <div>
-          <span class="stat-label">
-            <span>Pending Balance</span>
-            <span>⏳</span>
-          </span>
-          <div class="stat-value" id="pendingPointsVal">0</div>
-          <div class="stat-inr" id="pendingInrVal">₹0.00</div>
-        </div>
-        <p class="stat-desc">
-          Awaiting partner advertiser verification (usually up to 7 days).
-        </p>
-      </article>
+      <div class="metric-card">
+        <div class="metric-label">Pending balance</div>
+        <div class="metric-figure" id="valPendingBalance" style="color: var(--status-pending-text);">₹0.00</div>
+        <div class="metric-subtext">Under partner review (up to 7 days).</div>
+      </div>
 
-      <!-- 3. Withdrawal Progress -->
-      <article class="stat-card">
-        <div>
-          <span class="stat-label">
-            <span>Minimum Payout Goal</span>
-            <span id="progressPercentLabel">0%</span>
-          </span>
-          <div class="stat-value" style="font-size: 1.75rem;" id="progressSummary">0 / 500 Pts</div>
-          <div class="progress-bar-container" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-            <div class="progress-bar-fill" id="progressBarFill" style="width: 0%;"></div>
-          </div>
-        </div>
-        <p class="stat-desc" id="progressRemainingText">
-          500 points needed to unlock your first UPI withdrawal.
-        </p>
-      </article>
-    </div>
-
-    <!-- Quick Action Bar -->
-    <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem;">
-      <a href="tasks.html" class="btn-primary">
-        <span>Explore Available Tasks</span>
-        <span>→</span>
-      </a>
-      <a href="withdraw.html" class="btn-secondary">
-        <span>Request Withdrawal</span>
-      </a>
-    </div>
-
-    <!-- Honest Information Reminder -->
-    <div class="notice-box">
-      <span class="notice-icon">ℹ️</span>
-      <div class="notice-body">
-        <strong>How Points Work:</strong> When you complete an offer, it is immediately credited as <em>Pending</em>. Advertiser partners take several days to review survey quality and app usage. Confirmed points never expire as long as your account remains in good standing. Do not use VPNs or proxies.
+      <div class="metric-card">
+        <div class="metric-label">Total withdrawn</div>
+        <div class="metric-figure" id="valTotalWithdrawn">₹0.00</div>
+        <div class="metric-subtext">Cumulative payouts processed to date.</div>
       </div>
     </div>
 
-    <!-- Recent Activity / Transactions Section -->
-    <section class="card" style="margin-top: 2rem;">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.5rem;">
-        <div>
-          <h2 style="font-size: 1.25rem; font-weight: 800;">Recent Account Activity</h2>
-          <p style="font-size: 0.85rem; color: var(--text-muted);">Live history of your task earnings, confirmations, and withdrawals.</p>
-        </div>
+    <!-- Withdrawal Progress Section -->
+    <div class="card" style="margin-bottom: 2rem;">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem;">
+        <span style="font-size: 0.875rem; font-weight: 600;">Withdrawal requirement progress</span>
+        <span style="font-family: var(--font-mono); font-size: 0.875rem; font-weight: 600;" id="progressFractionText">₹0.00 of ₹300.00</span>
       </div>
 
-      <div class="table-responsive">
-        <table class="data-table" aria-label="Recent Transactions">
+      <div class="progress-container" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-fill" id="progressFillBar" style="width: 0%;"></div>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem; flex-wrap: wrap; gap: 0.75rem;">
+        <span style="font-size: 0.8125rem; color: var(--color-text-secondary);" id="progressDetailText">
+          ₹300.00 needed to request your first withdrawal.
+        </span>
+        <a href="withdraw.html" class="btn-primary btn-sm" id="btnRequestWithdrawalLink">Withdraw funds</a>
+      </div>
+    </div>
+
+    <!-- Statement Activity Table -->
+    <div style="margin-bottom: 4rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+        <h2 style="font-size: 1.125rem; font-weight: 700;">Statement activity</h2>
+        <a href="earn.html" class="btn-secondary btn-sm">Find new offers</a>
+      </div>
+
+      <div class="table-wrap">
+        <table class="statement-table" aria-label="Statement transactions">
           <thead>
             <tr>
               <th scope="col">Date</th>
-              <th scope="col">Activity Type</th>
-              <th scope="col">Partner / Channel</th>
-              <th scope="col">Points</th>
-              <th scope="col">Rupee Value</th>
+              <th scope="col">Description</th>
+              <th scope="col">Partner</th>
               <th scope="col">Status</th>
+              <th scope="col" style="text-align: right;">Amount</th>
             </tr>
           </thead>
-          <tbody id="transactionsTableBody">
+          <tbody id="statementTbody">
             <tr>
-              <td colspan="6" class="empty-state">
-                <div class="empty-state-icon">📋</div>
-                <p>No activity recorded yet. Visit the <a href="tasks.html" style="color: var(--accent-primary); text-decoration: underline;">Tasks page</a> to get started!</p>
-              </td>
+              <td colspan="5" class="empty-table-state">Loading records...</td>
             </tr>
           </tbody>
         </table>
       </div>
-    </section>
-
+    </div>
   </main>
 
-  <!-- Footer -->
   <footer class="site-footer">
-    <div class="container footer-bottom">
-      <p>© <span id="currentYear">2026</span> AntiCash (anticash.tech). All rights reserved.</p>
-      <p><a href="privacy.html" class="footer-link">Privacy Policy</a> • <a href="terms.html" class="footer-link">Terms of Service</a></p>
+    <div class="container footer-bottom-line" style="margin-top: 0; padding-top: 0; border-top: none;">
+      <span>AntiCash (anticash.tech).</span>
+      <span><a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a></span>
     </div>
   </footer>
 
   <script type="module">
     import { initAuth, requireAuth, onUserChange, db } from "./auth.js";
-    import { APP_CONFIG, pointsToInr, getWithdrawalProgress } from "./app-config.js";
-    import { collection, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { formatRupees, getWithdrawalProgress, APP_CONFIG } from "./app-config.js";
+    import { collection, query, orderBy, limit, getDocs, where } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
     document.addEventListener("DOMContentLoaded", () => {
       initAuth();
       requireAuth();
 
-      const year = document.getElementById("currentYear");
-      if (year) year.textContent = new Date().getFullYear();
-
       onUserChange(async (user, userData) => {
         if (!user) return;
 
-        // Greeting
-        const nameEl = document.getElementById("greetingName");
-        const emailEl = document.getElementById("greetingEmail");
-        if (nameEl) nameEl.textContent = `Welcome back, ${user.displayName || "Member"}!`;
-        if (emailEl) emailEl.textContent = `${user.email} (UID: ${user.uid})`;
+        document.getElementById("statementUserTitle").textContent = `${user.displayName || "Member"} Wallet`;
+        document.getElementById("statementUserSub").textContent = `${user.email} (UID: ${user.uid})`;
 
-        // Points
-        const confirmed = Number(userData?.confirmedPoints) || 0;
-        const pending = Number(userData?.pendingPoints) || 0;
+        const confirmedPaise = Number(userData?.confirmedBalancePaise) || 0;
+        const pendingPaise = Number(userData?.pendingBalancePaise) || 0;
 
-        document.getElementById("confirmedPointsVal").textContent = confirmed.toLocaleString();
-        document.getElementById("confirmedInrVal").textContent = pointsToInr(confirmed);
+        document.getElementById("valConfirmedBalance").textContent = formatRupees(confirmedPaise);
+        document.getElementById("valPendingBalance").textContent = formatRupees(pendingPaise);
 
-        document.getElementById("pendingPointsVal").textContent = pending.toLocaleString();
-        document.getElementById("pendingInrVal").textContent = pointsToInr(pending);
+        // Progress Calculation
+        const prog = getWithdrawalProgress(confirmedPaise);
+        document.getElementById("progressFractionText").textContent = `${prog.currentFormatted} of ${prog.targetFormatted}`;
+        document.getElementById("progressFillBar").style.width = `${prog.percent}%`;
 
-        // Progress
-        const prog = getWithdrawalProgress(confirmed);
-        document.getElementById("progressPercentLabel").textContent = `${prog.percent}%`;
-        document.getElementById("progressSummary").textContent = `${confirmed.toLocaleString()} / ${APP_CONFIG.minWithdrawalPoints} Pts`;
-        document.getElementById("progressBarFill").style.width = `${prog.percent}%`;
+        const detailEl = document.getElementById("progressDetailText");
+        const withdrawBtn = document.getElementById("btnRequestWithdrawalLink");
 
-        const remText = document.getElementById("progressRemainingText");
-        if (prog.pointsNeeded === 0) {
-          remText.innerHTML = `🎉 <strong>Eligible for withdrawal!</strong> You have reached the minimum threshold.`;
+        if (prog.isReady) {
+          detailEl.textContent = "Minimum threshold reached. You can request a payout.";
+          withdrawBtn.removeAttribute("disabled");
         } else {
-          remText.textContent = `${prog.pointsNeeded.toLocaleString()} points (${prog.inrNeeded}) more needed to withdraw.`;
+          detailEl.textContent = `${prog.formattedNeeded} remaining to reach minimum withdrawal.`;
         }
 
-        // Fetch recent transactions
-        loadTransactions(user.uid);
+        loadTransactionsAndWithdrawals(user.uid);
       });
 
-      async function loadTransactions(uid) {
+      async function loadTransactionsAndWithdrawals(uid) {
         if (!db) return;
-        const tbody = document.getElementById("transactionsTableBody");
+        const tbody = document.getElementById("statementTbody");
         if (!tbody) return;
 
         try {
+          // Calculate total withdrawn
+          const wRef = collection(db, "withdrawals");
+          const wQuery = query(wRef, where("uid", "==", uid), where("status", "==", "paid"));
+          const wSnap = await getDocs(wQuery);
+          let totalWithdrawnPaise = 0;
+          wSnap.forEach(d => {
+            totalWithdrawnPaise += (Number(d.data().amountPaise) || 0);
+          });
+          document.getElementById("valTotalWithdrawn").textContent = formatRupees(totalWithdrawnPaise);
+
+          // Load Transactions
           const txRef = collection(db, "users", uid, "transactions");
-          const q = query(txRef, orderBy("createdAt", "desc"), limit(25));
-          const snap = await getDocs(q);
+          const txQuery = query(txRef, orderBy("createdAt", "desc"), limit(30));
+          const snap = await getDocs(txQuery);
 
           if (snap.empty) {
             tbody.innerHTML = `
               <tr>
-                <td colspan="6" class="empty-state">
-                  <div class="empty-state-icon">📋</div>
-                  <p>No activity recorded yet. Visit the <a href="tasks.html" style="color: var(--accent-primary); text-decoration: underline;">Tasks page</a> to complete your first offer!</p>
+                <td colspan="5" class="empty-table-state">
+                  No activity recorded yet. Start by completing an offer on the <a href="earn.html">Earn page</a>.
                 </td>
               </tr>
             `;
@@ -237,29 +187,37 @@
           snap.forEach((doc) => {
             const tx = doc.data();
             const dateStr = tx.createdAt?.toDate ? tx.createdAt.toDate().toLocaleDateString("en-IN", {
-              day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit"
+              day: "numeric", month: "short", year: "numeric"
             }) : "Recent";
-            
-            const pts = Number(tx.points) || 0;
-            const ptsDisplay = pts > 0 ? `+${pts}` : `${pts}`;
-            const statusClass = (tx.status || "pending").toLowerCase();
-            const typeLabel = (tx.type || "earn").toUpperCase();
+
+            const paise = Number(tx.amountPaise) || 0;
+            const isPositive = paise >= 0;
+            const amountFormatted = (isPositive ? "+" : "") + formatRupees(paise);
+            const statusKey = (tx.status || "pending").toLowerCase();
+            const description = tx.type === "withdrawal" ? "UPI Withdrawal" : (tx.description || "Partner Offer Completion");
 
             html += `
               <tr>
-                <td>${dateStr}</td>
-                <td><strong>${typeLabel}</strong></td>
-                <td>${tx.network || tx.method || "Partner Offer"}</td>
-                <td style="font-weight: 700; color: ${pts >= 0 ? 'var(--accent-primary)' : '#f87171'}">${ptsDisplay} Pts</td>
-                <td>${pointsToInr(Math.abs(pts))}</td>
-                <td><span class="badge-status ${statusClass}">${tx.status || "pending"}</span></td>
+                <td class="mono-cell">${dateStr}</td>
+                <td>${escapeHtml(description)}</td>
+                <td>${escapeHtml(tx.network || tx.method || "Partner")}</td>
+                <td><span class="badge-status ${statusKey}">${escapeHtml(tx.status || "pending")}</span></td>
+                <td style="text-align: right;" class="${isPositive ? 'amount-positive' : 'amount-negative'}">${amountFormatted}</td>
               </tr>
             `;
           });
+
           tbody.innerHTML = html;
         } catch (err) {
-          console.warn("Could not load transactions:", err);
+          console.warn("Failed to load wallet statement:", err);
+          tbody.innerHTML = `<tr><td colspan="5" class="empty-table-state">Unable to load activity. Please refresh.</td></tr>`;
         }
+      }
+
+      function escapeHtml(str) {
+        const div = document.createElement("div");
+        div.textContent = str;
+        return div.innerHTML;
       }
     });
   </script>

@@ -3,75 +3,57 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-  <title>404 — Page Not Found | AntiCash</title>
+  <title>Page Not Found — AntiCash</title>
   <meta name="robots" content="noindex, follow">
-
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <meta name="theme-color" content="#07090e">
+  <meta name="theme-color" content="#F7F5F0">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <!-- Header -->
   <header class="site-header">
-    <div class="container nav-wrapper">
-      <a href="index.html" class="brand-logo" aria-label="AntiCash Homepage">
-        <span class="brand-icon">
-          <svg width="28" height="28" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <rect width="100" height="100" rx="24" fill="#111827" stroke="#1e293b" stroke-width="2"/>
-            <path d="M 28 72 L 47 25 C 48 22.5 52 22.5 53 25 L 72 72" stroke="#00f5a0" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M 33 53 L 67 53" stroke="#00d2ff" stroke-width="6" stroke-linecap="round" />
-          </svg>
-        </span>
-        <span>Anti<span class="brand-text-accent">Cash</span></span>
-      </a>
+    <div class="container header-inner">
+      <a href="index.html" class="wordmark">AntiCash</a>
 
-      <nav aria-label="Primary Navigation">
-        <ul class="nav-links">
-          <li><a href="index.html" class="nav-link">Home</a></li>
-          <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
-          <li><a href="tasks.html" class="nav-link">Tasks</a></li>
+      <nav aria-label="Primary navigation">
+        <ul class="nav-menu">
+          <li><a href="earn.html" class="nav-menu-link">Earn</a></li>
+          <li><a href="dashboard.html" class="nav-menu-link">Wallet</a></li>
+          <li><a href="withdraw.html" class="nav-menu-link">Withdraw</a></li>
         </ul>
       </nav>
 
-      <div class="nav-auth-area" id="navUserArea">
+      <div class="header-auth-slot" id="navUserArea">
         <!-- Injected via auth.js -->
       </div>
     </div>
   </header>
 
   <main id="main-content" class="container" style="text-align: center; padding: 6rem 1rem;">
-    <div style="font-size: clamp(5rem, 12vw, 8rem); font-weight: 900; line-height: 1; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+    <div style="font-family: var(--font-mono); font-size: 4rem; font-weight: 600; color: var(--color-text-secondary); margin-bottom: 0.5rem;">
       404
     </div>
-    <h1 style="font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 800; margin: 1rem 0;">
-      Page Not Found
-    </h1>
-    <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto 2rem; font-size: 1.05rem;">
-      The page you are looking for does not exist or may have been moved.
+    <h1 style="font-size: 1.75rem; font-weight: 700; margin-bottom: 0.75rem;">Page not found</h1>
+    <p style="color: var(--color-text-secondary); max-width: 440px; margin: 0 auto 2rem; font-size: 0.9375rem;">
+      The requested page does not exist or has been relocated.
     </p>
-    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-      <a href="index.html" class="btn-primary">Return to Homepage</a>
-      <a href="dashboard.html" class="btn-secondary">Go to Dashboard</a>
+    <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
+      <a href="index.html" class="btn-primary">Return to home</a>
+      <a href="dashboard.html" class="btn-secondary">Go to wallet</a>
     </div>
   </main>
 
   <footer class="site-footer">
-    <div class="container footer-bottom">
-      <p>© <span id="currentYear">2026</span> AntiCash (anticash.tech). All rights reserved.</p>
+    <div class="container footer-bottom-line" style="margin-top: 0; padding-top: 0; border-top: none;">
+      <span>AntiCash (anticash.tech).</span>
+      <span><a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a></span>
     </div>
   </footer>
 
   <script type="module">
     import { initAuth } from "./auth.js";
-    document.addEventListener("DOMContentLoaded", () => {
-      initAuth();
-      const year = document.getElementById("currentYear");
-      if (year) year.textContent = new Date().getFullYear();
-    });
+    document.addEventListener("DOMContentLoaded", () => initAuth());
   </script>
 </body>
 </html>

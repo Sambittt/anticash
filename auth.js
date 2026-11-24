@@ -1,9 +1,6 @@
 /**
- * ==========================================================================
- * ANTICASH FIREBASE AUTH & FIRESTORE STATE MANAGER
- * ==========================================================================
- * Uses official Firebase Web SDK v10 (modular) loaded via Google's official CDN.
- * ==========================================================================
+ * AntiCash Authentication and Firestore State Manager
+ * Zero emojis, real rupees, modular Firebase v10 SDK.
  */
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
@@ -20,23 +17,15 @@ import {
   getDoc, 
   setDoc, 
   onSnapshot, 
-  serverTimestamp, 
-  collection, 
-  query, 
-  where, 
-  orderBy, 
-  limit, 
-  getDocs 
+  serverTimestamp 
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 import { 
-  getFunctions, 
-  httpsCallable 
+  getFunctions 
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-functions.js";
 
 import { firebaseConfig, isFirebaseConfigured } from "./firebase-config.js";
-import { APP_CONFIG, pointsToInr } from "./app-config.js";
+import { APP_CONFIG, formatRupees } from "./app-config.js";
 
-// Initialize Firebase
 let app = null;
 let auth = null;
 let db = null;
@@ -51,17 +40,14 @@ if (isFirebaseConfigured()) {
   } catch (err) {
     console.error("Firebase initialization failed:", err);
   }
-} else {
-  console.warn("AntiCash: Firebase config is still using placeholders. Please edit firebase-config.js.");
 }
 
 export { app, auth, db, functions };
 
-// Reactive state
 export let currentUser = null;
 export let currentUserData = {
-  confirmedPoints: 0,
-  pendingPoints: 0,
+  confirmedBalancePaise: 0,
+  pendingBalancePaise: 0,
   banned: false,
   email: "",
   displayName: ""
@@ -70,9 +56,6 @@ export let currentUserData = {
 let userDocUnsubscribe = null;
 const authCallbacks = [];
 
-/**
- * Register listener for auth state changes
- */
 export function onUserChange(callback) {
   authCallbacks.push(callback);
   if (currentUser) {
@@ -90,12 +73,9 @@ function notifyCallbacks() {
   });
 }
 
-/**
- * Sign in with Google
- */
 export async function loginWithGoogle() {
   if (!isFirebaseConfigured()) {
-    showConfigNoticeModal();
+    alert("Configuration notice: Please enter your Firebase web app keys in firebase-config.js.");
     return;
   }
   
@@ -106,7 +86,6 @@ export async function loginWithGoogle() {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
     
-    // Ensure user document exists in Firestore
     const userRef = doc(db, "users", user.uid);
     const snap = await getDoc(userRef);
     
@@ -115,15 +94,14 @@ export async function loginWithGoogle() {
         email: user.email || "",
         displayName: user.displayName || "User",
         createdAt: serverTimestamp(),
-        confirmedPoints: 0,
-        pendingPoints: 0,
+        confirmedBalancePaise: 0,
+        pendingBalancePaise: 0,
         banned: false
       });
     }
     
     return user;
   } catch (error) {
-    console.error("Google Sign-In failed:", error);
     if (error.code !== "auth/popup-closed-by-user") {
       alert(`Sign in error: ${error.message}`);
     }
@@ -131,9 +109,6 @@ export async function loginWithGoogle() {
   }
 }
 
-/**
- * Sign out
- */
 export async function logoutUser() {
   if (!auth) return;
   if (userDocUnsubscribe) {
@@ -144,11 +119,7 @@ export async function logoutUser() {
   window.location.href = "index.html";
 }
 
-/**
- * Setup Realtime Auth & Profile Listener
- */
 export function initAuth() {
-  // Show setup banner if Firebase is unconfigured
   renderConfigBannerIfNeeded();
 
   if (!auth) {
@@ -165,7 +136,6 @@ export function initAuth() {
     }
 
     if (user) {
-      // Listen to users/{uid} document in real-time
       const userRef = doc(db, "users", user.uid);
       userDocUnsubscribe = onSnapshot(userRef, (snap) => {
         if (snap.exists()) {
@@ -176,7 +146,7 @@ export function initAuth() {
           };
           
           if (currentUserData.banned) {
-            handleBannedUser();
+            alert("Your account has been suspended for violating terms of service (such as proxy usage or multiple accounts). Payouts and offer access are disabled.");
           }
         }
         updateNavbarUI(currentUser, currentUserData);
@@ -186,8 +156,8 @@ export function initAuth() {
       });
     } else {
       currentUserData = {
-        confirmedPoints: 0,
-        pendingPoints: 0,
+        confirmedBalancePaise: 0,
+        pendingBalancePaise: 0,
         banned: false,
         email: "",
         displayName: ""
@@ -198,81 +168,63 @@ export function initAuth() {
   });
 }
 
-function handleBannedUser() {
-  alert("Notice: This account has been flagged or suspended for terms violation (multiple accounts or VPN detected). Payouts and task participation are disabled.");
-}
-
-/**
- * Route protection for pages that require login (dashboard, tasks, withdraw, admin)
- */
 export function requireAuth(options = { requireAdmin: false }) {
-  if (!isFirebaseConfigured()) {
-    renderConfigBannerIfNeeded();
-    return;
-  }
-
+  if (!isFirebaseConfigured()) return;
   if (!auth) return;
 
   onAuthStateChanged(auth, (user) => {
     if (!user) {
-      // Redirect to home page with login prompt
       window.location.href = "index.html?auth_required=true";
       return;
     }
 
     if (options.requireAdmin) {
-      if (user.uid !== APP_CONFIG.ownerUid) {
-        alert("Access Denied: You must be the owner to view the admin area.");
+      if (user.uid !== APP_CONFIG.ownerUid && APP_CONFIG.ownerUid !== "EDIT_ME_OWNER_UID") {
+        alert("Access restricted to owner account.");
         window.location.href = "dashboard.html";
       }
     }
   });
 }
 
-/**
- * Update Navbar based on user state
- */
 export function updateNavbarUI(user, userData) {
   const navContainer = document.getElementById("navUserArea");
   if (!navContainer) return;
 
   if (user) {
-    const isOwner = user.uid === APP_CONFIG.ownerUid;
-    const confirmedPts = userData?.confirmedPoints || 0;
-    const pendingPts = userData?.pendingPoints || 0;
+    const isOwner = user.uid === APP_CONFIG.ownerUid || APP_CONFIG.ownerUid === "EDIT_ME_OWNER_UID";
+    const confirmedPaise = userData?.confirmedBalancePaise || 0;
+    const formattedBalance = formatRupees(confirmedPaise);
 
     navContainer.innerHTML = `
       <div class="nav-user-logged">
-        <a href="dashboard.html" class="nav-points-badge" title="Confirmed Points: ${confirmedPts} | Pending: ${pendingPts}">
-          <span class="points-icon" aria-hidden="true">🪙</span>
-          <span class="points-value">${confirmedPts.toLocaleString()} Pts</span>
-          <span class="points-inr">(${pointsToInr(confirmedPts)})</span>
+        <a href="dashboard.html" class="nav-balance-badge" title="Confirmed balance available to withdraw">
+          <span class="nav-balance-label">Balance</span>
+          <span class="nav-balance-amount">${formattedBalance}</span>
         </a>
-        <div class="nav-user-dropdown-wrap">
-          <button type="button" class="btn-user-profile" id="userMenuBtn" aria-label="User menu" aria-expanded="false">
+        <div class="user-dropdown-container">
+          <button type="button" class="btn-user-avatar" id="userMenuBtn" aria-label="Open user menu" aria-expanded="false">
             <span class="user-avatar-initial">${(user.displayName || "U").charAt(0).toUpperCase()}</span>
-            <span class="user-name-short">${(user.displayName || "Account").split(" ")[0]}</span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </button>
           <div class="user-dropdown-menu" id="userDropdownMenu">
             <div class="dropdown-header">
-              <span class="dropdown-user-name">${user.displayName || "User"}</span>
-              <span class="dropdown-user-email">${user.email || ""}</span>
-              <span class="dropdown-uid-tag">UID: ${user.uid.slice(0, 8)}...</span>
+              <span class="dropdown-user-name">${escapeHtml(user.displayName || "Account")}</span>
+              <span class="dropdown-user-email">${escapeHtml(user.email || "")}</span>
+              <span class="dropdown-uid-tag">UID: ${user.uid.slice(0, 10)}...</span>
             </div>
-            <hr class="dropdown-divider">
-            <a href="dashboard.html" class="dropdown-item">📊 Dashboard</a>
-            <a href="tasks.html" class="dropdown-item">🎯 Tasks & Offers</a>
-            <a href="withdraw.html" class="dropdown-item">💸 Withdraw (UPI)</a>
-            ${isOwner ? '<a href="admin.html" class="dropdown-item admin-link">⚡ Admin Panel</a>' : ''}
-            <hr class="dropdown-divider">
-            <button type="button" class="dropdown-item btn-signout-item" id="logoutBtn">🚪 Sign Out</button>
+            <div class="dropdown-divider"></div>
+            <a href="dashboard.html" class="dropdown-link">Wallet</a>
+            <a href="earn.html" class="dropdown-link">Earn</a>
+            <a href="withdraw.html" class="dropdown-link">Withdraw</a>
+            ${isOwner ? '<a href="admin.html" class="dropdown-link admin-nav-item">Admin Console</a>' : ''}
+            <div class="dropdown-divider"></div>
+            <button type="button" class="dropdown-link btn-signout-action" id="logoutBtn">Sign out</button>
           </div>
         </div>
       </div>
     `;
 
-    // Dropdown toggle
     const menuBtn = document.getElementById("userMenuBtn");
     const menu = document.getElementById("userDropdownMenu");
     const logoutBtn = document.getElementById("logoutBtn");
@@ -280,11 +232,11 @@ export function updateNavbarUI(user, userData) {
     if (menuBtn && menu) {
       menuBtn.addEventListener("click", (e) => {
         e.stopPropagation();
-        const expanded = menu.classList.toggle("show");
+        const expanded = menu.classList.toggle("is-open");
         menuBtn.setAttribute("aria-expanded", String(expanded));
       });
       document.addEventListener("click", () => {
-        menu.classList.remove("show");
+        menu.classList.remove("is-open");
         menuBtn.setAttribute("aria-expanded", "false");
       });
     }
@@ -294,8 +246,8 @@ export function updateNavbarUI(user, userData) {
     }
   } else {
     navContainer.innerHTML = `
-      <button type="button" class="btn-google-login" id="googleLoginBtn">
-        <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+      <button type="button" class="btn-signin-google" id="googleLoginBtn">
+        <svg class="google-icon" width="16" height="16" viewBox="0 0 24 24">
           <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
           <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
           <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
@@ -312,29 +264,25 @@ export function updateNavbarUI(user, userData) {
   }
 }
 
-/**
- * Setup Banner helper: Alerts owner if firebase-config.js is not yet filled in
- */
 function renderConfigBannerIfNeeded() {
   if (isFirebaseConfigured()) return;
-  const existing = document.getElementById("firebaseSetupBanner");
+  const existing = document.getElementById("configAlertBanner");
   if (existing) return;
 
-  const banner = document.createElement("aside");
-  banner.id = "firebaseSetupBanner";
-  banner.className = "setup-alert-banner";
+  const banner = document.createElement("div");
+  banner.id = "configAlertBanner";
+  banner.className = "alert-system-banner";
   banner.innerHTML = `
-    <div class="container banner-inner">
-      <span class="banner-icon">⚙️</span>
-      <div class="banner-text">
-        <strong>Setup Required:</strong> Firebase credentials are not yet configured. Please paste your Firebase web app keys into <code>firebase-config.js</code> to enable Google Sign-In and Firestore live points.
-      </div>
-      <a href="https://console.firebase.google.com/" target="_blank" rel="noopener noreferrer" class="btn-banner-action">Open Console</a>
+    <div class="container alert-banner-inner">
+      <span>Setup required: Please enter your Firebase web app keys in <code>firebase-config.js</code> to enable authentication and balance storage.</span>
+      <a href="https://console.firebase.google.com/" target="_blank" rel="noopener noreferrer" class="alert-banner-link">Console</a>
     </div>
   `;
   document.body.prepend(banner);
 }
 
-function showConfigNoticeModal() {
-  alert("Setup Notice:\n\nFirebase is not configured yet. To enable real Google Sign-In, please paste your Firebase Web App configuration inside 'firebase-config.js'.\n\nRefer to SETUP.md for simple instructions!");
+function escapeHtml(str) {
+  const div = document.createElement("div");
+  div.textContent = str;
+  return div.innerHTML;
 }
