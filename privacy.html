@@ -14,6 +14,7 @@
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
+  <!-- Header -->
   <header class="site-header">
     <div class="container header-inner">
       <a href="index.html" class="wordmark">AntiCash</a>
@@ -27,11 +28,26 @@
         </ul>
       </nav>
 
-      <div class="header-auth-slot" id="navUserArea">
-        <!-- Injected via auth.js -->
+      <div class="header-right-area">
+        <div class="header-auth-slot" id="navUserArea">
+          <div class="header-skeleton" aria-hidden="true"></div>
+        </div>
+        <button type="button" class="btn-mobile-nav" id="mobileNavToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobileNavDrawer">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
       </div>
     </div>
   </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-nav-drawer" id="mobileNavDrawer" aria-label="Mobile navigation">
+    <a href="earn.html" class="mobile-drawer-link">Earn</a>
+    <a href="dashboard.html" class="mobile-drawer-link">Wallet</a>
+    <a href="withdraw.html" class="mobile-drawer-link">Withdraw</a>
+    <a href="contact.html" class="mobile-drawer-link">Help</a>
+    <a href="terms.html" class="mobile-drawer-link">Terms</a>
+    <a href="privacy.html" class="mobile-drawer-link">Privacy</a>
+  </div>
 
   <main id="main-content" class="container prose-section">
     <h1 class="prose-title">Privacy Policy</h1>
@@ -84,10 +100,45 @@
     </div>
   </main>
 
+  <!-- Multi-column Footer -->
   <footer class="site-footer">
-    <div class="container footer-bottom-line" style="margin-top: 0; padding-top: 0; border-top: none;">
+    <div class="container footer-columns-grid">
+      <div class="footer-col-brand">
+        <span class="footer-brand">AntiCash</span>
+        <p class="footer-disclaimer" style="max-width: 340px;">
+          Direct UPI rewards for completing verified advertiser surveys and application offers in India.
+        </p>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Product</div>
+        <ul class="footer-col-links">
+          <li><a href="earn.html">Earn</a></li>
+          <li><a href="dashboard.html">Wallet</a></li>
+          <li><a href="withdraw.html">Withdraw</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Support</div>
+        <ul class="footer-col-links">
+          <li><a href="contact.html">Help</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Legal</div>
+        <ul class="footer-col-links">
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container footer-bottom-line">
       <span>AntiCash (anticash.tech).</span>
-      <span><a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a></span>
+      <span>Offers subject to advertiser availability. No guaranteed income.</span>
     </div>
   </footer>
 

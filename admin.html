@@ -12,6 +12,7 @@
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
+  <!-- Header -->
   <header class="site-header">
     <div class="container header-inner">
       <a href="index.html" class="wordmark">AntiCash</a>
@@ -24,11 +25,25 @@
         </ul>
       </nav>
 
-      <div class="header-auth-slot" id="navUserArea">
-        <!-- Injected via auth.js -->
+      <div class="header-right-area">
+        <div class="header-auth-slot" id="navUserArea">
+          <div class="header-skeleton" aria-hidden="true"></div>
+        </div>
+        <button type="button" class="btn-mobile-nav" id="mobileNavToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobileNavDrawer">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
       </div>
     </div>
   </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-nav-drawer" id="mobileNavDrawer" aria-label="Mobile navigation">
+    <a href="earn.html" class="mobile-drawer-link">Earn</a>
+    <a href="dashboard.html" class="mobile-drawer-link">Wallet</a>
+    <a href="withdraw.html" class="mobile-drawer-link">Withdraw</a>
+    <a href="admin.html" class="mobile-drawer-link">Admin</a>
+    <a href="contact.html" class="mobile-drawer-link">Help</a>
+  </div>
 
   <main id="main-content" class="container" style="padding-top: 2.5rem; padding-bottom: 5rem;">
     <div id="accessDeniedPanel" style="display: none; text-align: center; padding: 4rem 1rem;">
@@ -151,7 +166,7 @@
 
       async function loadAdminRecords() {
         if (!db) return;
-        tbody.innerHTML = `<tr><td colspan="7" class="empty-table-state">Loading records...</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="7" class="empty-table-state">Fetching withdrawals...</td></tr>`;
 
         try {
           const wRef = collection(db, "withdrawals");
@@ -160,106 +175,108 @@
 
           cachedWithdrawals = [];
           let pendingCount = 0;
-          let pendingPaiseTotal = 0;
+          let pendingTotal = 0;
           let paidCount = 0;
-          let paidPaiseTotal = 0;
+          let paidTotal = 0;
 
-          snap.forEach((d) => {
+          snap.forEach(d => {
             const data = d.data();
-            data.id = d.id;
-            cachedWithdrawals.push(data);
+            const w = { id: d.id, ...data };
+            cachedWithdrawals.push(w);
 
-            const amt = Number(data.amountPaise) || 0;
-            const st = (data.status || "pending").toLowerCase();
-
-            if (st === "pending") {
+            const amt = Number(w.amountPaise) || 0;
+            if (w.status === "pending") {
               pendingCount++;
-              pendingPaiseTotal += amt;
-            } else if (st === "paid") {
+              pendingTotal += amt;
+            } else if (w.status === "paid") {
               paidCount++;
-              paidPaiseTotal += amt;
+              paidTotal += amt;
             }
           });
 
-          document.getElementById("metricPendingAmount").textContent = formatRupees(pendingPaiseTotal);
-          document.getElementById("metricPendingCount").textContent = `${pendingCount} request${pendingCount === 1 ? '' : 's'} pending`;
-          document.getElementById("metricPaidAmount").textContent = formatRupees(paidPaiseTotal);
-          document.getElementById("metricPaidCount").textContent = `${paidCount} payout${paidCount === 1 ? '' : 's'} completed`;
+          document.getElementById("metricPendingAmount").textContent = formatRupees(pendingTotal);
+          document.getElementById("metricPendingCount").textContent = `${pendingCount} requests pending`;
+          document.getElementById("metricPaidAmount").textContent = formatRupees(paidTotal);
+          document.getElementById("metricPaidCount").textContent = `${paidCount} payouts completed`;
 
           renderTable();
         } catch (err) {
-          console.error("Failed to load admin records:", err);
-          tbody.innerHTML = `<tr><td colspan="7" class="empty-table-state" style="color: var(--status-rejected-text);">Error loading records: ${err.message}</td></tr>`;
+          console.warn("Error fetching admin records:", err);
+          tbody.innerHTML = `<tr><td colspan="7" class="empty-table-state">Failed to load records: ${escapeHtml(err.message)}</td></tr>`;
         }
       }
 
       function renderTable() {
         const filter = filterSelect.value;
-        const filtered = cachedWithdrawals.filter((w) => {
-          if (filter === "all") return true;
-          return (w.status || "pending").toLowerCase() === filter;
-        });
+        let list = cachedWithdrawals;
+        if (filter !== "all") {
+          list = cachedWithdrawals.filter(w => (w.status || "pending").toLowerCase() === filter);
+        }
 
-        if (filtered.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="7" class="empty-table-state">No matching withdrawal requests found.</td></tr>`;
+        if (list.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="7" class="empty-table-state">No matching withdrawal records.</td></tr>`;
           return;
         }
 
         let html = "";
-        filtered.forEach((w) => {
+        list.forEach(w => {
           const dateStr = w.createdAt?.toDate ? w.createdAt.toDate().toLocaleDateString("en-IN", {
-            day: "numeric", month: "short", hour: "2-digit", minute: "2-digit"
+            day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit"
           }) : "Recent";
           const statusKey = (w.status || "pending").toLowerCase();
           const amountFormatted = formatRupees(w.amountPaise || 0);
 
+          let actionButtons = "";
+          if (statusKey === "pending") {
+            actionButtons = `
+              <button type="button" class="btn-success btn-action-paid" data-id="${w.id}">Mark Paid</button>
+              <button type="button" class="btn-danger btn-action-reject" data-id="${w.id}">Reject</button>
+            `;
+          } else {
+            actionButtons = `<span style="font-size: 0.75rem; color: var(--color-text-tertiary);">Processed</span>`;
+          }
+
           html += `
             <tr>
               <td class="mono-cell">${dateStr}</td>
-              <td class="mono-cell" title="${w.id}">${w.id.slice(0, 8)}...</td>
-              <td class="mono-cell" title="${w.uid}">${(w.uid || "").slice(0, 8)}...</td>
-              <td class="mono-cell">${escapeHtml(w.upiId || "")}</td>
-              <td><span class="badge-status ${statusKey}">${escapeHtml(w.status || "pending")}</span></td>
+              <td class="mono-cell" title="${escapeHtml(w.id)}">${escapeHtml(w.id.slice(0, 8))}...</td>
+              <td class="mono-cell" title="${escapeHtml(w.uid || '')}">${escapeHtml((w.uid || '').slice(0, 8))}...</td>
+              <td class="mono-cell">${escapeHtml(w.upiId || '')}</td>
+              <td><span class="badge-status ${statusKey}">${escapeHtml(w.status || 'pending')}</span></td>
               <td style="text-align: right;" class="mono-cell">${amountFormatted}</td>
-              <td style="text-align: right;">
-                ${statusKey === "pending" ? `
-                  <button type="button" class="btn-success" onclick="window.markPaid('${w.id}')">Paid</button>
-                  <button type="button" class="btn-danger" style="margin-left: 0.25rem;" onclick="window.rejectWithdrawal('${w.id}')">Reject</button>
-                ` : `<span style="font-size: 0.75rem; color: var(--color-text-tertiary);">Processed</span>`}
-              </td>
+              <td style="text-align: right; white-space: nowrap;">${actionButtons}</td>
             </tr>
           `;
         });
 
         tbody.innerHTML = html;
+        bindActions();
       }
 
-      window.markPaid = async (withdrawalId) => {
-        if (!confirm(`Confirm that you have transferred funds via UPI for request ${withdrawalId}?`)) return;
-        try {
-          if (!functions) throw new Error("Functions backend not ready.");
-          const processFn = httpsCallable(functions, "processWithdrawalAdmin");
-          await processFn({ withdrawalId, action: "paid" });
-          alert("Marked as paid.");
-          loadAdminRecords();
-        } catch (err) {
-          alert(`Error: ${err.message}`);
-        }
-      };
+      function bindActions() {
+        document.querySelectorAll(".btn-action-paid").forEach(btn => {
+          btn.addEventListener("click", () => handleStatusChange(btn.dataset.id, "paid"));
+        });
+        document.querySelectorAll(".btn-action-reject").forEach(btn => {
+          btn.addEventListener("click", () => handleStatusChange(btn.dataset.id, "rejected"));
+        });
+      }
 
-      window.rejectWithdrawal = async (withdrawalId) => {
-        const reason = prompt("Enter reason for rejection (paise will be refunded to user balance):", "Invalid UPI address");
-        if (reason === null) return;
+      async function handleStatusChange(withdrawalId, targetStatus) {
+        if (!confirm(`Are you sure you want to mark withdrawal ${withdrawalId} as ${targetStatus.toUpperCase()}?`)) {
+          return;
+        }
+
         try {
-          if (!functions) throw new Error("Functions backend not ready.");
+          if (!functions) throw new Error("Functions backend not connected.");
           const processFn = httpsCallable(functions, "processWithdrawalAdmin");
-          await processFn({ withdrawalId, action: "reject", reason });
-          alert("Withdrawal rejected and funds refunded to user balance.");
+          await processFn({ withdrawalId, action: targetStatus });
+          alert(`Withdrawal marked as ${targetStatus}.`);
           loadAdminRecords();
         } catch (err) {
-          alert(`Error: ${err.message}`);
+          alert(`Action failed: ${err.message}`);
         }
-      };
+      }
 
       // Export Withdrawals CSV
       exportWithdrawalsBtn.addEventListener("click", () => {
@@ -268,80 +285,55 @@
           return;
         }
 
-        const headers = ["Date", "Withdrawal ID", "User UID", "UPI ID", "Amount (Paise)", "Amount (INR)", "Status"];
-        const rows = cachedWithdrawals.map((w) => {
+        const headers = ["Withdrawal_ID", "Date", "UID", "UPI_ID", "Status", "Amount_INR"];
+        const rows = cachedWithdrawals.map(w => {
           const dateStr = w.createdAt?.toDate ? w.createdAt.toDate().toISOString() : "";
           const inr = ((Number(w.amountPaise) || 0) / 100).toFixed(2);
-          return [
-            `"${dateStr}"`,
-            `"${w.id || ""}"`,
-            `"${w.uid || ""}"`,
-            `"${w.upiId || ""}"`,
-            w.amountPaise || 0,
-            inr,
-            `"${w.status || "pending"}"`
-          ].join(",");
+          return `"${w.id}","${dateStr}","${w.uid || ''}","${w.upiId || ''}","${w.status || 'pending'}","${inr}"`;
         });
 
-        downloadCsv(`anticash_withdrawals_${new Date().toISOString().split("T")[0]}.csv`, [headers.join(","), ...rows].join("\n"));
+        downloadCsvFile(`anticash-withdrawals-${new Date().toISOString().split("T")[0]}.csv`, [headers.join(","), ...rows].join("\r\n"));
       });
 
       // Export Transactions CSV
       exportTransactionsBtn.addEventListener("click", async () => {
+        exportTransactionsBtn.disabled = true;
+        exportTransactionsBtn.textContent = "Exporting...";
+
         try {
-          exportTransactionsBtn.disabled = true;
-          exportTransactionsBtn.textContent = "Exporting...";
-
           const txGroup = collectionGroup(db, "transactions");
-          const snap = await getDocs(txGroup);
+          const snap = await getDocs(query(txGroup, orderBy("createdAt", "desc")));
 
-          if (snap.empty) {
-            alert("No transactions found.");
-            return;
-          }
-
-          const headers = ["Date", "Transaction ID", "User UID", "Type", "Partner", "Amount (Paise)", "Amount (INR)", "Status", "Source IP"];
+          const headers = ["Transaction_ID", "Date", "Description", "Network", "Status", "Amount_INR"];
           const rows = [];
-
-          snap.forEach((doc) => {
-            const tx = doc.data();
+          snap.forEach(d => {
+            const tx = d.data();
             const dateStr = tx.createdAt?.toDate ? tx.createdAt.toDate().toISOString() : "";
-            const paise = Number(tx.amountPaise) || 0;
-            const inr = (paise / 100).toFixed(2);
-            const pathParts = doc.ref.path.split("/");
-            const userUid = pathParts[1] || "";
-
-            rows.push([
-              `"${dateStr}"`,
-              `"${doc.id}"`,
-              `"${userUid}"`,
-              `"${tx.type || "earn"}"`,
-              `"${tx.network || tx.method || ""}"`,
-              paise,
-              inr,
-              `"${tx.status || "pending"}"`,
-              `"${tx.sourceIp || ""}"`
-            ].join(","));
+            const desc = (tx.description || tx.type || "").replace(/"/g, '""');
+            const net = (tx.network || tx.method || "").replace(/"/g, '""');
+            const inr = ((Number(tx.amountPaise) || 0) / 100).toFixed(2);
+            rows.push(`"${d.id}","${dateStr}","${desc}","${net}","${tx.status || ''}","${inr}"`);
           });
 
-          downloadCsv(`anticash_all_transactions_${new Date().toISOString().split("T")[0]}.csv`, [headers.join(","), ...rows].join("\n"));
+          downloadCsvFile(`anticash-all-transactions-${new Date().toISOString().split("T")[0]}.csv`, [headers.join(","), ...rows].join("\r\n"));
         } catch (err) {
-          alert(`Error exporting transactions: ${err.message}`);
+          alert(`Export failed: ${err.message}`);
         } finally {
           exportTransactionsBtn.disabled = false;
           exportTransactionsBtn.textContent = "Transactions CSV";
         }
       });
 
-      function downloadCsv(filename, content) {
+      function downloadCsvFile(filename, content) {
         const blob = new Blob([content], { type: "text/csv;charset=utf-8;" });
         const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.setAttribute("href", url);
-        link.setAttribute("download", filename);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
       }
 
       function escapeHtml(str) {

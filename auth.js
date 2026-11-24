@@ -1,6 +1,7 @@
 /**
  * AntiCash Authentication and Firestore State Manager
- * Zero emojis, real rupees, modular Firebase v10 SDK.
+ * Single source of truth via onAuthStateChanged.
+ * Zero emojis, clean neutral skeleton loading states.
  */
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
@@ -44,6 +45,8 @@ if (isFirebaseConfigured()) {
 
 export { app, auth, db, functions };
 
+export let isAuthResolved = false;
+export let isFirestoreLoaded = false;
 export let currentUser = null;
 export let currentUserData = {
   confirmedBalancePaise: 0,
@@ -58,15 +61,15 @@ const authCallbacks = [];
 
 export function onUserChange(callback) {
   authCallbacks.push(callback);
-  if (currentUser) {
-    callback(currentUser, currentUserData);
+  if (isAuthResolved) {
+    callback(currentUser, currentUserData, isFirestoreLoaded);
   }
 }
 
-function notifyCallbacks() {
+function notifyCallbacks(isLoaded) {
   authCallbacks.forEach((cb) => {
     try {
-      cb(currentUser, currentUserData);
+      cb(currentUser, currentUserData, isLoaded);
     } catch (e) {
       console.error("Error in auth callback:", e);
     }
@@ -86,6 +89,7 @@ export async function loginWithGoogle() {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
     
+    // Ensure user document exists in Firestore via allowed schema
     const userRef = doc(db, "users", user.uid);
     const snap = await getDoc(userRef);
     
@@ -120,14 +124,25 @@ export async function logoutUser() {
 }
 
 export function initAuth() {
-  renderConfigBannerIfNeeded();
+  setupMobileDrawer();
+  highlightActiveNavLinks();
+
+  const navContainer = document.getElementById("navUserArea");
+  if (navContainer) {
+    navContainer.innerHTML = `<div class="header-skeleton" aria-hidden="true"></div>`;
+  }
 
   if (!auth) {
-    updateNavbarUI(null, null);
+    isAuthResolved = true;
+    isFirestoreLoaded = true;
+    updateNavbarUI(null, null, true);
+    notifyCallbacks(true);
     return;
   }
 
+  // Single source of truth
   onAuthStateChanged(auth, async (user) => {
+    isAuthResolved = true;
     currentUser = user;
     
     if (userDocUnsubscribe) {
@@ -136,25 +151,56 @@ export function initAuth() {
     }
 
     if (user) {
+      isFirestoreLoaded = false;
+      // Show loading skeleton in navbar while user doc is loading
+      updateNavbarUI(user, null, false);
+      notifyCallbacks(false);
+
       const userRef = doc(db, "users", user.uid);
-      userDocUnsubscribe = onSnapshot(userRef, (snap) => {
-        if (snap.exists()) {
-          const data = snap.data();
+      userDocUnsubscribe = onSnapshot(userRef, async (snap) => {
+        if (!snap.exists()) {
+          // Initialize first-time user document through allowed path
+          try {
+            await setDoc(userRef, {
+              email: user.email || "",
+              displayName: user.displayName || "User",
+              createdAt: serverTimestamp(),
+              confirmedBalancePaise: 0,
+              pendingBalancePaise: 0,
+              banned: false
+            });
+          } catch (err) {
+            console.warn("User document creation error:", err);
+          }
+          currentUserData = {
+            confirmedBalancePaise: 0,
+            pendingBalancePaise: 0,
+            banned: false,
+            email: user.email || "",
+            displayName: user.displayName || "User"
+          };
+        } else {
           currentUserData = {
             ...currentUserData,
-            ...data
+            ...snap.data()
           };
           
           if (currentUserData.banned) {
-            alert("Your account has been suspended for violating terms of service (such as proxy usage or multiple accounts). Payouts and offer access are disabled.");
+            alert("Your account has been suspended for violating terms of service. Payouts and offer access are disabled.");
           }
         }
-        updateNavbarUI(currentUser, currentUserData);
-        notifyCallbacks();
+
+        isFirestoreLoaded = true;
+        updateNavbarUI(currentUser, currentUserData, true);
+        notifyCallbacks(true);
       }, (error) => {
         console.warn("Firestore user sync error:", error);
+        isFirestoreLoaded = true;
+        updateNavbarUI(currentUser, currentUserData, true);
+        notifyCallbacks(true);
       });
     } else {
+      isFirestoreLoaded = true;
       currentUserData = {
         confirmedBalancePaise: 0,
         pendingBalancePaise: 0,
@@ -162,8 +208,8 @@ export function initAuth() {
         email: "",
         displayName: ""
       };
-      updateNavbarUI(null, null);
-      notifyCallbacks();
+      updateNavbarUI(null, null, true);
+      notifyCallbacks(true);
     }
   });
 }
@@ -180,17 +226,24 @@ export function requireAuth(options = { requireAdmin: false }) {
 
     if (options.requireAdmin) {
       if (user.uid !== APP_CONFIG.ownerUid && APP_CONFIG.ownerUid !== "EDIT_ME_OWNER_UID") {
-        alert("Access restricted to owner account.");
+        alert("Access restricted to administrator account.");
         window.location.href = "dashboard.html";
       }
     }
   });
 }
 
-export function updateNavbarUI(user, userData) {
+export function updateNavbarUI(user, userData, isLoaded) {
   const navContainer = document.getElementById("navUserArea");
   if (!navContainer) return;
 
+  // 1. Still resolving auth or firestore
+  if (!isAuthResolved || (user && !isLoaded)) {
+    navContainer.innerHTML = `<div class="header-skeleton" aria-hidden="true"></div>`;
+    return;
+  }
+
+  // 2. User is signed in and document loaded
   if (user) {
     const isOwner = user.uid === APP_CONFIG.ownerUid || APP_CONFIG.ownerUid === "EDIT_ME_OWNER_UID";
     const confirmedPaise = userData?.confirmedBalancePaise || 0;
@@ -245,6 +298,7 @@ export function updateNavbarUI(user, userData) {
       logoutBtn.addEventListener("click", () => logoutUser());
     }
   } else {
+    // 3. User is signed out
     navContainer.innerHTML = `
       <button type="button" class="btn-signin-google" id="googleLoginBtn">
         <svg class="google-icon" width="16" height="16" viewBox="0 0 24 24">
@@ -264,21 +318,50 @@ export function updateNavbarUI(user, userData) {
   }
 }
 
-function renderConfigBannerIfNeeded() {
-  if (isFirebaseConfigured()) return;
-  const existing = document.getElementById("configAlertBanner");
-  if (existing) return;
+/**
+ * Add active-page underline on current nav link
+ */
+function highlightActiveNavLinks() {
+  const currentPath = window.location.pathname.split("/").pop() || "index.html";
+  
+  const links = document.querySelectorAll(".nav-menu-link, .mobile-drawer-link");
+  links.forEach(link => {
+    const href = link.getAttribute("href");
+    if (href === currentPath || (currentPath === "" && href === "index.html")) {
+      link.classList.add("active");
+    } else {
+      link.classList.remove("active");
+    }
+  });
+}
 
-  const banner = document.createElement("div");
-  banner.id = "configAlertBanner";
-  banner.className = "alert-system-banner";
-  banner.innerHTML = `
-    <div class="container alert-banner-inner">
-      <span>Setup required: Please enter your Firebase web app keys in <code>firebase-config.js</code> to enable authentication and balance storage.</span>
-      <a href="https://console.firebase.google.com/" target="_blank" rel="noopener noreferrer" class="alert-banner-link">Console</a>
-    </div>
-  `;
-  document.body.prepend(banner);
+/**
+ * Mobile navigation drawer handler
+ */
+function setupMobileDrawer() {
+  const toggleBtn = document.getElementById("mobileNavToggle");
+  const drawer = document.getElementById("mobileNavDrawer");
+  if (!toggleBtn || !drawer) return;
+
+  toggleBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const isOpen = drawer.classList.toggle("is-open");
+    toggleBtn.setAttribute("aria-expanded", String(isOpen));
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!drawer.contains(e.target) && e.target !== toggleBtn) {
+      drawer.classList.remove("is-open");
+      toggleBtn.setAttribute("aria-expanded", "false");
+    }
+  });
+
+  drawer.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+      drawer.classList.remove("is-open");
+      toggleBtn.setAttribute("aria-expanded", "false");
+    });
+  });
 }
 
 function escapeHtml(str) {

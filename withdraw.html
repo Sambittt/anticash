@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Withdraw Funds — AntiCash</title>
+  <meta name="description" content="Request an Indian UPI withdrawal from your confirmed AntiCash earnings.">
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <meta name="theme-color" content="#F7F5F0">
@@ -12,6 +13,7 @@
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
+  <!-- Header -->
   <header class="site-header">
     <div class="container header-inner">
       <a href="index.html" class="wordmark">AntiCash</a>
@@ -25,14 +27,30 @@
         </ul>
       </nav>
 
-      <div class="header-auth-slot" id="navUserArea">
-        <!-- Injected via auth.js -->
+      <div class="header-right-area">
+        <div class="header-auth-slot" id="navUserArea">
+          <div class="header-skeleton" aria-hidden="true"></div>
+        </div>
+        <button type="button" class="btn-mobile-nav" id="mobileNavToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobileNavDrawer">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
       </div>
     </div>
   </header>
 
+  <!-- Mobile Drawer -->
+  <div class="mobile-nav-drawer" id="mobileNavDrawer" aria-label="Mobile navigation">
+    <a href="earn.html" class="mobile-drawer-link">Earn</a>
+    <a href="dashboard.html" class="mobile-drawer-link">Wallet</a>
+    <a href="withdraw.html" class="mobile-drawer-link">Withdraw</a>
+    <a href="contact.html" class="mobile-drawer-link">Help</a>
+    <a href="terms.html" class="mobile-drawer-link">Terms</a>
+    <a href="privacy.html" class="mobile-drawer-link">Privacy</a>
+  </div>
+
   <main id="main-content" class="container" style="padding-top: 2.5rem; padding-bottom: 4rem;">
     <div style="max-width: 620px; margin: 0 auto;">
+      
       <div style="margin-bottom: 1.75rem;">
         <h1 style="font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.25rem;">Withdraw funds</h1>
         <p style="color: var(--color-text-secondary); font-size: 0.9375rem;">
@@ -42,11 +60,28 @@
 
       <!-- Current Balance Card -->
       <div class="card" style="margin-bottom: 1.5rem; padding: 1.25rem;">
-        <div style="display: flex; justify-content: space-between; align-items: baseline;">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem;">
           <span style="font-size: 0.8125rem; font-weight: 600; color: var(--color-text-secondary); text-transform: uppercase;">Confirmed balance</span>
-          <span style="font-size: 0.8125rem; color: var(--color-text-secondary);">Minimum withdrawal: ₹300.00</span>
+          <span style="font-size: 0.8125rem; color: var(--color-text-secondary);">Minimum threshold: ₹300.00</span>
         </div>
-        <div style="font-family: var(--font-mono); font-size: 2rem; font-weight: 600; margin-top: 0.25rem;" id="withdrawConfirmedDisplay">₹0.00</div>
+        <div style="font-family: var(--font-mono); font-size: 2rem; font-weight: 600; margin-top: 0.25rem;" id="withdrawConfirmedDisplay">
+          <span class="skeleton-figure"></span>
+        </div>
+      </div>
+
+      <!-- Threshold Notice with Progress Bar (Shown when balance is under ₹300) -->
+      <div class="notice notice-warning" id="thresholdNotice" style="display: none; margin-top: 0; margin-bottom: 1.5rem;">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem;">
+          <strong style="color: var(--color-text-main);">Minimum withdrawal requirement</strong>
+          <span style="font-family: var(--font-mono); font-size: 0.8125rem; font-weight: 600;" id="thresholdFractionText">₹0.00 of ₹300.00</span>
+        </div>
+        <div class="progress-container" style="margin: 0 0 0.75rem 0;">
+          <div class="progress-fill" id="thresholdProgressBar" style="width: 0%;"></div>
+        </div>
+        <p style="font-size: 0.8125rem; color: var(--color-text-secondary); margin-bottom: 0.75rem;" id="thresholdNoticeMsg">
+          You need ₹300.00 confirmed balance to request a withdrawal. Complete offers on the Earn page to reach the threshold.
+        </p>
+        <a href="earn.html" class="btn-secondary btn-sm">Find offers on Earn page</a>
       </div>
 
       <div id="alertBox" class="alert-box"></div>
@@ -54,51 +89,53 @@
       <!-- Withdrawal Form -->
       <div class="card">
         <form id="withdrawForm" novalidate>
-          <div class="form-group">
-            <label for="upiInput" class="form-label">UPI ID (Virtual Payment Address)</label>
-            <input 
-              type="text" 
-              id="upiInput" 
-              class="form-input" 
-              placeholder="name@bank or 9876543210@paytm" 
-              autocomplete="off"
-              required
-            >
-            <span class="form-helper">Enter a valid UPI address. Funds sent to an incorrect address cannot be recalled.</span>
-          </div>
-
-          <div class="form-group">
-            <label for="amountInput" class="form-label">Withdrawal amount (in Rupees)</label>
-            <div style="display: flex; gap: 0.5rem;">
+          <fieldset id="withdrawFieldset" style="border: none; padding: 0; margin: 0;">
+            <div class="form-group">
+              <label for="upiInput" class="form-label">UPI ID (Virtual Payment Address)</label>
               <input 
-                type="number" 
-                id="amountInput" 
+                type="text" 
+                id="upiInput" 
                 class="form-input" 
-                min="300" 
-                step="1" 
-                placeholder="Minimum 300" 
+                placeholder="name@bank or 9876543210@paytm" 
+                autocomplete="off"
                 required
               >
-              <button type="button" class="btn-secondary btn-sm" id="btnMaxWithdraw" style="white-space: nowrap;">Max</button>
+              <span class="form-helper">Enter an active Indian UPI ID. Funds sent to an incorrect address cannot be reversed.</span>
             </div>
-            <span class="form-helper">Minimum threshold is ₹300.00.</span>
-          </div>
 
-          <div class="form-group" style="margin-top: 1.25rem;">
-            <label style="display: flex; align-items: flex-start; gap: 0.5rem; cursor: pointer; font-size: 0.875rem; color: var(--color-text-secondary);">
-              <input type="checkbox" id="confirmCheckbox" style="margin-top: 0.2rem;" required>
-              <span>I confirm that this UPI ID belongs to me, is active, and is spelled correctly.</span>
-            </label>
-          </div>
+            <div class="form-group">
+              <label for="amountInput" class="form-label">Withdrawal amount (in Rupees)</label>
+              <div style="display: flex; gap: 0.5rem;">
+                <input 
+                  type="number" 
+                  id="amountInput" 
+                  class="form-input" 
+                  min="300" 
+                  step="1" 
+                  placeholder="Minimum 300" 
+                  required
+                >
+                <button type="button" class="btn-secondary btn-sm" id="btnMaxWithdraw" style="white-space: nowrap;">Max</button>
+              </div>
+              <span class="form-helper">Minimum withdrawal amount is ₹300.00.</span>
+            </div>
 
-          <button type="submit" class="btn-primary" id="btnSubmitWithdraw" style="width: 100%; margin-top: 0.75rem;">
-            <span>Submit withdrawal request</span>
-          </button>
+            <div class="form-group" style="margin-top: 1.25rem;">
+              <label style="display: flex; align-items: flex-start; gap: 0.5rem; cursor: pointer; font-size: 0.875rem; color: var(--color-text-secondary);">
+                <input type="checkbox" id="confirmCheckbox" style="margin-top: 0.2rem;" required>
+                <span>I confirm that this UPI ID belongs to me, is active, and is spelled correctly.</span>
+              </label>
+            </div>
+
+            <button type="submit" class="btn-primary" id="btnSubmitWithdraw" style="width: 100%; margin-top: 0.75rem;">
+              <span>Submit withdrawal request</span>
+            </button>
+          </fieldset>
         </form>
       </div>
 
       <!-- Past Withdrawals Table -->
-      <div style="margin-top: 3rem;">
+      <div style="margin-top: 3.5rem;">
         <h2 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 0.75rem;">Past withdrawal requests</h2>
         <div class="table-wrap">
           <table class="statement-table" aria-label="Withdrawal history table">
@@ -122,16 +159,51 @@
     </div>
   </main>
 
+  <!-- Multi-column Footer -->
   <footer class="site-footer">
-    <div class="container footer-bottom-line" style="margin-top: 0; padding-top: 0; border-top: none;">
+    <div class="container footer-columns-grid">
+      <div class="footer-col-brand">
+        <span class="footer-brand">AntiCash</span>
+        <p class="footer-disclaimer" style="max-width: 340px;">
+          Direct UPI rewards for completing verified advertiser surveys and application offers in India.
+        </p>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Product</div>
+        <ul class="footer-col-links">
+          <li><a href="earn.html">Earn</a></li>
+          <li><a href="dashboard.html">Wallet</a></li>
+          <li><a href="withdraw.html">Withdraw</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Support</div>
+        <ul class="footer-col-links">
+          <li><a href="contact.html">Help</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Legal</div>
+        <ul class="footer-col-links">
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container footer-bottom-line">
       <span>AntiCash (anticash.tech).</span>
-      <span><a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a></span>
+      <span>Offers subject to advertiser availability. No guaranteed income.</span>
     </div>
   </footer>
 
   <script type="module">
     import { initAuth, requireAuth, onUserChange, db, functions } from "./auth.js";
-    import { formatRupees, MIN_WITHDRAWAL_PAISE } from "./app-config.js";
+    import { formatRupees, getWithdrawalProgress, MIN_WITHDRAWAL_PAISE } from "./app-config.js";
     import { collection, query, where, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
     import { httpsCallable } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-functions.js";
 
@@ -140,6 +212,12 @@
       requireAuth();
 
       const balanceDisplay = document.getElementById("withdrawConfirmedDisplay");
+      const thresholdNotice = document.getElementById("thresholdNotice");
+      const thresholdFractionText = document.getElementById("thresholdFractionText");
+      const thresholdProgressBar = document.getElementById("thresholdProgressBar");
+      const thresholdNoticeMsg = document.getElementById("thresholdNoticeMsg");
+      const fieldset = document.getElementById("withdrawFieldset");
+
       const upiInput = document.getElementById("upiInput");
       const amountInput = document.getElementById("amountInput");
       const btnMax = document.getElementById("btnMaxWithdraw");
@@ -152,11 +230,37 @@
       let userConfirmedPaise = 0;
       let currentUid = null;
 
-      onUserChange((user, userData) => {
+      onUserChange((user, userData, isLoaded) => {
         if (!user) return;
         currentUid = user.uid;
+
+        if (!isLoaded) {
+          // Wait for firestore doc before rendering figures
+          return;
+        }
+
         userConfirmedPaise = Number(userData?.confirmedBalancePaise) || 0;
         balanceDisplay.textContent = formatRupees(userConfirmedPaise);
+
+        // Progress and Disabled State handling
+        const prog = getWithdrawalProgress(userConfirmedPaise);
+        thresholdFractionText.textContent = `${prog.currentFormatted} of ${prog.targetFormatted}`;
+        thresholdProgressBar.style.width = `${prog.percent}%`;
+
+        if (!prog.isReady) {
+          thresholdNotice.style.display = "block";
+          thresholdNoticeMsg.textContent = `You currently have ${prog.currentFormatted}. You need ${prog.formattedNeeded} more confirmed balance to submit a withdrawal request.`;
+          fieldset.disabled = true;
+          submitBtn.disabled = true;
+        } else {
+          thresholdNotice.style.display = "none";
+          fieldset.disabled = false;
+          submitBtn.disabled = false;
+          const maxInr = Math.floor(userConfirmedPaise / 100);
+          if (!amountInput.value) {
+            amountInput.value = maxInr;
+          }
+        }
 
         loadPastWithdrawals(user.uid);
       });
@@ -215,6 +319,9 @@
             amountPaise: requestedPaise
           });
 
+          // Remember that user has configured UPI
+          localStorage.setItem("anticash_upi_configured", "true");
+
           showAlert(`Withdrawal request for ${formatRupees(requestedPaise)} submitted. Your payout will be reviewed within 24 to 48 business hours.`, false);
           form.reset();
           if (currentUid) loadPastWithdrawals(currentUid);
@@ -247,6 +354,9 @@
             tbody.innerHTML = `<tr><td colspan="4" class="empty-table-state">No past requests recorded.</td></tr>`;
             return;
           }
+
+          // User has past withdrawals
+          localStorage.setItem("anticash_upi_configured", "true");
 
           let html = "";
           snap.forEach((doc) => {
