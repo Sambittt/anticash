@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Admin Dashboard — AntiCash</title>
+  <meta name="robots" content="noindex, nofollow">
+
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="theme-color" content="#07090e">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo" aria-label="AntiCash Homepage">
+        <span class="brand-icon">
+          <svg width="28" height="28" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="100" height="100" rx="24" fill="#111827" stroke="#1e293b" stroke-width="2"/>
+            <path d="M 28 72 L 47 25 C 48 22.5 52 22.5 53 25 L 72 72" stroke="#00f5a0" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M 33 53 L 67 53" stroke="#00d2ff" stroke-width="6" stroke-linecap="round" />
+          </svg>
+        </span>
+        <span>Anti<span class="brand-text-accent">Cash</span></span>
+        <span class="brand-badge" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border-color: rgba(56, 189, 248, 0.3);">Admin</span>
+      </a>
+
+      <nav aria-label="Primary Navigation">
+        <ul class="nav-links">
+          <li><a href="dashboard.html" class="nav-link">User Dashboard</a></li>
+          <li><a href="tasks.html" class="nav-link">Tasks</a></li>
+          <li><a href="admin.html" class="nav-link active">Admin Management</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-auth-area" id="navUserArea">
+        <!-- Injected via auth.js -->
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" class="container" style="padding-top: 2.5rem; padding-bottom: 5rem;">
+    
+    <div id="adminAccessDenied" style="display: none; text-align: center; padding: 5rem 1rem;">
+      <h1 style="color: #f87171; font-size: 2rem; margin-bottom: 1rem;">⛔ Access Denied</h1>
+      <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto 1.5rem;">
+        This page is restricted to the site owner. Please sign in with the Google Account whose UID matches <code>APP_CONFIG.ownerUid</code> in <code>app-config.js</code>.
+      </p>
+      <a href="dashboard.html" class="btn-primary">Return to Dashboard</a>
+    </div>
+
+    <div id="adminContent" style="display: block;">
+      <header style="margin-bottom: 2rem;">
+        <h1 style="font-size: clamp(1.8rem, 4vw, 2.4rem); font-weight: 800; margin-bottom: 0.35rem;">
+          Payouts & Accounting Console
+        </h1>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">
+          Review member UPI withdrawal requests, mark transfers paid or rejected, and export tax records.
+        </p>
+      </header>
+
+      <!-- Metric Cards -->
+      <div class="stats-grid" style="margin-bottom: 2rem;">
+        <article class="stat-card">
+          <span class="stat-label">Pending Payouts</span>
+          <div class="stat-value" id="adminPendingCount">0</div>
+          <div class="stat-inr" id="adminPendingInr">₹0.00</div>
+          <p class="stat-desc">Requests awaiting your review and UPI disbursement.</p>
+        </article>
+        <article class="stat-card">
+          <span class="stat-label">Total Completed Payouts</span>
+          <div class="stat-value" id="adminPaidCount">0</div>
+          <div class="stat-inr" id="adminPaidInr">₹0.00</div>
+          <p class="stat-desc">Cumulative disbursements processed to date.</p>
+        </article>
+        <article class="stat-card">
+          <span class="stat-label">Tax / Accounting Export</span>
+          <div class="stat-value" style="font-size: 1.5rem; margin: 0.5rem 0;">CSV Reports</div>
+          <p class="stat-desc">Download formatted spreadsheets for your annual financial records.</p>
+        </article>
+      </div>
+
+      <!-- Action Bar with CSV Export -->
+      <div class="admin-actions-bar">
+        <div>
+          <h2 style="font-size: 1.35rem; font-weight: 800;">Withdrawal Requests</h2>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Real-time list from <code>withdrawals</code> collection.</p>
+        </div>
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+          <button type="button" class="btn-csv" id="btnExportWithdrawals">
+            <span>📥 Export Withdrawals CSV</span>
+          </button>
+          <button type="button" class="btn-csv" id="btnExportTransactions">
+            <span>📥 Export Transactions CSV</span>
+          </button>
+          <button type="button" class="btn-secondary btn-sm" id="btnRefreshAdmin">
+            <span>🔄 Refresh</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Withdrawals Management Table -->
+      <div class="table-responsive">
+        <table class="data-table" aria-label="Admin withdrawals list">
+          <thead>
+            <tr>
+              <th scope="col">Date</th>
+              <th scope="col">Withdrawal ID</th>
+              <th scope="col">User UID</th>
+              <th scope="col">Method</th>
+              <th scope="col">UPI ID / Destination</th>
+              <th scope="col">Points</th>
+              <th scope="col">INR (₹)</th>
+              <th scope="col">Status</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="adminWithdrawalsTableBody">
+            <tr>
+              <td colspan="9" class="empty-state">
+                <p>Loading withdrawal requests...</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <p>© <span id="currentYear">2026</span> AntiCash Owner Console.</p>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { initAuth, requireAuth, onUserChange, db, functions } from "./auth.js";
+    import { APP_CONFIG, pointsToInr } from "./app-config.js";
+    import { collection, query, orderBy, getDocs, doc, updateDoc, serverTimestamp, collectionGroup } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { httpsCallable } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-functions.js";
+
+    document.addEventListener("DOMContentLoaded", () => {
+      initAuth();
+      requireAuth({ requireAdmin: true });
+
+      const year = document.getElementById("currentYear");
+      if (year) year.textContent = new Date().getFullYear();
+
+      const adminContent = document.getElementById("adminContent");
+      const accessDenied = document.getElementById("adminAccessDenied");
+      const tbody = document.getElementById("adminWithdrawalsTableBody");
+      const refreshBtn = document.getElementById("btnRefreshAdmin");
+      const exportWithdrawalsBtn = document.getElementById("btnExportWithdrawals");
+      const exportTransactionsBtn = document.getElementById("btnExportTransactions");
+
+      let allWithdrawalsCache = [];
+
+      onUserChange((user) => {
+        if (!user) return;
+
+        // Check if user is owner
+        if (APP_CONFIG.ownerUid === "EDIT_ME_OWNER_UID") {
+          console.warn("Owner UID not set yet. Displaying setup guidance.");
+        }
+
+        if (user.uid !== APP_CONFIG.ownerUid && APP_CONFIG.ownerUid !== "EDIT_ME_OWNER_UID") {
+          adminContent.style.display = "none";
+          accessDenied.style.display = "block";
+          return;
+        }
+
+        loadAdminWithdrawals();
+      });
+
+      if (refreshBtn) refreshBtn.addEventListener("click", () => loadAdminWithdrawals());
+
+      async function loadAdminWithdrawals() {
+        if (!db) return;
+        tbody.innerHTML = `<tr><td colspan="9" class="empty-state"><p>Loading records...</p></td></tr>`;
+
+        try {
+          const wRef = collection(db, "withdrawals");
+          const q = query(wRef, orderBy("createdAt", "desc"));
+          const snap = await getDocs(q);
+
+          allWithdrawalsCache = [];
+          let pendingCount = 0;
+          let pendingInrTotal = 0;
+          let paidCount = 0;
+          let paidInrTotal = 0;
+
+          if (snap.empty) {
+            tbody.innerHTML = `<tr><td colspan="9" class="empty-state"><p>No withdrawal requests found in database.</p></td></tr>`;
+            updateSummaryCounters(0, 0, 0, 0);
+            return;
+          }
+
+          let html = "";
+          snap.forEach((d) => {
+            const data = d.data();
+            data.id = d.id;
+            allWithdrawalsCache.push(data);
+
+            const pts = Number(data.points) || 0;
+            const inr = pts / APP_CONFIG.pointsPerInr;
+            const status = (data.status || "pending").toLowerCase();
+
+            if (status === "pending") {
+              pendingCount++;
+              pendingInrTotal += inr;
+            } else if (status === "paid") {
+              paidCount++;
+              paidInrTotal += inr;
+            }
+
+            const dateStr = data.createdAt?.toDate ? data.createdAt.toDate().toLocaleDateString("en-IN", {
+              day: "numeric", month: "short", hour: "2-digit", minute: "2-digit"
+            }) : "N/A";
+            const destination = data.upiId || data.recipientEmail || data.giftCardType || "UPI";
+
+            html += `
+              <tr>
+                <td>${dateStr}</td>
+                <td><code style="font-size: 0.75rem;">${d.id.slice(0, 8)}...</code></td>
+                <td><code style="font-size: 0.75rem;">${(data.uid || "").slice(0, 8)}...</code></td>
+                <td>${(data.method || "upi").toUpperCase()}</td>
+                <td><strong>${destination}</strong></td>
+                <td>${pts.toLocaleString()}</td>
+                <td>${pointsToInr(pts)}</td>
+                <td><span class="badge-status ${status}">${data.status || "pending"}</span></td>
+                <td>
+                  ${status === "pending" ? `
+                    <button type="button" class="btn-action-paid" onclick="window.markPaid('${d.id}')">Mark Paid</button>
+                    <button type="button" class="btn-action-reject" onclick="window.rejectWithdrawal('${d.id}', '${data.uid}', ${pts})">Reject</button>
+                  ` : `
+                    <span style="font-size: 0.75rem; color: var(--text-subtle);">Processed</span>
+                  `}
+                </td>
+              </tr>
+            `;
+          });
+
+          tbody.innerHTML = html;
+          updateSummaryCounters(pendingCount, pendingInrTotal, paidCount, paidInrTotal);
+        } catch (err) {
+          console.error("Failed to load admin withdrawals:", err);
+          tbody.innerHTML = `<tr><td colspan="9" class="empty-state" style="color: #f87171;"><p>Error: ${err.message}</p></td></tr>`;
+        }
+      }
+
+      function updateSummaryCounters(pendingCount, pendingInr, paidCount, paidInr) {
+        document.getElementById("adminPendingCount").textContent = pendingCount;
+        document.getElementById("adminPendingInr").textContent = `₹${pendingInr.toFixed(2)}`;
+        document.getElementById("adminPaidCount").textContent = paidCount;
+        document.getElementById("adminPaidInr").textContent = `₹${paidInr.toFixed(2)}`;
+      }
+
+      // Mark Paid Handler
+      window.markPaid = async (withdrawalId) => {
+        if (!confirm(`Confirm that you have transferred the funds via UPI for withdrawal ID: ${withdrawalId}?`)) return;
+        try {
+          if (functions) {
+            const adminFn = httpsCallable(functions, "processWithdrawalAdmin");
+            await adminFn({ withdrawalId, action: "paid" });
+          } else {
+            // Direct fallback
+            await updateDoc(doc(db, "withdrawals", withdrawalId), {
+              status: "paid",
+              processedAt: serverTimestamp()
+            });
+          }
+          alert("Marked as Paid!");
+          loadAdminWithdrawals();
+        } catch (err) {
+          alert(`Error updating withdrawal: ${err.message}`);
+        }
+      };
+
+      // Reject Handler
+      window.rejectWithdrawal = async (withdrawalId, uid, points) => {
+        const reason = prompt("Enter rejection reason (points will be refunded to user):", "Invalid UPI ID or terms violation");
+        if (reason === null) return;
+
+        try {
+          if (functions) {
+            const adminFn = httpsCallable(functions, "processWithdrawalAdmin");
+            await adminFn({ withdrawalId, action: "reject", reason });
+          } else {
+            alert("To refund points safely, please deploy the processWithdrawalAdmin Cloud Function.");
+          }
+          alert("Withdrawal rejected and points returned to user.");
+          loadAdminWithdrawals();
+        } catch (err) {
+          alert(`Error: ${err.message}`);
+        }
+      };
+
+      // Export Withdrawals CSV
+      exportWithdrawalsBtn.addEventListener("click", () => {
+        if (!allWithdrawalsCache || allWithdrawalsCache.length === 0) {
+          alert("No withdrawal data available to export.");
+          return;
+        }
+
+        const headers = ["Date", "Withdrawal ID", "User UID", "Method", "UPI / Destination", "Points", "Amount (INR)", "Status"];
+        const rows = allWithdrawalsCache.map((w) => {
+          const dateStr = w.createdAt?.toDate ? w.createdAt.toDate().toISOString() : "";
+          const inr = ((Number(w.points) || 0) / APP_CONFIG.pointsPerInr).toFixed(2);
+          const dest = w.upiId || w.recipientEmail || w.giftCardType || "";
+          return [
+            `"${dateStr}"`,
+            `"${w.id || ""}"`,
+            `"${w.uid || ""}"`,
+            `"${w.method || "upi"}"`,
+            `"${dest}"`,
+            w.points || 0,
+            inr,
+            `"${w.status || "pending"}"`
+          ].join(",");
+        });
+
+        const csvContent = "data:text/csv;charset=utf-8," + [headers.join(","), ...rows].join("\n");
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `anticash_withdrawals_${new Date().toISOString().split("T")[0]}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
+
+      // Export Transactions CSV
+      exportTransactionsBtn.addEventListener("click", async () => {
+        try {
+          exportTransactionsBtn.textContent = "Generating CSV...";
+          exportTransactionsBtn.disabled = true;
+
+          // Query all transactions via collectionGroup
+          const txGroup = collectionGroup(db, "transactions");
+          const snap = await getDocs(txGroup);
+
+          if (snap.empty) {
+            alert("No transactions found.");
+            return;
+          }
+
+          const headers = ["Date", "Transaction ID", "User UID", "Type", "Network / Channel", "Points", "Rupee Value", "Status", "Source IP"];
+          const rows = [];
+
+          snap.forEach((doc) => {
+            const tx = doc.data();
+            const dateStr = tx.createdAt?.toDate ? tx.createdAt.toDate().toISOString() : "";
+            const pts = Number(tx.points) || 0;
+            const inr = (Math.abs(pts) / APP_CONFIG.pointsPerInr).toFixed(2);
+            
+            // Extract user UID from document reference path
+            const pathParts = doc.ref.path.split("/");
+            const userUid = pathParts[1] || "";
+
+            rows.push([
+              `"${dateStr}"`,
+              `"${doc.id}"`,
+              `"${userUid}"`,
+              `"${tx.type || "earn"}"`,
+              `"${tx.network || tx.method || ""}"`,
+              pts,
+              inr,
+              `"${tx.status || "pending"}"`,
+              `"${tx.sourceIp || ""}"`
+            ].join(","));
+          });
+
+          const csvContent = "data:text/csv;charset=utf-8," + [headers.join(","), ...rows].join("\n");
+          const encodedUri = encodeURI(csvContent);
+          const link = document.createElement("a");
+          link.setAttribute("href", encodedUri);
+          link.setAttribute("download", `anticash_all_transactions_${new Date().toISOString().split("T")[0]}.csv`);
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        } catch (err) {
+          alert(`Error exporting transactions: ${err.message}`);
+        } finally {
+          exportTransactionsBtn.textContent = "📥 Export Transactions CSV";
+          exportTransactionsBtn.disabled = false;
+        }
+      });
+    });
+  </script>
+</body>
+</html>

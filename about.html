@@ -1,37 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-<!--
-  ==========================================================================
-  EDIT ME: ABOUT PAGE CUSTOMIZATION
-  ==========================================================================
-  1. STORY & MISSION: Customize the paragraphs in the prose sections below.
-  2. CORE PILLARS: Edit the bullet points under "What We Stand For".
-  3. CONTACT EMAIL: Change "hello@anticash.tech" to your email.
-  ==========================================================================
--->
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  <title>About Us — AntiCash (anticash.tech)</title>
-  <meta name="title" content="About Us — AntiCash">
-  <meta name="description" content="Discover the mission, philosophy, and architectural vision behind AntiCash.">
+  <title>About AntiCash — Transparent Rewards Platform</title>
+  <meta name="title" content="About AntiCash — Transparent Rewards Platform">
+  <meta name="description" content="Learn how AntiCash connects Indian users with global market research agencies and digital advertisers to earn UPI rewards.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://anticash.tech/about.html">
 
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <meta name="theme-color" content="#070a11">
+  <meta name="theme-color" content="#07090e">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <a href="#main-content" class="skip-to-content">Skip to main content</a>
-
-  <!-- Ambient background -->
-  <div class="bg-ambient" aria-hidden="true">
-    <div class="ambient-orb ambient-orb-1"></div>
-    <div class="ambient-orb ambient-orb-2"></div>
-  </div>
 
   <!-- Header -->
   <header class="site-header">
@@ -45,97 +30,109 @@
           </svg>
         </span>
         <span>Anti<span class="brand-text-accent">Cash</span></span>
+        <span class="brand-badge">India</span>
       </a>
 
       <nav aria-label="Primary Navigation">
         <ul class="nav-links">
           <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+          <li><a href="tasks.html" class="nav-link">Tasks</a></li>
+          <li><a href="withdraw.html" class="nav-link">Withdraw</a></li>
           <li><a href="about.html" class="nav-link active">About</a></li>
-          <li><a href="privacy.html" class="nav-link">Privacy</a></li>
-          <li><a href="index.html#signup" class="btn-nav">Join Waitlist</a></li>
         </ul>
       </nav>
+
+      <div class="nav-auth-area" id="navUserArea">
+        <!-- Injected via auth.js -->
+      </div>
     </div>
   </header>
 
-  <main id="main-content" class="page-content-wrapper container">
-    <header class="page-header">
-      <h1 class="hero-title" style="font-size: clamp(2.2rem, 5vw, 3.5rem); margin-bottom: 0.5rem;">
-        About <span class="hero-gradient-text">AntiCash</span>
+  <main id="main-content" class="container prose-container">
+    <header class="prose-header">
+      <h1 style="font-size: clamp(2.2rem, 5vw, 3.2rem); font-weight: 800; margin-bottom: 0.5rem;">
+        About <span class="gradient-text">AntiCash</span>
       </h1>
-      <p class="page-meta">Last Updated: November 2026 • Domain: anticash.tech</p>
+      <p style="color: var(--text-muted); font-size: 1rem;">
+        A transparent, no-nonsense rewards platform engineered for users in India.
+      </p>
     </header>
 
-    <article>
-      <!-- EDIT ME: Section 1 -->
-      <section class="prose-section">
-        <h2>The Thesis</h2>
+    <article class="prose-body">
+      <section>
+        <h2>Our Mission: Absolute Transparency</h2>
         <p>
-          For thousands of years, physical cash allowed people to trade freely, privately, and without permission from a central entity. When commerce migrated to the web, we gained unprecedented global reach, but at an immense cost: our transactions became tracked, monetized, restricted, and taxed by layers of financial middlemen.
+          The web is filled with reward websites promising extravagant earnings, fake live payout tickers, and unrealistic guarantees. <strong>AntiCash is built on a totally different principle: absolute honesty.</strong>
         </p>
         <p>
-          <strong>AntiCash</strong> was founded on a simple observation: we don't need to return to paper banknotes, nor do we have to accept invasive commercial surveillance. We can build a modern financial substrate that embodies the sovereign characteristics of cash—frictionless, private, and instantaneous—amplified by the speed of modern technology.
+          AntiCash connects consumers in India with global advertising networks, app developers, and market research agencies (known in the digital industry as offerwalls). When companies launch a new consumer app, game, or questionnaire in India, they need real humans to test features, provide demographic feedback, and try products.
         </p>
       </section>
 
-      <!-- EDIT ME: Section 2 -->
-      <section class="prose-section">
-        <h2>Our Core Principles</h2>
-        <div class="highlight-box">
-          <p>
-            <strong>"If physical cash were invented today, traditional gatekeepers would try to outlaw it. We are building its digital successor."</strong>
-          </p>
+      <section>
+        <h2>How the Economics Work</h2>
+        <p>
+          When you complete a survey or install a trial application:
+        </p>
+        <ol>
+          <li>The advertiser pays AntiCash a fee for your verified engagement.</li>
+          <li>We share the majority of that advertising revenue directly with you in the form of redeemable AntiCash points.</li>
+          <li>You convert those points directly into Indian Rupees sent via UPI (Google Pay, PhonePe, Paytm, BHIM) or digital retail vouchers.</li>
+        </ol>
+      </section>
+
+      <div class="notice-box">
+        <span class="notice-icon">💡</span>
+        <div class="notice-body">
+          <strong>Realistic Expectations:</strong>
+          AntiCash is designed to help you earn modest pocket-money rewards during your commute or downtime. It is <em>not</em> a salary, job, or get-rich-quick opportunity. Available offers vary daily depending on demographic demand from advertisers.
         </div>
+      </div>
+
+      <section>
+        <h2>Why We Do Not Use Google AdSense for Rewards</h2>
+        <p>
+          Many low-quality sites try to place Google AdSense ads on reward pages or ask users to click banners to earn coins. <strong>AntiCash strictly forbids this practice.</strong>
+        </p>
+        <p>
+          Google AdSense policies strictly prohibit incentivizing users to view, click, or engage with ads. AntiCash works exclusively with compliant performance-marketing offerwall networks and survey panels that are explicitly intended for rewarded engagement.
+        </p>
+      </section>
+
+      <section>
+        <h2>Our Core Commitments to You</h2>
         <ul>
-          <li><strong>Zero Friction:</strong> Transfers should finalize in milliseconds, anywhere in the world, with negligible overhead.</li>
-          <li><strong>Built-In Privacy:</strong> Financial privacy is a fundamental human right. Transaction data should never be harvested or sold to data brokers.</li>
-          <li><strong>Open Standards:</strong> AntiCash is engineered with transparency and open interoperability as first-class citizens.</li>
-          <li><strong>Direct Custody:</strong> You retain ownership of your assets without exposure to counterparty insolvency or arbitrary account freezes.</li>
+          <li><strong>No Fake Payout Proofs:</strong> We never display fake popups showing "User X just withdrew ₹5,000". What you see on AntiCash is 100% genuine.</li>
+          <li><strong>Clear Status Tracking:</strong> Every offer you complete has a transparent status (Pending, Confirmed, or Reversed) with clear dates and transaction IDs.</li>
+          <li><strong>Direct UPI Payments:</strong> You don't have to jump through international payment processors. Payouts are made directly in Indian Rupees to your UPI ID.</li>
+          <li><strong>Zero Tolerance for Fraud:</strong> To protect our relationships with advertising partners, we actively monitor and ban automated bots, VPNs, and duplicate accounts.</li>
         </ul>
       </section>
 
-      <!-- EDIT ME: Section 3 -->
-      <section class="prose-section">
-        <h2>What's Next</h2>
-        <p>
-          AntiCash is currently in private development. Our engineering team is finalizing core cryptographic primitives and security audits. We are opening our early access program to innovators, builders, and privacy advocates.
-        </p>
-        <p>
-          Want to test our early releases or partner with us? <a href="index.html#signup" style="color: var(--accent-primary); text-decoration: underline;">Join our early access waitlist on the homepage</a> or reach out directly at <a href="mailto:hello@anticash.tech" style="color: var(--accent-primary);">hello@anticash.tech</a>.
-        </p>
-      </section>
+      <div style="text-align: center; margin-top: 3rem;">
+        <a href="index.html" class="btn-primary">
+          <span>Start Exploring Tasks</span>
+          <span>→</span>
+        </a>
+      </div>
     </article>
-
-    <div style="margin-top: 3rem; text-align: center;">
-      <a href="index.html" class="btn-primary" style="display: inline-flex;">
-        <span>← Return to Home & Waitlist</span>
-      </a>
-    </div>
   </main>
 
   <footer class="site-footer">
-    <div class="container">
-      <div class="footer-top">
-        <div class="footer-brand">
-          <a href="index.html" class="brand-logo">
-            <span>Anti<span class="brand-text-accent">Cash</span></span>
-          </a>
-          <p class="footer-brand-desc">
-            Redefining digital value exchange. Independent, fast, and secure.
-          </p>
-        </div>
-        <ul class="footer-links">
-          <li><a href="index.html" class="footer-link">Home</a></li>
-          <li><a href="privacy.html" class="footer-link">Privacy Policy</a></li>
-          <li><a href="mailto:hello@anticash.tech" class="footer-link">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-bottom">
-        <p>© <span id="currentYear">2026</span> AntiCash (anticash.tech). All rights reserved.</p>
-      </div>
+    <div class="container footer-bottom">
+      <p>© <span id="currentYear">2026</span> AntiCash (anticash.tech). All rights reserved.</p>
+      <p><a href="privacy.html" class="footer-link">Privacy Policy</a> • <a href="terms.html" class="footer-link">Terms of Service</a></p>
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script type="module">
+    import { initAuth } from "./auth.js";
+    document.addEventListener("DOMContentLoaded", () => {
+      initAuth();
+      const year = document.getElementById("currentYear");
+      if (year) year.textContent = new Date().getFullYear();
+    });
+  </script>
 </body>
 </html>

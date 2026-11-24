@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Withdraw Points — AntiCash</title>
+  <meta name="robots" content="noindex, nofollow">
+
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="theme-color" content="#07090e">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo" aria-label="AntiCash Homepage">
+        <span class="brand-icon">
+          <svg width="28" height="28" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="100" height="100" rx="24" fill="#111827" stroke="#1e293b" stroke-width="2"/>
+            <path d="M 28 72 L 47 25 C 48 22.5 52 22.5 53 25 L 72 72" stroke="#00f5a0" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M 33 53 L 67 53" stroke="#00d2ff" stroke-width="6" stroke-linecap="round" />
+          </svg>
+        </span>
+        <span>Anti<span class="brand-text-accent">Cash</span></span>
+      </a>
+
+      <nav aria-label="Primary Navigation">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+          <li><a href="tasks.html" class="nav-link">Tasks</a></li>
+          <li><a href="withdraw.html" class="nav-link active">Withdraw</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-auth-area" id="navUserArea">
+        <!-- Injected via auth.js -->
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" class="container" style="padding-top: 2.5rem; padding-bottom: 4rem;">
+    
+    <div class="withdraw-form-container">
+      <header style="text-align: center; margin-bottom: 2rem;">
+        <h1 style="font-size: clamp(1.8rem, 4vw, 2.4rem); font-weight: 800; margin-bottom: 0.5rem;">
+          Redeem Your Points
+        </h1>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">
+          Transfer your confirmed points directly to your UPI ID or choose digital gift cards.
+        </p>
+      </header>
+
+      <!-- Balance Card -->
+      <div class="card" style="margin-bottom: 2rem; text-align: center; padding: 1.5rem;">
+        <span class="stat-label" style="justify-content: center; margin-bottom: 0.25rem;">Available Confirmed Balance</span>
+        <div class="stat-value" id="availablePointsDisplay">0 Pts</div>
+        <div class="stat-inr" id="availableInrDisplay">₹0.00</div>
+        <p style="font-size: 0.775rem; color: var(--text-subtle);">
+          Minimum withdrawal requirement: <strong>500 Points (₹50.00)</strong>
+        </p>
+      </div>
+
+      <!-- Feedback Alerts -->
+      <div id="formErrorAlert" class="form-error-alert" role="alert"></div>
+      <div id="formSuccessAlert" class="form-success-alert" role="status"></div>
+
+      <!-- Withdrawal Form -->
+      <div class="card">
+        <form id="withdrawForm" novalidate>
+          
+          <!-- Method Selection -->
+          <div class="form-group">
+            <label for="payoutMethod" class="form-label">Payout Method</label>
+            <select id="payoutMethod" class="form-select">
+              <option value="upi">Direct UPI Transfer (GPay, PhonePe, Paytm, BHIM)</option>
+              <option value="amazon_pay">Amazon Pay Gift Card Voucher</option>
+              <option value="flipkart">Flipkart Gift Card Voucher</option>
+              <option value="google_play">Google Play Store Redeem Code</option>
+            </select>
+          </div>
+
+          <!-- Dynamic UPI Field -->
+          <div class="form-group" id="upiGroup">
+            <label for="upiIdInput" class="form-label">Your UPI ID (Virtual Payment Address)</label>
+            <input 
+              type="text" 
+              id="upiIdInput" 
+              class="form-input" 
+              placeholder="e.g. yourname@okhdfcbank or 9876543210@paytm"
+              autocomplete="off"
+            >
+            <span class="form-helper">Make sure your UPI ID is active and entered correctly. Funds sent to an incorrect UPI ID cannot be recovered.</span>
+          </div>
+
+          <!-- Dynamic Gift Card Details -->
+          <div class="form-group" id="giftCardGroup" style="display: none;">
+            <label for="recipientEmailInput" class="form-label">Delivery Email Address</label>
+            <input 
+              type="email" 
+              id="recipientEmailInput" 
+              class="form-input" 
+              placeholder="e.g. yourname@gmail.com"
+            >
+            <span class="form-helper">Digital voucher code and PIN will be sent to this email upon approval.</span>
+          </div>
+
+          <!-- Points Amount -->
+          <div class="form-group">
+            <label for="pointsInput" class="form-label">Points to Redeem</label>
+            <input 
+              type="number" 
+              id="pointsInput" 
+              class="form-input" 
+              min="500" 
+              step="50"
+              placeholder="Minimum 500 points"
+            >
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.35rem;">
+              <span class="form-helper" id="conversionPreview">Equivalent: ₹0.00</span>
+              <button type="button" id="btnMaxPoints" style="font-size: 0.8rem; color: var(--accent-primary); font-weight: 700; text-decoration: underline;">
+                Use Max Confirmed
+              </button>
+            </div>
+          </div>
+
+          <!-- Honest Compliance Notice -->
+          <div class="notice-box" style="margin: 1.5rem 0;">
+            <span class="notice-icon">⚠️</span>
+            <div class="notice-body">
+              <strong>Processing Guidelines:</strong>
+              <p style="margin-top: 0.25rem;">
+                Withdrawals are manually reviewed within 24–48 business hours to verify that associated task completions were legitimate. Only 1 pending withdrawal request is permitted at a time.
+              </p>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary" id="btnSubmitWithdrawal" style="width: 100%;">
+            <span>Submit Withdrawal Request</span>
+            <span>→</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Past Withdrawals List -->
+      <section style="margin-top: 3.5rem;">
+        <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 1rem;">My Past Withdrawal Requests</h2>
+        <div class="table-responsive">
+          <table class="data-table" aria-label="Withdrawal history">
+            <thead>
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Method</th>
+                <th scope="col">Target / UPI</th>
+                <th scope="col">Points</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody id="withdrawalsTableBody">
+              <tr>
+                <td colspan="6" class="empty-state">
+                  <p>No previous withdrawal requests found.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <p>© <span id="currentYear">2026</span> AntiCash (anticash.tech). All rights reserved.</p>
+      <p><a href="privacy.html" class="footer-link">Privacy Policy</a> • <a href="terms.html" class="footer-link">Terms of Service</a></p>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { initAuth, requireAuth, onUserChange, db, functions } from "./auth.js";
+    import { APP_CONFIG, pointsToInr } from "./app-config.js";
+    import { httpsCallable } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-functions.js";
+    import { collection, query, where, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    document.addEventListener("DOMContentLoaded", () => {
+      initAuth();
+      requireAuth();
+
+      const year = document.getElementById("currentYear");
+      if (year) year.textContent = new Date().getFullYear();
+
+      const pointsDisplay = document.getElementById("availablePointsDisplay");
+      const inrDisplay = document.getElementById("availableInrDisplay");
+      const pointsInput = document.getElementById("pointsInput");
+      const conversionPreview = document.getElementById("conversionPreview");
+      const btnMax = document.getElementById("btnMaxPoints");
+      const payoutMethod = document.getElementById("payoutMethod");
+      const upiGroup = document.getElementById("upiGroup");
+      const giftCardGroup = document.getElementById("giftCardGroup");
+      const upiInput = document.getElementById("upiIdInput");
+      const emailInput = document.getElementById("recipientEmailInput");
+      const form = document.getElementById("withdrawForm");
+      const errorAlert = document.getElementById("formErrorAlert");
+      const successAlert = document.getElementById("formSuccessAlert");
+      const submitBtn = document.getElementById("btnSubmitWithdrawal");
+
+      let userConfirmedPoints = 0;
+      let currentUid = null;
+
+      onUserChange((user, userData) => {
+        if (!user) return;
+        currentUid = user.uid;
+        userConfirmedPoints = Number(userData?.confirmedPoints) || 0;
+
+        pointsDisplay.textContent = `${userConfirmedPoints.toLocaleString()} Pts`;
+        inrDisplay.textContent = pointsToInr(userConfirmedPoints);
+
+        if (emailInput && !emailInput.value) {
+          emailInput.value = user.email || "";
+        }
+
+        loadUserWithdrawals(user.uid);
+      });
+
+      // Switch UPI / Giftcard UI
+      payoutMethod.addEventListener("change", () => {
+        if (payoutMethod.value === "upi") {
+          upiGroup.style.display = "flex";
+          giftCardGroup.style.display = "none";
+        } else {
+          upiGroup.style.display = "none";
+          giftCardGroup.style.display = "flex";
+        }
+      });
+
+      // Conversion preview
+      pointsInput.addEventListener("input", () => {
+        const val = Number(pointsInput.value) || 0;
+        conversionPreview.textContent = `Equivalent: ${pointsToInr(val)}`;
+      });
+
+      // Max button
+      btnMax.addEventListener("click", () => {
+        pointsInput.value = userConfirmedPoints;
+        conversionPreview.textContent = `Equivalent: ${pointsToInr(userConfirmedPoints)}`;
+      });
+
+      // Form submission
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        hideAlerts();
+
+        const method = payoutMethod.value;
+        const points = parseInt(pointsInput.value, 10);
+        let destination = "";
+
+        if (method === "upi") {
+          destination = upiInput.value.trim();
+          const upiRegex = /^[a-zA-Z0-9.\-_]{2,256}@[a-zA-Z]{2,64}$/;
+          if (!destination || !upiRegex.test(destination)) {
+            showError("Please enter a valid Indian UPI ID (e.g. yourname@okhdfcbank or 9876543210@paytm).");
+            upiInput.focus();
+            return;
+          }
+        } else {
+          destination = emailInput.value.trim();
+          if (!destination || !destination.includes("@")) {
+            showError("Please enter a valid recipient email for voucher delivery.");
+            emailInput.focus();
+            return;
+          }
+        }
+
+        if (isNaN(points) || points < APP_CONFIG.minWithdrawalPoints) {
+          showError(`The minimum withdrawal threshold is ${APP_CONFIG.minWithdrawalPoints} points (${pointsToInr(APP_CONFIG.minWithdrawalPoints)}).`);
+          pointsInput.focus();
+          return;
+        }
+
+        if (points > userConfirmedPoints) {
+          showError(`Insufficient confirmed points. Your confirmed balance is ${userConfirmedPoints} points.`);
+          pointsInput.focus();
+          return;
+        }
+
+        // Call Cloud Function createWithdrawal
+        submitBtn.disabled = true;
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = `<span>Processing Request...</span>`;
+
+        try {
+          if (!functions) {
+            throw new Error("Firebase Functions not initialized. Please ensure firebase-config.js is configured.");
+          }
+
+          const createWithdrawalFn = httpsCallable(functions, "createWithdrawal");
+          const result = await createWithdrawalFn({
+            method,
+            upiId: method === "upi" ? destination : undefined,
+            giftCardType: method !== "upi" ? method : undefined,
+            recipientEmail: method !== "upi" ? destination : undefined,
+            points
+          });
+
+          showSuccess("🎉 Withdrawal request submitted successfully! Your points have been deducted and your payout is queued for review (typically 24-48 business hours).");
+          form.reset();
+          if (currentUid) loadUserWithdrawals(currentUid);
+        } catch (err) {
+          console.error("Withdrawal error:", err);
+          showError(err.message || "Failed to submit withdrawal request. Please check your balance and try again.");
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+        }
+      });
+
+      function showError(msg) {
+        errorAlert.textContent = msg;
+        errorAlert.style.display = "block";
+      }
+
+      function showSuccess(msg) {
+        successAlert.textContent = msg;
+        successAlert.style.display = "block";
+      }
+
+      function hideAlerts() {
+        errorAlert.style.display = "none";
+        successAlert.style.display = "none";
+      }
+
+      async function loadUserWithdrawals(uid) {
+        if (!db) return;
+        const tbody = document.getElementById("withdrawalsTableBody");
+        if (!tbody) return;
+
+        try {
+          const wRef = collection(db, "withdrawals");
+          const q = query(wRef, where("uid", "==", uid), orderBy("createdAt", "desc"));
+          const snap = await getDocs(q);
+
+          if (snap.empty) {
+            tbody.innerHTML = `
+              <tr>
+                <td colspan="6" class="empty-state">
+                  <p>No previous withdrawal requests found.</p>
+                </td>
+              </tr>
+            `;
+            return;
+          }
+
+          let html = "";
+          snap.forEach((doc) => {
+            const w = doc.data();
+            const dateStr = w.createdAt?.toDate ? w.createdAt.toDate().toLocaleDateString("en-IN", {
+              day: "numeric", month: "short", year: "numeric"
+            }) : "Recent";
+            const target = w.upiId || w.giftCardType || "UPI";
+            const statusClass = (w.status || "pending").toLowerCase();
+
+            html += `
+              <tr>
+                <td>${dateStr}</td>
+                <td><strong>${(w.method || "upi").toUpperCase()}</strong></td>
+                <td><code>${target}</code></td>
+                <td>${Number(w.points).toLocaleString()} Pts</td>
+                <td>${pointsToInr(w.points)}</td>
+                <td><span class="badge-status ${statusClass}">${w.status || "pending"}</span></td>
+              </tr>
+            `;
+          });
+          tbody.innerHTML = html;
+        } catch (err) {
+          console.warn("Could not load user withdrawals:", err);
+        }
+      }
+    });
+  </script>
+</body>
+</html>

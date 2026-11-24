@@ -9,17 +9,11 @@
   <meta name="robots" content="noindex, follow">
 
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <meta name="theme-color" content="#070a11">
+  <meta name="theme-color" content="#07090e">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <a href="#main-content" class="skip-to-content">Skip to main content</a>
-
-  <!-- Ambient background -->
-  <div class="bg-ambient" aria-hidden="true">
-    <div class="ambient-orb ambient-orb-1"></div>
-    <div class="ambient-orb ambient-orb-2"></div>
-  </div>
 
   <!-- Header -->
   <header class="site-header">
@@ -38,33 +32,46 @@
       <nav aria-label="Primary Navigation">
         <ul class="nav-links">
           <li><a href="index.html" class="nav-link">Home</a></li>
-          <li><a href="about.html" class="nav-link">About</a></li>
-          <li><a href="index.html#signup" class="btn-nav">Get Notified</a></li>
+          <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+          <li><a href="tasks.html" class="nav-link">Tasks</a></li>
         </ul>
       </nav>
+
+      <div class="nav-auth-area" id="navUserArea">
+        <!-- Injected via auth.js -->
+      </div>
     </div>
   </header>
 
-  <main id="main-content" class="container error-page-hero">
-    <div class="error-code">404</div>
-    <h1 class="hero-title" style="font-size: clamp(1.8rem, 4vw, 2.75rem); margin-bottom: 1rem;">
-      Page Beyond Reach
+  <main id="main-content" class="container" style="text-align: center; padding: 6rem 1rem;">
+    <div style="font-size: clamp(5rem, 12vw, 8rem); font-weight: 900; line-height: 1; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+      404
+    </div>
+    <h1 style="font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 800; margin: 1rem 0;">
+      Page Not Found
     </h1>
-    <p class="hero-tagline" style="margin-bottom: 2.5rem;">
-      The page you're searching for either doesn't exist, has been moved, or hasn't launched yet.
+    <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto 2rem; font-size: 1.05rem;">
+      The page you are looking for does not exist or may have been moved.
     </p>
-    <a href="index.html" class="btn-primary" style="display: inline-flex;">
-      <span>← Return to AntiCash Home</span>
-    </a>
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+      <a href="index.html" class="btn-primary">Return to Homepage</a>
+      <a href="dashboard.html" class="btn-secondary">Go to Dashboard</a>
+    </div>
   </main>
 
   <footer class="site-footer">
-    <div class="container footer-bottom" style="border-top: none; padding-top: 0;">
+    <div class="container footer-bottom">
       <p>© <span id="currentYear">2026</span> AntiCash (anticash.tech). All rights reserved.</p>
-      <p><a href="index.html" style="color: var(--accent-primary);">Home</a> • <a href="privacy.html" style="color: var(--accent-primary);">Privacy</a></p>
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script type="module">
+    import { initAuth } from "./auth.js";
+    document.addEventListener("DOMContentLoaded", () => {
+      initAuth();
+      const year = document.getElementById("currentYear");
+      if (year) year.textContent = new Date().getFullYear();
+    });
+  </script>
 </body>
 </html>

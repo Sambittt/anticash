@@ -1,0 +1,76 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ==========================================================================
+    // EDIT ME: FIRESTORE SECURITY RULES
+    // ==========================================================================
+    // Replace EDIT_ME_OWNER_UID with your Firebase Auth UID from the Firebase Console.
+    // ==========================================================================
+    function isOwner() {
+      return request.auth != null && request.auth.uid == "EDIT_ME_OWNER_UID";
+    }
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isSelf(uid) {
+      return request.auth != null && request.auth.uid == uid;
+    }
+
+    // 1. User profile documents
+    match /users/{uid} {
+      // Users can only read their own document; Owner can read all
+      allow read: if isSelf(uid) || isOwner();
+
+      // Users can only create their own document on first Google login with 0 points
+      allow create: if isSelf(uid) &&
+                       request.resource.data.confirmedPoints == 0 &&
+                       request.resource.data.pendingPoints == 0 &&
+                       request.resource.data.banned == false;
+
+      // Users can NEVER write confirmedPoints, pendingPoints, or banned from the browser!
+      // Any balance changes happen strictly inside Cloud Functions via Admin SDK.
+      allow update: if (isSelf(uid) &&
+                       !request.resource.data.diff(resource.data).affectedKeys().hasAny(['confirmedPoints', 'pendingPoints', 'banned'])) ||
+                       isOwner();
+
+      allow delete: if false;
+
+      // 2. User transactions subcollection
+      match /transactions/{txId} {
+        // Users can read only their own transactions; Owner can read all
+        allow read: if isSelf(uid) || isOwner();
+        
+        // Front-end browser writes are STRICTLY FORBIDDEN!
+        // All transactions are generated and managed by Cloud Functions.
+        allow write: if false;
+      }
+    }
+
+    // 3. Withdrawals collection
+    match /withdrawals/{withdrawalId} {
+      // Users can read only their own withdrawal requests; Owner can read all
+      allow read: if (isAuthenticated() && resource.data.uid == request.auth.uid) || isOwner();
+      
+      // Client-side creates are disabled to prevent points manipulation.
+      // Must be submitted through the createWithdrawal Cloud Function.
+      allow create: if false;
+      allow update: if isOwner();
+      allow delete: if false;
+    }
+
+    // 4. Processed postbacks idempotency collection
+    match /processedPostbacks/{postbackId} {
+      // Only owner can view for audit; writes happen only from Cloud Functions
+      allow read: if isOwner();
+      allow write: if false;
+    }
+
+    // Default deny for everything else
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

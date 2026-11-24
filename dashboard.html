@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Dashboard — AntiCash</title>
+  <meta name="robots" content="noindex, nofollow">
+
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="theme-color" content="#07090e">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo" aria-label="AntiCash Homepage">
+        <span class="brand-icon">
+          <svg width="28" height="28" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="100" height="100" rx="24" fill="#111827" stroke="#1e293b" stroke-width="2"/>
+            <path d="M 28 72 L 47 25 C 48 22.5 52 22.5 53 25 L 72 72" stroke="#00f5a0" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M 33 53 L 67 53" stroke="#00d2ff" stroke-width="6" stroke-linecap="round" />
+          </svg>
+        </span>
+        <span>Anti<span class="brand-text-accent">Cash</span></span>
+      </a>
+
+      <nav aria-label="Primary Navigation">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="dashboard.html" class="nav-link active">Dashboard</a></li>
+          <li><a href="tasks.html" class="nav-link">Tasks</a></li>
+          <li><a href="withdraw.html" class="nav-link">Withdraw</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-auth-area" id="navUserArea">
+        <!-- Injected via auth.js -->
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" class="container dashboard-header">
+    
+    <div class="dashboard-user-greeting">
+      <h1 class="greeting-title" id="greetingName">Welcome back!</h1>
+      <p class="greeting-sub" id="greetingEmail">Loading your account details...</p>
+    </div>
+
+    <!-- Stats Cards Grid -->
+    <div class="stats-grid">
+      <!-- 1. Confirmed Points -->
+      <article class="stat-card">
+        <div>
+          <span class="stat-label">
+            <span>Confirmed Balance</span>
+            <span>✅</span>
+          </span>
+          <div class="stat-value" id="confirmedPointsVal">0</div>
+          <div class="stat-inr" id="confirmedInrVal">₹0.00</div>
+        </div>
+        <p class="stat-desc">
+          Ready for withdrawal via UPI or gift card vouchers.
+        </p>
+      </article>
+
+      <!-- 2. Pending Points -->
+      <article class="stat-card">
+        <div>
+          <span class="stat-label">
+            <span>Pending Balance</span>
+            <span>⏳</span>
+          </span>
+          <div class="stat-value" id="pendingPointsVal">0</div>
+          <div class="stat-inr" id="pendingInrVal">₹0.00</div>
+        </div>
+        <p class="stat-desc">
+          Awaiting partner advertiser verification (usually up to 7 days).
+        </p>
+      </article>
+
+      <!-- 3. Withdrawal Progress -->
+      <article class="stat-card">
+        <div>
+          <span class="stat-label">
+            <span>Minimum Payout Goal</span>
+            <span id="progressPercentLabel">0%</span>
+          </span>
+          <div class="stat-value" style="font-size: 1.75rem;" id="progressSummary">0 / 500 Pts</div>
+          <div class="progress-bar-container" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-bar-fill" id="progressBarFill" style="width: 0%;"></div>
+          </div>
+        </div>
+        <p class="stat-desc" id="progressRemainingText">
+          500 points needed to unlock your first UPI withdrawal.
+        </p>
+      </article>
+    </div>
+
+    <!-- Quick Action Bar -->
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem;">
+      <a href="tasks.html" class="btn-primary">
+        <span>Explore Available Tasks</span>
+        <span>→</span>
+      </a>
+      <a href="withdraw.html" class="btn-secondary">
+        <span>Request Withdrawal</span>
+      </a>
+    </div>
+
+    <!-- Honest Information Reminder -->
+    <div class="notice-box">
+      <span class="notice-icon">ℹ️</span>
+      <div class="notice-body">
+        <strong>How Points Work:</strong> When you complete an offer, it is immediately credited as <em>Pending</em>. Advertiser partners take several days to review survey quality and app usage. Confirmed points never expire as long as your account remains in good standing. Do not use VPNs or proxies.
+      </div>
+    </div>
+
+    <!-- Recent Activity / Transactions Section -->
+    <section class="card" style="margin-top: 2rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.5rem;">
+        <div>
+          <h2 style="font-size: 1.25rem; font-weight: 800;">Recent Account Activity</h2>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Live history of your task earnings, confirmations, and withdrawals.</p>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="data-table" aria-label="Recent Transactions">
+          <thead>
+            <tr>
+              <th scope="col">Date</th>
+              <th scope="col">Activity Type</th>
+              <th scope="col">Partner / Channel</th>
+              <th scope="col">Points</th>
+              <th scope="col">Rupee Value</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody id="transactionsTableBody">
+            <tr>
+              <td colspan="6" class="empty-state">
+                <div class="empty-state-icon">📋</div>
+                <p>No activity recorded yet. Visit the <a href="tasks.html" style="color: var(--accent-primary); text-decoration: underline;">Tasks page</a> to get started!</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <p>© <span id="currentYear">2026</span> AntiCash (anticash.tech). All rights reserved.</p>
+      <p><a href="privacy.html" class="footer-link">Privacy Policy</a> • <a href="terms.html" class="footer-link">Terms of Service</a></p>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { initAuth, requireAuth, onUserChange, db } from "./auth.js";
+    import { APP_CONFIG, pointsToInr, getWithdrawalProgress } from "./app-config.js";
+    import { collection, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    document.addEventListener("DOMContentLoaded", () => {
+      initAuth();
+      requireAuth();
+
+      const year = document.getElementById("currentYear");
+      if (year) year.textContent = new Date().getFullYear();
+
+      onUserChange(async (user, userData) => {
+        if (!user) return;
+
+        // Greeting
+        const nameEl = document.getElementById("greetingName");
+        const emailEl = document.getElementById("greetingEmail");
+        if (nameEl) nameEl.textContent = `Welcome back, ${user.displayName || "Member"}!`;
+        if (emailEl) emailEl.textContent = `${user.email} (UID: ${user.uid})`;
+
+        // Points
+        const confirmed = Number(userData?.confirmedPoints) || 0;
+        const pending = Number(userData?.pendingPoints) || 0;
+
+        document.getElementById("confirmedPointsVal").textContent = confirmed.toLocaleString();
+        document.getElementById("confirmedInrVal").textContent = pointsToInr(confirmed);
+
+        document.getElementById("pendingPointsVal").textContent = pending.toLocaleString();
+        document.getElementById("pendingInrVal").textContent = pointsToInr(pending);
+
+        // Progress
+        const prog = getWithdrawalProgress(confirmed);
+        document.getElementById("progressPercentLabel").textContent = `${prog.percent}%`;
+        document.getElementById("progressSummary").textContent = `${confirmed.toLocaleString()} / ${APP_CONFIG.minWithdrawalPoints} Pts`;
+        document.getElementById("progressBarFill").style.width = `${prog.percent}%`;
+
+        const remText = document.getElementById("progressRemainingText");
+        if (prog.pointsNeeded === 0) {
+          remText.innerHTML = `🎉 <strong>Eligible for withdrawal!</strong> You have reached the minimum threshold.`;
+        } else {
+          remText.textContent = `${prog.pointsNeeded.toLocaleString()} points (${prog.inrNeeded}) more needed to withdraw.`;
+        }
+
+        // Fetch recent transactions
+        loadTransactions(user.uid);
+      });
+
+      async function loadTransactions(uid) {
+        if (!db) return;
+        const tbody = document.getElementById("transactionsTableBody");
+        if (!tbody) return;
+
+        try {
+          const txRef = collection(db, "users", uid, "transactions");
+          const q = query(txRef, orderBy("createdAt", "desc"), limit(25));
+          const snap = await getDocs(q);
+
+          if (snap.empty) {
+            tbody.innerHTML = `
+              <tr>
+                <td colspan="6" class="empty-state">
+                  <div class="empty-state-icon">📋</div>
+                  <p>No activity recorded yet. Visit the <a href="tasks.html" style="color: var(--accent-primary); text-decoration: underline;">Tasks page</a> to complete your first offer!</p>
+                </td>
+              </tr>
+            `;
+            return;
+          }
+
+          let html = "";
+          snap.forEach((doc) => {
+            const tx = doc.data();
+            const dateStr = tx.createdAt?.toDate ? tx.createdAt.toDate().toLocaleDateString("en-IN", {
+              day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit"
+            }) : "Recent";
+            
+            const pts = Number(tx.points) || 0;
+            const ptsDisplay = pts > 0 ? `+${pts}` : `${pts}`;
+            const statusClass = (tx.status || "pending").toLowerCase();
+            const typeLabel = (tx.type || "earn").toUpperCase();
+
+            html += `
+              <tr>
+                <td>${dateStr}</td>
+                <td><strong>${typeLabel}</strong></td>
+                <td>${tx.network || tx.method || "Partner Offer"}</td>
+                <td style="font-weight: 700; color: ${pts >= 0 ? 'var(--accent-primary)' : '#f87171'}">${ptsDisplay} Pts</td>
+                <td>${pointsToInr(Math.abs(pts))}</td>
+                <td><span class="badge-status ${statusClass}">${tx.status || "pending"}</span></td>
+              </tr>
+            `;
+          });
+          tbody.innerHTML = html;
+        } catch (err) {
+          console.warn("Could not load transactions:", err);
+        }
+      }
+    });
+  </script>
+</body>
+</html>
