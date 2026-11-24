@@ -13,7 +13,8 @@ export const firebaseConfig = {
   storageBucket: "anticash-16001.firebasestorage.app",
   messagingSenderId: "414696198643",
   appId: "1:414696198643:web:a28241653e1b758e8e0286",
-  measurementId: "G-XSJGJ7H96N"
+  measurementId: "G-XSJGJ7H96N",
+  googleClientId: "414696198643-d3cal7omkseft0m8l9ssaiaeijliqges.apps.googleusercontent.com"
 };
 
 // Check if Firebase has been configured with real keys
