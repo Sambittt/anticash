@@ -1,37 +1,22 @@
 /**
  * ==========================================================================
- * EDIT ME: FIREBASE WEB SDK (v10+ MODULAR) CONFIGURATION
+ * ANTICASH FIREBASE WEB SDK (v10+ MODULAR) CONFIGURATION
  * ==========================================================================
- * Replace the placeholder values below with your actual Firebase project settings.
- * Find these in the Firebase Console:
- * 1. Go to https://console.firebase.google.com/
- * 2. Select your project (or create one)
- * 3. Project Settings (Gear icon) -> General -> Your apps -> Web app (</>)
- * 4. Copy the firebaseConfig object properties and paste them below.
+ * Active production Firebase project credentials for AntiCash.
  * ==========================================================================
  */
 
 export const firebaseConfig = {
-  // EDIT ME: Your Firebase API Key
-  apiKey: "AIzaSy_YOUR_API_KEY_HERE_EDIT_ME",
-  
-  // EDIT ME: Your Auth Domain (e.g., your-project-id.firebaseapp.com)
-  authDomain: "anticash-rewards.firebaseapp.com",
-  
-  // EDIT ME: Your Project ID
-  projectId: "anticash-rewards",
-  
-  // EDIT ME: Your Storage Bucket (e.g., your-project-id.appspot.com)
-  storageBucket: "anticash-rewards.appspot.com",
-  
-  // EDIT ME: Messaging Sender ID
-  messagingSenderId: "123456789012",
-  
-  // EDIT ME: App ID
-  appId: "1:123456789012:web:abcdef1234567890"
+  apiKey: "AIzaSyCzpDOt6cP1xPxC__JyeJeHN5IbKShC00E",
+  authDomain: "anticash-16001.firebaseapp.com",
+  projectId: "anticash-16001",
+  storageBucket: "anticash-16001.firebasestorage.app",
+  messagingSenderId: "414696198643",
+  appId: "1:414696198643:web:a28241653e1b758e8e0286",
+  measurementId: "G-XSJGJ7H96N"
 };
 
-// Check if Firebase has been configured with real keys or is still on placeholder
+// Check if Firebase has been configured with real keys
 export const isFirebaseConfigured = () => {
   return (
     firebaseConfig.apiKey &&
