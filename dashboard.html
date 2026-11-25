@@ -258,11 +258,13 @@
   <script type="module">
     import { initAuth, requireAuth, onUserChange, db } from "./auth.js";
     import { formatRupees, getWithdrawalProgress } from "./app-config.js";
+    import { animateRupeeCounter, initScrollReveals } from "./motion.js";
     import { collection, query, orderBy, limit, getDocs, where } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
     document.addEventListener("DOMContentLoaded", () => {
       initAuth();
       requireAuth();
+      initScrollReveals();
 
       const onboardingPanel = document.getElementById("onboardingPanel");
       const btnDismissOnboarding = document.getElementById("btnDismissOnboarding");
@@ -299,8 +301,8 @@
         const confirmedPaise = Number(userData?.confirmedBalancePaise) || 0;
         const pendingPaise = Number(userData?.pendingBalancePaise) || 0;
 
-        document.getElementById("valConfirmedBalance").textContent = formatRupees(confirmedPaise);
-        document.getElementById("valPendingBalance").textContent = formatRupees(pendingPaise);
+        animateRupeeCounter(document.getElementById("valConfirmedBalance"), confirmedPaise, 1000);
+        animateRupeeCounter(document.getElementById("valPendingBalance"), pendingPaise, 1000);
 
         // Progress Calculation
         const prog = getWithdrawalProgress(confirmedPaise);
@@ -359,7 +361,7 @@
           wSnap.forEach(d => {
             totalWithdrawnPaise += (Number(d.data().amountPaise) || 0);
           });
-          document.getElementById("valTotalWithdrawn").textContent = formatRupees(totalWithdrawnPaise);
+          animateRupeeCounter(document.getElementById("valTotalWithdrawn"), totalWithdrawnPaise, 1000);
 
           // If user has past withdrawals, mark UPI task in onboarding
           if (!wSnap.empty) {

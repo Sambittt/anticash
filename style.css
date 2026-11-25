@@ -1524,3 +1524,275 @@ textarea:focus-visible {
   flex-wrap: wrap;
   gap: 0.5rem;
 }
+
+/* ==========================================================================
+   MOTION GRAPHICS & ANIMATIONS
+   ========================================================================== */
+
+/* Hero Section Motion Canvas Container */
+.home-hero-wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-motion-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.75;
+}
+
+.hero-grid {
+  position: relative;
+  z-index: 1;
+}
+
+/* 3D Perspective Sample Card */
+.sample-preview-wrap {
+  perspective: 1000px;
+}
+
+.sample-preview-card {
+  transform-style: preserve-3d;
+  transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 250ms ease;
+  will-change: transform;
+}
+.sample-preview-card:hover {
+  box-shadow: 0 16px 36px rgba(15, 107, 79, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* Animated Task-to-UPI Payment Rail Graphic */
+.payment-rail-graphic {
+  background-color: var(--color-surface-subtle);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 0.875rem 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.payment-rail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.payment-rail-title {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-secondary);
+}
+
+.payment-rail-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.live-dot-ping {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--color-accent);
+  box-shadow: 0 0 0 2px rgba(15, 107, 79, 0.2);
+  animation: livePing 2s ease-in-out infinite;
+}
+@keyframes livePing {
+  0% { transform: scale(0.95); opacity: 0.7; }
+  50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 0 4px rgba(15, 107, 79, 0.15); }
+  100% { transform: scale(0.95); opacity: 0.7; }
+}
+
+.payment-rail-track {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.rail-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  z-index: 2;
+  position: relative;
+  text-align: center;
+}
+
+.rail-node-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-secondary);
+  position: relative;
+  transition: all 300ms ease;
+}
+
+.rail-node.complete .rail-node-icon {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(15, 107, 79, 0.12);
+}
+
+.rail-node.pending .rail-node-icon {
+  border-color: var(--status-pending-text);
+  color: var(--status-pending-text);
+  box-shadow: 0 0 0 3px rgba(183, 121, 31, 0.12);
+}
+
+.rail-node.upi .rail-node-icon {
+  border-color: var(--color-accent);
+  background-color: var(--status-confirmed-bg);
+  color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(15, 107, 79, 0.15);
+}
+
+.rail-node-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--color-text-main);
+  white-space: nowrap;
+}
+
+.rail-node-sub {
+  font-size: 0.625rem;
+  color: var(--color-text-tertiary);
+  white-space: nowrap;
+}
+
+.rail-connector {
+  flex: 1;
+  height: 2px;
+  position: relative;
+  margin: 0 0.5rem;
+  margin-bottom: 1.25rem;
+  overflow: hidden;
+  background-color: var(--color-border);
+  border-radius: 1px;
+}
+
+.rail-pulse-line {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+  animation: pulseRail 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.rail-connector.second .rail-pulse-line {
+  animation-delay: 1.2s;
+}
+
+@keyframes pulseRail {
+  0% { left: -50%; }
+  100% { left: 150%; }
+}
+
+.spin-slow {
+  animation: spinIcon 10s linear infinite;
+}
+@keyframes spinIcon {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Shimmer on progress bar */
+.progress-fill {
+  position: relative;
+  overflow: hidden;
+}
+.progress-fill::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: shimmerProgress 2.5s infinite;
+}
+@keyframes shimmerProgress {
+  0% { left: -100%; }
+  100% { left: 200%; }
+}
+
+/* Scroll-Triggered Reveals */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 650ms cubic-bezier(0.16, 1, 0.3, 1), transform 650ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 90ms; }
+.reveal-delay-2 { transition-delay: 180ms; }
+.reveal-delay-3 { transition-delay: 270ms; }
+.reveal-delay-4 { transition-delay: 360ms; }
+
+/* Interactive Hover Lifts */
+.way-card, .metric-card, .onboarding-item {
+  transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+}
+.way-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-border-hover);
+  box-shadow: 0 8px 24px rgba(15, 107, 79, 0.06);
+}
+
+.btn-primary {
+  transition: background-color var(--transition-default), transform 150ms ease, box-shadow 150ms ease;
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(15, 107, 79, 0.22);
+}
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .reveal-on-scroll {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .rail-pulse-line,
+  .progress-fill::after,
+  .spin-slow,
+  .live-dot-ping {
+    animation: none !important;
+  }
+  .hero-motion-canvas {
+    display: none !important;
+  }
+  .sample-preview-card {
+    transform: none !important;
+    transition: none !important;
+  }
+}

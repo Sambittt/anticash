@@ -57,8 +57,10 @@
 
   <main id="main-content">
     
-    <!-- 1. Hero Section -->
-    <section class="home-section" style="padding-top: 4.5rem; padding-bottom: 4rem;">
+    <!-- 1. Hero Section with Ambient Motion Canvas -->
+    <section class="home-section home-hero-wrap" style="padding-top: 4.5rem; padding-bottom: 4rem;">
+      <canvas id="heroMotionCanvas" class="hero-motion-canvas" aria-hidden="true"></canvas>
+
       <div class="container">
         <div class="hero-grid">
           
@@ -90,7 +92,7 @@
             </div>
           </div>
 
-          <!-- Right Column: Product Preview Sample Wallet Card -->
+          <!-- Right Column: Interactive Sample Preview Card with Live Rail -->
           <div class="sample-preview-wrap">
             <div class="sample-preview-card">
               <div class="sample-card-header">
@@ -98,18 +100,62 @@
                 <span class="sample-tag">Sample view</span>
               </div>
 
+              <!-- Animated Task-to-UPI Flow Graphic -->
+              <div class="payment-rail-graphic" aria-label="Live payout verification rail">
+                <div class="payment-rail-header">
+                  <span class="payment-rail-title">Live payout lifecycle</span>
+                  <span class="payment-rail-live-badge">
+                    <span class="live-dot-ping"></span>
+                    Verified
+                  </span>
+                </div>
+                <div class="payment-rail-track">
+                  <div class="rail-node complete">
+                    <div class="rail-node-icon" title="Offer completed">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                    <span class="rail-node-label">1. Task Done</span>
+                    <span class="rail-node-sub">Offer completed</span>
+                  </div>
+
+                  <div class="rail-connector">
+                    <div class="rail-pulse-line"></div>
+                  </div>
+
+                  <div class="rail-node pending">
+                    <div class="rail-node-icon" title="Standard partner quality audit hold">
+                      <svg class="spin-slow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    </div>
+                    <span class="rail-node-label">2. Partner Hold</span>
+                    <span class="rail-node-sub">Audit window</span>
+                  </div>
+
+                  <div class="rail-connector second">
+                    <div class="rail-pulse-line"></div>
+                  </div>
+
+                  <div class="rail-node upi">
+                    <div class="rail-node-icon" title="Direct bank transfer via UPI">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    </div>
+                    <span class="rail-node-label">3. Direct UPI</span>
+                    <span class="rail-node-sub">Instant to bank</span>
+                  </div>
+                </div>
+              </div>
+
               <div class="sample-metric-row">
                 <div class="sample-metric-item">
                   <span class="sample-metric-lbl">Available</span>
-                  <span class="sample-metric-val">₹340.00</span>
+                  <span class="sample-metric-val" id="sampleAvailVal">₹340.00</span>
                 </div>
                 <div class="sample-metric-item">
                   <span class="sample-metric-lbl">Pending</span>
-                  <span class="sample-metric-val" style="color: var(--status-pending-text);">₹120.00</span>
+                  <span class="sample-metric-val" id="samplePendVal" style="color: var(--status-pending-text);">₹120.00</span>
                 </div>
                 <div class="sample-metric-item">
                   <span class="sample-metric-lbl">Withdrawn</span>
-                  <span class="sample-metric-val">₹900.00</span>
+                  <span class="sample-metric-val" id="sampleWithVal">₹900.00</span>
                 </div>
               </div>
 
@@ -119,7 +165,7 @@
                   <span style="font-family: var(--font-mono); font-weight: 600;">₹340.00 of ₹300.00</span>
                 </div>
                 <div class="progress-container" style="margin: 0;">
-                  <div class="progress-fill" style="width: 100%;"></div>
+                  <div class="progress-fill" id="sampleProgressBarFill" style="width: 100%;"></div>
                 </div>
               </div>
 
@@ -152,21 +198,21 @@
       <hr class="hairline">
 
       <!-- 2. Facts Strip -->
-      <section class="container" style="padding-top: 2rem; padding-bottom: 2rem;">
+      <section class="container reveal-on-scroll" style="padding-top: 2rem; padding-bottom: 2rem;">
         <div class="facts-strip-grid">
-          <div class="fact-item">
+          <div class="fact-item reveal-on-scroll reveal-delay-1">
             <span class="fact-title">Rs 300 minimum withdrawal</span>
             <span class="fact-sub">Low, reachable threshold</span>
           </div>
-          <div class="fact-item">
+          <div class="fact-item reveal-on-scroll reveal-delay-2">
             <span class="fact-title">Payouts by UPI</span>
             <span class="fact-sub">Direct to your bank account</span>
           </div>
-          <div class="fact-item">
+          <div class="fact-item reveal-on-scroll reveal-delay-3">
             <span class="fact-title">Sign in with Google</span>
             <span class="fact-sub">No passwords to remember</span>
           </div>
-          <div class="fact-item">
+          <div class="fact-item reveal-on-scroll reveal-delay-4">
             <span class="fact-title">Free to join</span>
             <span class="fact-sub">No deposits, ever</span>
           </div>
@@ -176,7 +222,7 @@
       <hr class="hairline">
 
       <!-- 3. Ways to Earn (2x2 Grid) -->
-      <section class="home-section">
+      <section class="home-section reveal-on-scroll">
         <div class="container">
           <h2 class="section-title">Ways to earn</h2>
           <p class="section-desc">
@@ -185,7 +231,7 @@
 
           <div class="ways-grid-2x2">
             <!-- 1. Surveys -->
-            <div class="way-card">
+            <div class="way-card reveal-on-scroll reveal-delay-1">
               <div class="way-icon-box">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
               </div>
@@ -198,7 +244,7 @@
             </div>
 
             <!-- 2. App Offers -->
-            <div class="way-card">
+            <div class="way-card reveal-on-scroll reveal-delay-2">
               <div class="way-icon-box">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
               </div>
@@ -211,7 +257,7 @@
             </div>
 
             <!-- 3. Game Offers -->
-            <div class="way-card">
+            <div class="way-card reveal-on-scroll reveal-delay-3">
               <div class="way-icon-box">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="6 3 18 3 21 16 16 21 8 21 3 16 6 3"></polygon><line x1="12" y1="8" x2="12" y2="12"></line><line x1="10" y1="10" x2="14" y2="10"></line></svg>
               </div>
@@ -224,7 +270,7 @@
             </div>
 
             <!-- 4. Video & Other Offers -->
-            <div class="way-card">
+            <div class="way-card reveal-on-scroll reveal-delay-4">
               <div class="way-icon-box">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
               </div>
@@ -246,7 +292,7 @@
       <hr class="hairline">
 
       <!-- 4. How It Works (Numbered Steps) -->
-      <section class="home-section" id="how-it-works">
+      <section class="home-section reveal-on-scroll" id="how-it-works">
         <div class="container">
           <h2 class="section-title">How it works</h2>
           <p class="section-desc">
@@ -254,7 +300,7 @@
           </p>
 
           <div class="steps-stack">
-            <div class="step-row">
+            <div class="step-row reveal-on-scroll reveal-delay-1">
               <span class="step-num">01</span>
               <div>
                 <h3 class="step-heading">Sign in with Google</h3>
@@ -264,7 +310,7 @@
               </div>
             </div>
 
-            <div class="step-row">
+            <div class="step-row reveal-on-scroll reveal-delay-2">
               <span class="step-num">02</span>
               <div>
                 <h3 class="step-heading">Pick an offer and complete every requirement</h3>
@@ -274,7 +320,7 @@
               </div>
             </div>
 
-            <div class="step-row">
+            <div class="step-row reveal-on-scroll reveal-delay-3">
               <span class="step-num">03</span>
               <div>
                 <h3 class="step-heading">Partner confirms it (Pending hold)</h3>
@@ -284,7 +330,7 @@
               </div>
             </div>
 
-            <div class="step-row">
+            <div class="step-row reveal-on-scroll reveal-delay-4">
               <span class="step-num">04</span>
               <div>
                 <h3 class="step-heading">Request UPI withdrawal once Available reaches Rs 300</h3>
@@ -300,7 +346,7 @@
       <hr class="hairline">
 
       <!-- 5. Payout Details Table -->
-      <section class="home-section">
+      <section class="home-section reveal-on-scroll">
         <div class="container">
           <h2 class="section-title">Payout details</h2>
           <p class="section-desc">
@@ -590,10 +636,12 @@
   <script type="module">
     import { initAuth, loginWithGoogle, onUserChange } from "./auth.js";
     import { formatRupees } from "./app-config.js";
+    import { initMotion } from "./motion.js";
 
     document.addEventListener("DOMContentLoaded", () => {
       initAuth();
       setupFaqAccordion();
+      initMotion();
 
       const heroPrimaryBtn = document.getElementById("heroPrimaryBtn");
       const closingSigninBtn = document.getElementById("closingSigninBtn");
