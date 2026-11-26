@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
+Disallow: /dashboard.html
+Disallow: /earn.html
+Disallow: /withdraw.html
+Disallow: /admin.html
 
 Sitemap: https://anticash.tech/sitemap.xml

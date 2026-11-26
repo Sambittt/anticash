@@ -1,325 +1,137 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-auth="loading" data-owner="no">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Earn Money — AntiCash</title>
-  <meta name="description" content="Browse available partner surveys, app offers, and research tasks on AntiCash.">
-  <meta name="robots" content="noindex, nofollow">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <meta name="theme-color" content="#F7F5F0">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Earn | AntiCash</title>
+  <meta name="description" content="Partner offers you can complete to earn rupees.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#f7f5f0">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/theme.css">
 </head>
 <body>
-  <a href="#main-content" class="skip-link">Skip to main content</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><polyline points="5 12 10 17 19 7"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="g-logo" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></symbol>
+</svg>
+<!-- ================= HEADER ================= -->
+<header class="site-header" id="siteHeader">
+  <div class="wrap header-inner">
+    <a href="index.html" class="wordmark" aria-label="AntiCash home">Anti<span>Cash</span></a>
 
-  <!-- Header -->
-  <header class="site-header">
-    <div class="container header-inner">
-      <a href="index.html" class="wordmark">AntiCash</a>
+    <nav class="nav" aria-label="Main" data-show="out">
+      <a href="index.html#products">Products</a>
+      <a href="index.html#how">How it works</a>
+      <a href="index.html#links">Short links</a>
+      <a href="index.html#faq">FAQ</a>
+    </nav>
+    <nav class="nav" aria-label="Main" data-show="in">
+      <a href="earn.html">Earn</a>
+      <a href="links.html">Links</a>
+      <a href="dashboard.html">Wallet</a>
+      <a href="withdraw.html">Withdraw</a>
+      <a href="contact.html">Help</a>
+    </nav>
 
-      <nav aria-label="Primary navigation">
-        <ul class="nav-menu">
-          <li><a href="earn.html" class="nav-menu-link active">Earn</a></li>
-          <li><a href="dashboard.html" class="nav-menu-link">Wallet</a></li>
-          <li><a href="withdraw.html" class="nav-menu-link">Withdraw</a></li>
-          <li><a href="contact.html" class="nav-menu-link">Help</a></li>
-        </ul>
-      </nav>
+    <div class="header-right">
+      <div data-show="loading"><div class="skeleton skel-pill" aria-hidden="true"></div></div>
 
-      <div class="header-right-area">
-        <div class="header-auth-slot" id="navUserArea">
-          <div class="header-skeleton" aria-hidden="true"></div>
-        </div>
-        <button type="button" class="btn-mobile-nav" id="mobileNavToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobileNavDrawer">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-        </button>
-      </div>
-    </div>
-  </header>
+      <button class="btn btn-primary btn-sm hide-sm" data-show="out" data-action="signin" type="button">Sign in</button>
 
-  <!-- Mobile Drawer -->
-  <div class="mobile-nav-drawer" id="mobileNavDrawer" aria-label="Mobile navigation">
-    <a href="earn.html" class="mobile-drawer-link">Earn</a>
-    <a href="dashboard.html" class="mobile-drawer-link">Wallet</a>
-    <a href="withdraw.html" class="mobile-drawer-link">Withdraw</a>
-    <a href="contact.html" class="mobile-drawer-link">Help</a>
-    <a href="terms.html" class="mobile-drawer-link">Terms</a>
-    <a href="privacy.html" class="mobile-drawer-link">Privacy</a>
-  </div>
-
-  <main id="main-content" class="container" style="padding-top: 2.5rem; padding-bottom: 4rem;">
-    
-    <div style="max-width: 800px; margin-bottom: 2rem;">
-      <h1 style="font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.35rem;">Partner offers</h1>
-      <p style="color: var(--color-text-secondary); font-size: 0.9375rem; line-height: 1.6;">
-        Complete surveys, test new applications, and participate in market research. Earnings are recorded in real time and verified by partner advertisers before confirmation.
-      </p>
-    </div>
-
-    <!-- Dynamic Offerwall or Honest Status Container -->
-    <div id="offerwallContainer">
-      <div class="card" style="text-align: center; padding: 3rem 1.5rem;">
-        <span class="skeleton-figure" style="width: 220px; height: 1.5rem; margin-bottom: 0.75rem;"></span>
-        <p style="color: var(--color-text-secondary); font-size: 0.875rem;">Loading partner networks...</p>
-      </div>
-    </div>
-
-    <!-- Tips for Getting Credited -->
-    <div style="margin-top: 3.5rem;">
-      <div class="card" style="padding: 2rem;">
-        <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">Tips for getting credited</h2>
-        <p style="color: var(--color-text-secondary); font-size: 0.9375rem; line-height: 1.6; margin-bottom: 1.25rem;">
-          Advertisers verify completions automatically through tracking identifiers. Follow these practices to avoid cancelled rewards:
-        </p>
-
-        <ul class="safety-list" style="margin: 0;">
-          <li class="safety-item">
-            <svg class="safety-icon-bullet" style="color: var(--color-accent);" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            <span><strong>Finish every requirement:</strong> Read all offer criteria before clicking. Some tasks require completing a tutorial, registering an account, or verifying your email.</span>
-          </li>
-          <li class="safety-item">
-            <svg class="safety-icon-bullet" style="color: var(--color-accent);" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            <span><strong>Do not use VPNs, proxies, or Tor:</strong> Partner tracking systems reject requests routed through data centers or proxy networks. Accounts using VPNs are banned.</span>
-          </li>
-          <li class="safety-item">
-            <svg class="safety-icon-bullet" style="color: var(--color-accent);" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            <span><strong>Keep apps installed:</strong> For mobile application testing, keep the installed application open for the required duration and do not uninstall immediately after download.</span>
-          </li>
-          <li class="safety-item">
-            <svg class="safety-icon-bullet" style="color: var(--color-accent);" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            <span><strong>Use the same personal device:</strong> Do not start an offer on your mobile phone and finish it on a laptop. Complete the entire flow within the same browser session.</span>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-  </main>
-
-  <!-- Multi-column Footer -->
-  <footer class="site-footer">
-    <div class="container footer-columns-grid">
-      <div class="footer-col-brand">
-        <span class="footer-brand">AntiCash</span>
-        <p class="footer-disclaimer" style="max-width: 340px;">
-          Direct UPI rewards for completing verified advertiser surveys and application offers in India.
-        </p>
-      </div>
-
-      <div>
-        <div class="footer-col-title">Product</div>
-        <ul class="footer-col-links">
-          <li><a href="earn.html">Earn</a></li>
-          <li><a href="dashboard.html">Wallet</a></li>
-          <li><a href="withdraw.html">Withdraw</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <div class="footer-col-title">Support</div>
-        <ul class="footer-col-links">
-          <li><a href="contact.html">Help</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <div class="footer-col-title">Legal</div>
-        <ul class="footer-col-links">
-          <li><a href="terms.html">Terms</a></li>
-          <li><a href="privacy.html">Privacy</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="container footer-bottom-line">
-      <span>AntiCash (anticash.tech).</span>
-      <span>Offers subject to advertiser availability. No guaranteed income.</span>
-    </div>
-  </footer>
-
-  <script type="module">
-    import { initAuth, requireAuth, onUserChange } from "./auth.js";
-    import { APP_CONFIG } from "./app-config.js";
-
-    document.addEventListener("DOMContentLoaded", () => {
-      initAuth();
-      requireAuth();
-
-      // Mark that user browsed offers (ticks off step 2 in onboarding checklist)
-      localStorage.setItem("anticash_has_browsed_offers", "true");
-
-      onUserChange((user) => {
-        if (!user) return;
-        renderOfferwalls(user);
-      });
-
-      function renderOfferwalls(user) {
-        const container = document.getElementById("offerwallContainer");
-        if (!container) return;
-
-        const activeNetworks = (APP_CONFIG.networks || []).filter(n => n.active);
-
-        // Scenario 1: Not configured yet -> Honest Status Panel + 4 Ways to Earn + How It Works
-        if (activeNetworks.length === 0) {
-          container.innerHTML = `
-            <div class="card" style="padding: 2.5rem 2rem; margin-bottom: 2rem;">
-              <div style="max-width: 600px;">
-                <span class="badge-status pending" style="margin-bottom: 0.75rem;">Integration status</span>
-                <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--color-text-main);">
-                  Offers are not live yet
-                </h2>
-                <p style="color: var(--color-text-secondary); font-size: 0.9375rem; line-height: 1.6; margin-bottom: 1rem;">
-                  Offers are not live yet. We are waiting for partner approval. Your account is ready, and nothing is lost by signing up early.
-                </p>
-                <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-text-tertiary); background-color: var(--color-surface-subtle); padding: 0.5rem 0.75rem; border-radius: 4px; display: inline-block;">
-                  Your member UID: ${escapeHtml(user.uid)}
-                </div>
-              </div>
-            </div>
-
-            <div style="margin-bottom: 2rem;">
-              <h2 class="section-title" style="font-size: 1.25rem; margin-bottom: 0.25rem;">Available offer formats</h2>
-              <p class="section-desc" style="margin-bottom: 1.5rem;">Here is what will be available once partner networks complete approval:</p>
-              
-              <div class="ways-grid-2x2">
-                <div class="way-card">
-                  <div class="way-icon-box">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                  </div>
-                  <div>
-                    <h3 class="way-name">Surveys</h3>
-                    <p class="way-text">Consumer questionnaires from research agencies about shopping, media, and products.</p>
-                  </div>
-                </div>
-
-                <div class="way-card">
-                  <div class="way-icon-box">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
-                  </div>
-                  <div>
-                    <h3 class="way-name">App offers</h3>
-                    <p class="way-text">Install, register, or test new mobile applications according to specified criteria.</p>
-                  </div>
-                </div>
-
-                <div class="way-card">
-                  <div class="way-icon-box">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="6 3 18 3 21 16 16 21 8 21 3 16 6 3"></polygon><line x1="12" y1="8" x2="12" y2="12"></line><line x1="10" y1="10" x2="14" y2="10"></line></svg>
-                  </div>
-                  <div>
-                    <h3 class="way-name">Game offers</h3>
-                    <p class="way-text">Reach specific gameplay milestones or levels in featured mobile titles.</p>
-                  </div>
-                </div>
-
-                <div class="way-card">
-                  <div class="way-icon-box">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
-                  </div>
-                  <div>
-                    <h3 class="way-name">Video and other offers</h3>
-                    <p class="way-text">Short promotional clips and quick brand engagement tasks throughout the day.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="card" style="padding: 2rem;">
-              <h2 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 1rem;">How tasks work once active</h2>
-              <div class="steps-stack">
-                <div class="step-row" style="padding: 0.75rem 0;">
-                  <span class="step-num">01</span>
-                  <div>
-                    <h3 class="step-heading" style="font-size: 0.9375rem;">Select an offer</h3>
-                    <p class="step-body" style="font-size: 0.875rem;">Choose a campaign matching your device and read all listed requirements.</p>
-                  </div>
-                </div>
-                <div class="step-row" style="padding: 0.75rem 0;">
-                  <span class="step-num">02</span>
-                  <div>
-                    <h3 class="step-heading" style="font-size: 0.9375rem;">Complete requirements</h3>
-                    <p class="step-body" style="font-size: 0.875rem;">Finish the questionnaire or test without proxies, VPNs, or emulators.</p>
-                  </div>
-                </div>
-                <div class="step-row" style="padding: 0.75rem 0;">
-                  <span class="step-num">03</span>
-                  <div>
-                    <h3 class="step-heading" style="font-size: 0.9375rem;">Confirmation hold</h3>
-                    <p class="step-body" style="font-size: 0.875rem;">Earnings land in pending while the partner validates submission quality (up to 7 days).</p>
-                  </div>
-                </div>
-                <div class="step-row" style="padding: 0.75rem 0;">
-                  <span class="step-num">04</span>
-                  <div>
-                    <h3 class="step-heading" style="font-size: 0.9375rem;">Withdraw to UPI</h3>
-                    <p class="step-body" style="font-size: 0.875rem;">Once available balance reaches Rs 300, request transfer directly to your bank account.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          `;
-          return;
-        }
-
-        // Scenario 2: Configured offerwalls
-        let html = `
-          <div class="notice" style="margin-top: 0; margin-bottom: 1.5rem;">
-            <strong>Partner note:</strong> Offers come from our partners. Complete every step shown on the offer, and allow time for confirmation.
+      <div class="header-right" data-show="in" style="gap:12px">
+        <a href="dashboard.html" class="balance-chip" aria-label="Available balance">BALANCE <b class="skeleton" data-field="available-chip" style="min-width:64px;display:inline-block;height:18px">&nbsp;</b></a>
+        <div class="user-menu" id="userMenu">
+          <button class="avatar-btn" type="button" aria-haspopup="true" aria-expanded="false" id="userBtn" aria-label="Account menu">
+            <span class="avatar" data-user-initial>&nbsp;</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" class="ico" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="menu" role="menu">
+            <a href="dashboard.html" role="menuitem">Wallet</a>
+            <a href="earn.html" role="menuitem">Earn</a>
+            <a href="links.html" role="menuitem">Short links</a>
+            <a href="withdraw.html" role="menuitem">Withdraw</a>
+            <a href="admin.html" role="menuitem" data-show="owner">Admin</a>
+            <button type="button" role="menuitem" data-action="signout">Sign out</button>
           </div>
-          <div class="offer-network-list">
-        `;
+        </div>
+      </div>
 
-        activeNetworks.forEach((net) => {
-          const param = net.userIdParam || "uid";
-          const separator = net.url.includes("?") ? "&" : "?";
-          const fullUrl = `${net.url}${separator}${encodeURIComponent(param)}=${encodeURIComponent(user.uid)}`;
+      <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="drawer" type="button"><span></span></button>
+    </div>
+  </div>
+</header>
 
-          if (net.type === "iframe") {
-            html += `
-              <div class="card" style="grid-column: 1 / -1; padding: 1.25rem;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
-                  <div>
-                    <span class="network-badge">${escapeHtml(net.badge || "Partner Network")}</span>
-                    <h3 style="font-size: 1.125rem; font-weight: 600;">${escapeHtml(net.name)}</h3>
-                  </div>
-                  <a href="${fullUrl}" target="_blank" rel="noopener noreferrer" class="btn-secondary btn-sm">Open in new tab</a>
-                </div>
-                <div style="width: 100%; min-height: 650px; background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-card); overflow: hidden;">
-                  <iframe src="${fullUrl}" title="${escapeHtml(net.name)}" style="width: 100%; height: 700px; border: none;" loading="lazy"></iframe>
-                </div>
-              </div>
-            `;
-          } else {
-            html += `
-              <div class="network-item">
-                <div>
-                  <span class="network-badge">${escapeHtml(net.badge || "Offerwall")}</span>
-                  <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 0.5rem;">${escapeHtml(net.name)}</h3>
-                  <p style="color: var(--color-text-secondary); font-size: 0.875rem; line-height: 1.55;">
-                    ${escapeHtml(net.description || "Complete available surveys and app offers.")}
-                  </p>
-                </div>
-                <div>
-                  <a href="${fullUrl}" target="_blank" rel="noopener noreferrer" class="btn-primary" style="width: 100%;">
-                    <span>Open offers</span>
-                  </a>
-                </div>
-              </div>
-            `;
-          }
-        });
-
-        html += `</div>`;
-        container.innerHTML = html;
-      }
-
-      function escapeHtml(str) {
-        const div = document.createElement("div");
-        div.textContent = str;
-        return div.innerHTML;
-      }
-    });
-  </script>
+<div class="drawer" id="drawer">
+  <div data-show="out">
+    <a class="dl" href="index.html#products">Products</a>
+    <a class="dl" href="index.html#how">How it works</a>
+    <a class="dl" href="index.html#links">Short links</a>
+    <a class="dl" href="index.html#faq">FAQ</a>
+    <button class="btn btn-primary" type="button" data-action="signin">
+      <span class="g-badge"><svg><use href="#g-logo"/></svg></span> Sign in with Google
+    </button>
+  </div>
+  <div data-show="in">
+    <a class="dl" href="earn.html">Earn</a>
+    <a class="dl" href="links.html">Short links</a>
+    <a class="dl" href="dashboard.html">Wallet</a>
+    <a class="dl" href="withdraw.html">Withdraw</a>
+    <a class="dl" href="contact.html">Help</a>
+    <a class="dl" href="admin.html" data-show="owner">Admin</a>
+    <button class="btn btn-ghost" type="button" data-action="signout">Sign out</button>
+  </div>
+</div>
+<div class="banner" id="bannedBanner" role="alert" hidden>Your account is suspended. Offers and payouts are disabled. Contact support@anticash.tech if you think this is a mistake.</div>
+<main id="main">
+  <div class="wrap" data-show="loading" aria-hidden="true" style="padding:56px 24px 96px">
+    <div class="skeleton" style="height:16px;width:120px;margin-bottom:22px"></div>
+    <div class="skeleton" style="height:52px;width:min(460px,100%);margin-bottom:28px"></div>
+    <div class="skeleton" style="height:120px;width:100%;margin-bottom:16px"></div>
+    <div class="skeleton" style="height:260px;width:100%"></div>
+  </div>
+  <div class="wrap" data-show="out">
+    <div class="gate rise">
+      <span class="eyebrow"><span class="dot"></span>Members only</span>
+      <h2>Sign in to see offers</h2>
+      <p>Offers are matched to your account, so you need to be signed in. It takes a few seconds with Google.</p>
+      <button class="btn btn-primary" type="button" data-action="signin"><span class="g-badge"><svg><use href="#g-logo"/></svg></span>Sign in with Google</button>
+    </div>
+  </div>
+  <div data-show="in">
+    <div class="wrap">
+      <section class="page-head">
+        <span class="eyebrow rise"><span class="dot"></span>Earn</span>
+        <h1 class="rise" style="--d:1;margin-top:18px">Offers from our partners.</h1>
+        <p class="sub rise" style="--d:2">Finish every step listed on an offer. Rewards show as Pending first, then move to Available when the partner confirms.</p>
+      </section>
+      <div class="page-body" id="offerwallContainer">
+        <div class="skeleton" style="height:200px"></div>
+      </div>
+    </div>
+  </div>
+</main>
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a href="index.html" class="wordmark">Anti<span>Cash</span></a>
+        <p class="foot-about">Rewards from partner offers, and short links that pay. Made for users in India.</p>
+      </div>
+      <div><h4>Product</h4><ul><li><a href="earn.html">Rewards</a></li><li><a href="links.html">Short links</a></li><li><a href="index.html#how">How it works</a></li></ul></div>
+      <div><h4>Support</h4><ul><li><a href="contact.html">Contact</a></li><li><a href="index.html#faq">FAQ</a></li><li><a href="about.html">About</a></li></ul></div>
+      <div><h4>Legal</h4><ul><li><a href="terms.html">Terms</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="contact.html#abuse">Report abuse</a></li></ul></div>
+    </div>
+    <div class="foot-bottom"><span>&copy; 2026 AntiCash</span><span>Rewards depend on partner confirmation. Not employment, not guaranteed income.</span></div>
+  </div>
+</footer>
+<script src="js/shell.js"></script>
+<script type="module" src="js/earn.js"></script>
 </body>
 </html>

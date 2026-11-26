@@ -1,92 +1,55 @@
-# AntiCash Setup and Deployment Guide
+# AntiCash setup (do these in order)
 
-This guide covers deployment of AntiCash (anticash.tech) using the Indian rupee and paise monetary architecture.
+Folders: the website is the files in this folder (GitHub Pages). The server code is in `functions/` (Firebase). Nothing works for real money until step 5 is done.
 
----
+## 1. Find your owner ID
+1. Open the site, sign in with Google, open the Wallet page.
+2. Under "Your account" copy the Member ID (28 characters).
 
-## Configuration Checklist (Marked "EDIT ME")
+## 2. Paste it in 3 places
+1. `app-config.js`: replace `EDIT_ME_OWNER_UID`.
+2. `firestore.rules`: replace `EDIT_ME_OWNER_UID` (top of the file).
+3. `functions/.env`: copy `functions/.env.example` to `functions/.env` and fill in `OWNER_UID`.
 
-1. **app-config.js**: Set `ownerUid` to your Firebase Auth UID.
-2. **firestore.rules**: Set `request.auth.uid == "EDIT_ME_OWNER_UID"` to your Firebase Auth UID.
-3. **functions/index.js**: Set `ownerUid` and configure network secret keys and `rewardMultiplierToPaise`.
-4. **firebase-config.js**: Verify Firebase web app keys are present.
+## 3. Fill the other secrets in `functions/.env`
+- `TOKEN_SECRET`: any long random text (run `openssl rand -hex 32`). Short links refuse to work without it.
+- `IP_SALT`: any random text.
+- `OFFERWALL_SECRET_NET1` / `OFFERWALL_SECRET_NET2`: from your offer partners.
+Never put `functions/.env` on GitHub (it is already in `.gitignore`).
 
----
+## 4. Billing safety
+Firebase Cloud Functions need the Blaze plan. In Google Cloud Billing add a budget alert (for example Rs 500) so you get an email if usage jumps.
 
-## 1. Firebase Project Setup
-
-1. Open the [Firebase Console](https://console.firebase.google.com/) and navigate to project `anticash-16001`.
-2. Enable Authentication:
-   - In **Build -> Authentication -> Sign-in method**, ensure **Google** is enabled.
-   - In **Settings -> Authorized domains**, confirm that `anticash.tech`, `sambittt.github.io`, and `localhost` are present.
-3. Enable Firestore Database:
-   - In **Build -> Firestore Database**, start in production mode (location: `asia-south1` or `us-central1`).
-
----
-
-## 2. Upgrade to Blaze and Set a Budget Alert
-
-1. Cloud Functions (2nd Gen) and scheduled maturation require the **Blaze (Pay as you go)** plan.
-2. In the Firebase console (bottom left corner), upgrade to Blaze.
-3. In Google Cloud Console -> **Billing -> Budgets & alerts**, set an alert at **$1.00 (approximately ₹85)** to receive email notifications upon unexpected traffic.
-
----
-
-## 3. Retrieve Your Owner UID
-
-1. Visit [https://anticash.tech/](https://anticash.tech/) and click **Sign in with Google**.
-2. Open Firebase Console -> **Authentication -> Users**.
-3. Copy your **User UID** string.
-4. Replace `"EDIT_ME_OWNER_UID"` with your UID in:
-   - `app-config.js`
-   - `firestore.rules`
-   - `functions/index.js`
-
----
-
-## 4. Deploy Rules and Cloud Functions
-
-From the root project directory:
-```bash
-# 1. Deploy Firestore Security Rules
-firebase deploy --only firestore:rules
-
-# 2. Deploy Cloud Functions
-cd functions
-npm install
-cd ..
+## 5. Deploy the server side (from this folder)
+```
+npm install --prefix functions
+firebase deploy --only firestore:rules,firestore:indexes
 firebase deploy --only functions
 ```
+Indexes take a few minutes to build. Until they finish, admin lists and "Your links" can show an error.
 
-Upon completion, Firebase outputs your postback URL:
-```text
-https://us-central1-anticash-16001.cloudfunctions.net/postback
-```
+## 6. Publish the website
+Push all files to the `Sambittt/anticash` repo (main branch). Wait 1 to 2 minutes, then hard refresh (Ctrl+Shift+R). `404.html` must be in the repo: it is what makes `anticash.tech/l/CODE` links work on GitHub Pages.
 
----
+## 7. Offer partners
+Put each network's URL in `app-config.js` under `networks` and set `active: true`. Give each partner this postback address pattern from the Firebase console (function `postback`).
 
-## 5. Register Postback URL in Partner Networks
+## 8. Ads
+Open `js/ads.js`.
+- **AdSense** (About, Privacy, Terms, Contact pages only): paste your publisher id in `adsensePublisherId` (looks like `ca-pub-1234567890123456`) and put the same id in `ads.txt`. Apply for AdSense at adsense.google.com once the site has real content and traffic.
+- **Short link page ads** (`go.html`): paste the ad code from a network that allows short links (for example Adsterra, Monetag, PropellerAds) into `goTopSnippet` and `goBottomSnippet`.
 
-In each offerwall publisher dashboard:
-1. Go to the Postback / Webhook settings section.
-2. Set the postback URL to:
-   ```text
-   https://us-central1-anticash-16001.cloudfunctions.net/postback?network=network1&uid={user_id}&tx_id={transaction_id}&reward={currency}&status={status}&sig={signature}&ip={user_ip}
-   ```
-   (Replace placeholder macros with the exact names used by your partner network).
-3. Set `rewardMultiplierToPaise` in `functions/index.js` to match the network's reward currency:
-   - If the network sends 1 unit = ₹1 (100 paise), multiplier is `100`.
-   - If the network sends amount in paise directly, multiplier is `1`.
-4. Copy the secret key from the network dashboard and paste it into `functions/index.js` under `CONFIG.networks.network1.secret`.
+AdSense rules to know: it does not allow paying people for views or clicks, and it usually rejects pages built around a countdown before a link. That is why AdSense is never loaded on Earn, Wallet, Withdraw, Links or the visitor page.
 
----
+## 9. Short link rates
+Rates are in two places and must match: `LINK_RATES` in `app-config.js` (shown to users) and `RATES_PER_1000` in `functions/lib.js` (what is actually paid). Also `RATES` in `js/home.js` (the landing page calculator). Change them only when your ad network pays enough to cover them. Check your real ad earnings before promising any rate.
 
-## 6. Publish Updates to GitHub Pages
+## 10. Running it
+Admin page (menu, then Admin): Overview, Withdrawals (pay to UPI, then Mark paid), Members (ban), Links (disable, block a website), Reports, Partner log.
+Block bad websites early. Phishing or malware links on your domain can get `anticash.tech` flagged by Google.
 
-To deploy changes to the live site:
-```bash
-git add .
-git commit -m "Update AntiCash platform: real rupees architecture and refined design"
-git push origin main
-```
-GitHub Pages will automatically build and serve the site on https://anticash.tech/.
+## Security notes
+- Balances can only be changed by Cloud Functions; browser rules block everything else.
+- Short link timer is checked on the server, so it cannot be skipped in the browser.
+- Visitor IPs are stored only as a one-way hash.
+- The Firebase web key in `firebase-config.js` is public by design. In Google Cloud Console, restrict it to your domain (HTTP referrers: `anticash.tech/*`).

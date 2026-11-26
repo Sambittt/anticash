@@ -1,485 +1,198 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-auth="loading" data-owner="no">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wallet Statement — AntiCash</title>
-  <meta name="description" content="View your AntiCash earnings, pending holds, confirmed balance, and transaction statement.">
-  <meta name="robots" content="noindex, nofollow">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <meta name="theme-color" content="#F7F5F0">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wallet | AntiCash</title>
+  <meta name="description" content="Your AntiCash wallet: balances, progress to the minimum withdrawal, and statement.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#f7f5f0">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/theme.css">
 </head>
 <body>
-  <a href="#main-content" class="skip-link">Skip to main content</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><polyline points="5 12 10 17 19 7"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="g-logo" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></symbol>
+</svg>
+<!-- ================= HEADER ================= -->
+<header class="site-header" id="siteHeader">
+  <div class="wrap header-inner">
+    <a href="index.html" class="wordmark" aria-label="AntiCash home">Anti<span>Cash</span></a>
 
-  <!-- Header -->
-  <header class="site-header">
-    <div class="container header-inner">
-      <a href="index.html" class="wordmark">AntiCash</a>
+    <nav class="nav" aria-label="Main" data-show="out">
+      <a href="index.html#products">Products</a>
+      <a href="index.html#how">How it works</a>
+      <a href="index.html#links">Short links</a>
+      <a href="index.html#faq">FAQ</a>
+    </nav>
+    <nav class="nav" aria-label="Main" data-show="in">
+      <a href="earn.html">Earn</a>
+      <a href="links.html">Links</a>
+      <a href="dashboard.html">Wallet</a>
+      <a href="withdraw.html">Withdraw</a>
+      <a href="contact.html">Help</a>
+    </nav>
 
-      <nav aria-label="Primary navigation">
-        <ul class="nav-menu">
-          <li><a href="earn.html" class="nav-menu-link">Earn</a></li>
-          <li><a href="dashboard.html" class="nav-menu-link active">Wallet</a></li>
-          <li><a href="withdraw.html" class="nav-menu-link">Withdraw</a></li>
-          <li><a href="contact.html" class="nav-menu-link">Help</a></li>
-        </ul>
-      </nav>
+    <div class="header-right">
+      <div data-show="loading"><div class="skeleton skel-pill" aria-hidden="true"></div></div>
 
-      <div class="header-right-area">
-        <div class="header-auth-slot" id="navUserArea">
-          <div class="header-skeleton" aria-hidden="true"></div>
+      <button class="btn btn-primary btn-sm hide-sm" data-show="out" data-action="signin" type="button">Sign in</button>
+
+      <div class="header-right" data-show="in" style="gap:12px">
+        <a href="dashboard.html" class="balance-chip" aria-label="Available balance">BALANCE <b class="skeleton" data-field="available-chip" style="min-width:64px;display:inline-block;height:18px">&nbsp;</b></a>
+        <div class="user-menu" id="userMenu">
+          <button class="avatar-btn" type="button" aria-haspopup="true" aria-expanded="false" id="userBtn" aria-label="Account menu">
+            <span class="avatar" data-user-initial>&nbsp;</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" class="ico" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="menu" role="menu">
+            <a href="dashboard.html" role="menuitem">Wallet</a>
+            <a href="earn.html" role="menuitem">Earn</a>
+            <a href="links.html" role="menuitem">Short links</a>
+            <a href="withdraw.html" role="menuitem">Withdraw</a>
+            <a href="admin.html" role="menuitem" data-show="owner">Admin</a>
+            <button type="button" role="menuitem" data-action="signout">Sign out</button>
+          </div>
         </div>
-        <button type="button" class="btn-mobile-nav" id="mobileNavToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobileNavDrawer">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-        </button>
       </div>
-    </div>
-  </header>
 
-  <!-- Mobile Drawer -->
-  <div class="mobile-nav-drawer" id="mobileNavDrawer" aria-label="Mobile navigation">
-    <a href="earn.html" class="mobile-drawer-link">Earn</a>
-    <a href="dashboard.html" class="mobile-drawer-link">Wallet</a>
-    <a href="withdraw.html" class="mobile-drawer-link">Withdraw</a>
-    <a href="contact.html" class="mobile-drawer-link">Help</a>
-    <a href="terms.html" class="mobile-drawer-link">Terms</a>
-    <a href="privacy.html" class="mobile-drawer-link">Privacy</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="drawer" type="button"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="drawer" id="drawer">
+  <div data-show="out">
+    <a class="dl" href="index.html#products">Products</a>
+    <a class="dl" href="index.html#how">How it works</a>
+    <a class="dl" href="index.html#links">Short links</a>
+    <a class="dl" href="index.html#faq">FAQ</a>
+    <button class="btn btn-primary" type="button" data-action="signin">
+      <span class="g-badge"><svg><use href="#g-logo"/></svg></span> Sign in with Google
+    </button>
+  </div>
+  <div data-show="in">
+    <a class="dl" href="earn.html">Earn</a>
+    <a class="dl" href="links.html">Short links</a>
+    <a class="dl" href="dashboard.html">Wallet</a>
+    <a class="dl" href="withdraw.html">Withdraw</a>
+    <a class="dl" href="contact.html">Help</a>
+    <a class="dl" href="admin.html" data-show="owner">Admin</a>
+    <button class="btn btn-ghost" type="button" data-action="signout">Sign out</button>
+  </div>
+</div>
+<div class="banner" id="bannedBanner" role="alert" hidden>Your account is suspended. Offers and payouts are disabled. Contact support@anticash.tech if you think this is a mistake.</div>
+<main id="main">
+  <div class="wrap" data-show="loading" aria-hidden="true" style="padding:56px 24px 96px">
+    <div class="skeleton" style="height:16px;width:120px;margin-bottom:22px"></div>
+    <div class="skeleton" style="height:52px;width:min(460px,100%);margin-bottom:28px"></div>
+    <div class="skeleton" style="height:120px;width:100%;margin-bottom:16px"></div>
+    <div class="skeleton" style="height:260px;width:100%"></div>
+  </div>
+  <div class="wrap" data-show="out">
+    <div class="gate rise">
+      <span class="eyebrow"><span class="dot"></span>Members only</span>
+      <h2>Sign in to open your wallet</h2>
+      <p>Your wallet is created the first time you sign in with Google. It takes a few seconds.</p>
+      <button class="btn btn-primary" type="button" data-action="signin"><span class="g-badge"><svg><use href="#g-logo"/></svg></span>Sign in with Google</button>
+    </div>
   </div>
 
-  <main id="main-content" class="container statement-header">
-    
-    <!-- User Title Header -->
-    <div style="margin-bottom: 2rem;">
-      <h1 style="font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.25rem;" id="statementUserTitle">Account Wallet</h1>
-      <p style="font-size: 0.875rem; color: var(--color-text-secondary);" id="statementUserSub">Loading balance records...</p>
-    </div>
-
-    <!-- First-Time Experience Onboarding Checklist Panel -->
-    <div class="onboarding-card" id="onboardingPanel" style="display: none;">
-      <div class="onboarding-title-row">
-        <div>
-          <h2 style="font-size: 1rem; font-weight: 700; color: var(--color-text-main);">Get started with AntiCash</h2>
-          <p style="font-size: 0.8125rem; color: var(--color-text-secondary); margin-top: 0.2rem;">Complete these steps to set up your account and request your first UPI payment.</p>
+  <div data-show="in">
+    <div class="wrap">
+      <section class="page-head">
+        <span class="eyebrow rise"><span class="dot"></span>Wallet</span>
+        <h1 class="rise" style="--d:1;margin-top:18px">Hello, <span data-user-name>there</span>.</h1>
+        <p class="sub rise" style="--d:2">New earnings show as Pending until the partner confirms them. Only Available money counts toward your <span class="mono">&#8377;300</span> minimum.</p>
+        <div class="row-actions rise" style="--d:3">
+          <a class="btn btn-primary" href="earn.html">Browse offers<svg class="arrow ico" viewBox="0 0 24 24"><use href="#i-arrow"/></svg></a>
+          <a class="btn btn-ghost" id="btnRequestWithdrawalLink" href="withdraw.html">Withdraw</a>
         </div>
-        <button type="button" class="btn-secondary btn-sm" id="btnDismissOnboarding">Dismiss</button>
-      </div>
-      <div class="onboarding-checklist">
-        <a href="withdraw.html" class="onboarding-item" id="taskUpiItem">
-          <div class="check-circle" id="checkUpiIcon">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
-          </div>
-          <div>
-            <strong>1. Add your UPI ID</strong>
-            <div style="font-size: 0.75rem; color: var(--color-text-secondary);">Set your payout destination</div>
-          </div>
-        </a>
+      </section>
 
-        <a href="earn.html" class="onboarding-item" id="taskBrowseOffersItem">
-          <div class="check-circle" id="checkBrowseIcon">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
-          </div>
-          <div>
-            <strong>2. Browse offers</strong>
-            <div style="font-size: 0.75rem; color: var(--color-text-secondary);">Pick surveys or app tasks</div>
-          </div>
-        </a>
-
-        <div class="onboarding-item" id="taskThresholdItem">
-          <div class="check-circle" id="checkThresholdIcon">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
-          </div>
-          <div>
-            <strong>3. Reach Rs 300</strong>
-            <div style="font-size: 0.75rem; color: var(--color-text-secondary);">Unlock UPI withdrawal</div>
-          </div>
+      <div class="page-body">
+        <div class="stats rise" style="--d:3">
+          <div><div class="fig-label">Available</div><div class="mono skeleton sk" data-field="available">&nbsp;</div><div class="hint">Confirmed and ready to withdraw</div></div>
+          <div><div class="fig-label">Pending</div><div class="mono skeleton sk" data-field="pending">&nbsp;</div><div class="hint">Waiting for partner confirmation</div></div>
+          <div><div class="fig-label">Withdrawn</div><div class="mono skeleton sk" id="valTotalWithdrawn">&nbsp;</div><div class="hint">Paid out to your UPI ID</div></div>
         </div>
-      </div>
-    </div>
 
-    <!-- Bank Statement Top Row with Info Tooltips and Neutral Skeleton -->
-    <div class="statement-top-grid">
-      <div class="metric-card">
-        <div class="metric-label">
-          <span>Available balance</span>
-          <div class="info-tooltip-wrap">
-            <button type="button" class="info-tooltip-btn" aria-label="Available balance details">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-            </button>
-            <div class="info-tooltip-content">
-              Confirmed earnings that have passed partner audit and are immediately eligible for UPI withdrawal.
+        <section class="panel progress-panel rise" style="--d:4" aria-label="Progress to minimum withdrawal">
+          <div class="panel-head" style="margin-bottom:16px">
+            <div><h2>Progress to your next withdrawal</h2><p data-field-detail>Loading your wallet</p></div>
+            <span class="mono" style="font-size:22px" data-field-pct></span>
+          </div>
+          <div class="bar"><i data-field-bar></i></div>
+          <div class="bar-meta"><span data-field-meta>&nbsp;</span><span class="mono">&#8377;300 minimum</span></div>
+        </section>
+
+        <section class="panel rise" style="--d:5" id="onboardingPanel" hidden aria-label="Getting started">
+          <div class="panel-head" style="margin-bottom:8px">
+            <div><h2>Getting started</h2><p>Three steps to your first payout.</p></div>
+            <button class="btn btn-ghost btn-sm" type="button" id="btnDismissOnboarding">Dismiss</button>
+          </div>
+          <div class="checklist">
+            <div class="ck" id="taskBrowseOffersItem"><span class="dot"><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><div><b>Browse the offers</b><span class="t">See what is open for your phone and location.</span></div><a class="btn btn-ghost btn-sm" href="earn.html">Open</a></div>
+            <div class="ck" id="taskThresholdItem"><span class="dot"><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><div><b>Reach &#8377;300 in Available</b><span class="t">Pending money moves to Available once confirmed.</span></div></div>
+            <div class="ck" id="taskUpiItem"><span class="dot"><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><div><b>Request your first withdrawal</b><span class="t">Enter your UPI ID and confirm. We review each request.</span></div><a class="btn btn-ghost btn-sm" href="withdraw.html">Open</a></div>
+          </div>
+        </section>
+
+        <section class="panel flat rise" style="--d:6" aria-label="Statement">
+          <div class="panel-head">
+            <div><h2>Statement</h2><p>Your latest 50 entries. Every reversal is its own line.</p></div>
+            <div class="tool-row">
+              <select class="select sm" id="statementStatusFilter" aria-label="Filter by status">
+                <option value="all">All activity</option><option value="pending">Pending</option><option value="confirmed">Confirmed</option><option value="paid">Paid</option><option value="reversed">Reversed</option><option value="rejected">Rejected</option>
+              </select>
+              <button class="btn btn-ghost btn-sm" type="button" id="btnDownloadStatementCsv">Download CSV</button>
             </div>
           </div>
-        </div>
-        <div class="metric-figure" id="valConfirmedBalance"><span class="skeleton-figure"></span></div>
-        <div class="metric-subtext">Confirmed and eligible for UPI withdrawal.</div>
-      </div>
-
-      <div class="metric-card">
-        <div class="metric-label">
-          <span>Pending balance</span>
-          <div class="info-tooltip-wrap">
-            <button type="button" class="info-tooltip-btn" aria-label="Pending balance details">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-            </button>
-            <div class="info-tooltip-content">
-              Earnings undergoing standard advertiser review (up to 7 days). Transferred to available once verified.
-            </div>
+          <div class="table-wrap" style="margin-top:20px">
+            <table class="dt">
+              <thead><tr><th>Date</th><th>Activity</th><th>Partner</th><th>Status</th><th class="r">Amount</th></tr></thead>
+              <tbody id="statementTbody">
+                <tr class="skel-row"><td colspan="5"><div class="skeleton" style="height:18px"></div></td></tr>
+                <tr class="skel-row"><td colspan="5"><div class="skeleton" style="height:18px"></div></td></tr>
+                <tr class="skel-row"><td colspan="5"><div class="skeleton" style="height:18px"></div></td></tr>
+              </tbody>
+            </table>
           </div>
-        </div>
-        <div class="metric-figure" id="valPendingBalance" style="color: var(--status-pending-text);"><span class="skeleton-figure"></span></div>
-        <div class="metric-subtext">Under partner review (up to 7 days).</div>
-      </div>
+        </section>
 
-      <div class="metric-card">
-        <div class="metric-label">
-          <span>Total withdrawn</span>
-          <div class="info-tooltip-wrap">
-            <button type="button" class="info-tooltip-btn" aria-label="Total withdrawn details">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-            </button>
-            <div class="info-tooltip-content">
-              Cumulative payouts successfully transferred to your Indian UPI address since joining.
-            </div>
+        <section class="panel rise" style="--d:7" aria-label="Account">
+          <div class="panel-head" style="margin-bottom:12px"><div><h2>Your account</h2><p>Quote your member ID when you write to support about an offer.</p></div></div>
+          <div style="display:grid;gap:14px">
+            <div><div class="fig-label">Signed in as</div><div style="font-weight:700"><span data-user-fullname></span> <span style="color:var(--ink-2);font-weight:500" data-user-email></span></div></div>
+            <div><div class="fig-label">Member ID</div><div class="uid-chip"><span class="v" data-user-uid></span><button type="button" id="btnCopyUid">Copy</button></div></div>
           </div>
-        </div>
-        <div class="metric-figure" id="valTotalWithdrawn"><span class="skeleton-figure"></span></div>
-        <div class="metric-subtext">Cumulative payouts processed to date.</div>
+        </section>
       </div>
     </div>
-
-    <!-- Withdrawal Progress Section -->
-    <div class="card" style="margin-bottom: 2rem;">
-      <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem;">
-        <span style="font-size: 0.875rem; font-weight: 600;">Withdrawal requirement progress</span>
-        <span style="font-family: var(--font-mono); font-size: 0.875rem; font-weight: 600;" id="progressFractionText">₹0.00 of ₹300.00</span>
-      </div>
-
-      <div class="progress-container" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-        <div class="progress-fill" id="progressFillBar" style="width: 0%;"></div>
-      </div>
-
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem; flex-wrap: wrap; gap: 0.75rem;">
-        <span style="font-size: 0.8125rem; color: var(--color-text-secondary);" id="progressDetailText">
-          ₹300.00 needed to request your first withdrawal.
-        </span>
-        <a href="withdraw.html" class="btn-primary btn-sm" id="btnRequestWithdrawalLink">Withdraw funds</a>
-      </div>
-    </div>
-
-    <!-- Statement Activity Table with Status Filter & CSV Download -->
-    <div style="margin-bottom: 4rem;">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.75rem;">
-        <div>
-          <h2 style="font-size: 1.125rem; font-weight: 700;">Statement activity</h2>
-          <p style="font-size: 0.8125rem; color: var(--color-text-secondary);">Direct record of completed tasks and payments.</p>
-        </div>
-
-        <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
-          <div style="display: flex; align-items: center; gap: 0.35rem;">
-            <label for="statementStatusFilter" style="font-size: 0.8125rem; font-weight: 600; color: var(--color-text-secondary);">Filter:</label>
-            <select id="statementStatusFilter" class="form-select" style="width: auto; padding: 0.35rem 0.65rem; font-size: 0.8125rem;">
-              <option value="all">All statuses</option>
-              <option value="confirmed">Confirmed only</option>
-              <option value="pending">Pending only</option>
-              <option value="reversed">Reversed</option>
-            </select>
-          </div>
-          <button type="button" class="btn-secondary btn-sm" id="btnDownloadStatementCsv">Download statement (CSV)</button>
-          <a href="earn.html" class="btn-primary btn-sm">Find new offers</a>
-        </div>
-      </div>
-
-      <div class="table-wrap">
-        <table class="statement-table" aria-label="Statement transactions">
-          <thead>
-            <tr>
-              <th scope="col">Date</th>
-              <th scope="col">Description</th>
-              <th scope="col">Partner</th>
-              <th scope="col">Status</th>
-              <th scope="col" style="text-align: right;">Amount</th>
-            </tr>
-          </thead>
-          <tbody id="statementTbody">
-            <tr>
-              <td colspan="5" class="empty-table-state">Loading records...</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-  </main>
-
-  <!-- Multi-column Footer -->
-  <footer class="site-footer">
-    <div class="container footer-columns-grid">
-      <div class="footer-col-brand">
-        <span class="footer-brand">AntiCash</span>
-        <p class="footer-disclaimer" style="max-width: 340px;">
-          Direct UPI rewards for completing verified advertiser surveys and application offers in India.
-        </p>
-      </div>
-
+  </div>
+</main>
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="foot-grid">
       <div>
-        <div class="footer-col-title">Product</div>
-        <ul class="footer-col-links">
-          <li><a href="earn.html">Earn</a></li>
-          <li><a href="dashboard.html">Wallet</a></li>
-          <li><a href="withdraw.html">Withdraw</a></li>
-        </ul>
+        <a href="index.html" class="wordmark">Anti<span>Cash</span></a>
+        <p class="foot-about">Rewards from partner offers, and short links that pay. Made for users in India.</p>
       </div>
-
-      <div>
-        <div class="footer-col-title">Support</div>
-        <ul class="footer-col-links">
-          <li><a href="contact.html">Help</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <div class="footer-col-title">Legal</div>
-        <ul class="footer-col-links">
-          <li><a href="terms.html">Terms</a></li>
-          <li><a href="privacy.html">Privacy</a></li>
-        </ul>
-      </div>
+      <div><h4>Product</h4><ul><li><a href="earn.html">Rewards</a></li><li><a href="links.html">Short links</a></li><li><a href="index.html#how">How it works</a></li></ul></div>
+      <div><h4>Support</h4><ul><li><a href="contact.html">Contact</a></li><li><a href="index.html#faq">FAQ</a></li><li><a href="about.html">About</a></li></ul></div>
+      <div><h4>Legal</h4><ul><li><a href="terms.html">Terms</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="contact.html#abuse">Report abuse</a></li></ul></div>
     </div>
-
-    <div class="container footer-bottom-line">
-      <span>AntiCash (anticash.tech).</span>
-      <span>Offers subject to advertiser availability. No guaranteed income.</span>
-    </div>
-  </footer>
-
-  <script type="module">
-    import { initAuth, requireAuth, onUserChange, db } from "./auth.js";
-    import { formatRupees, getWithdrawalProgress } from "./app-config.js";
-    import { animateRupeeCounter, initScrollReveals } from "./motion.js";
-    import { collection, query, orderBy, limit, getDocs, where } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-    document.addEventListener("DOMContentLoaded", () => {
-      initAuth();
-      requireAuth();
-      initScrollReveals();
-
-      const onboardingPanel = document.getElementById("onboardingPanel");
-      const btnDismissOnboarding = document.getElementById("btnDismissOnboarding");
-      const filterSelect = document.getElementById("statementStatusFilter");
-      const btnDownloadCsv = document.getElementById("btnDownloadStatementCsv");
-
-      let currentTransactions = [];
-
-      // Check onboarding dismissed status
-      const isOnboardingDismissed = localStorage.getItem("anticash_onboarding_dismissed") === "true";
-      if (!isOnboardingDismissed && onboardingPanel) {
-        onboardingPanel.style.display = "block";
-      }
-
-      if (btnDismissOnboarding && onboardingPanel) {
-        btnDismissOnboarding.addEventListener("click", () => {
-          onboardingPanel.style.display = "none";
-          localStorage.setItem("anticash_onboarding_dismissed", "true");
-        });
-      }
-
-      onUserChange(async (user, userData, isLoaded) => {
-        if (!user) return;
-
-        // When loaded, update UI with user info
-        document.getElementById("statementUserTitle").textContent = `${user.displayName || "Member"} Wallet`;
-        document.getElementById("statementUserSub").textContent = `${user.email} (UID: ${user.uid})`;
-
-        if (!isLoaded) {
-          // Keep neutral skeleton figure
-          return;
-        }
-
-        const confirmedPaise = Number(userData?.confirmedBalancePaise) || 0;
-        const pendingPaise = Number(userData?.pendingBalancePaise) || 0;
-
-        animateRupeeCounter(document.getElementById("valConfirmedBalance"), confirmedPaise, 1000);
-        animateRupeeCounter(document.getElementById("valPendingBalance"), pendingPaise, 1000);
-
-        // Progress Calculation
-        const prog = getWithdrawalProgress(confirmedPaise);
-        document.getElementById("progressFractionText").textContent = `${prog.currentFormatted} of ${prog.targetFormatted}`;
-        document.getElementById("progressFillBar").style.width = `${prog.percent}%`;
-
-        const detailEl = document.getElementById("progressDetailText");
-        const withdrawBtn = document.getElementById("btnRequestWithdrawalLink");
-
-        if (prog.isReady) {
-          detailEl.textContent = "Minimum threshold reached. You can request a payout.";
-          withdrawBtn.removeAttribute("disabled");
-        } else {
-          detailEl.textContent = `${prog.formattedNeeded} remaining to reach minimum withdrawal.`;
-        }
-
-        // Update onboarding checklist items
-        updateOnboardingState(confirmedPaise);
-
-        loadTransactionsAndWithdrawals(user.uid);
-      });
-
-      function updateOnboardingState(confirmedPaise) {
-        // Step 1: UPI ID checked if user visited or has withdrawal
-        const hasSavedUpi = localStorage.getItem("anticash_upi_configured") === "true";
-        const taskUpiItem = document.getElementById("taskUpiItem");
-        if (hasSavedUpi && taskUpiItem) {
-          taskUpiItem.classList.add("is-completed");
-        }
-
-        // Step 2: Browse offers checked if visited
-        const hasBrowsed = localStorage.getItem("anticash_has_browsed_offers") === "true";
-        const taskBrowseItem = document.getElementById("taskBrowseOffersItem");
-        if (hasBrowsed && taskBrowseItem) {
-          taskBrowseItem.classList.add("is-completed");
-        }
-
-        // Step 3: Threshold reached
-        const taskThresholdItem = document.getElementById("taskThresholdItem");
-        if (confirmedPaise >= 30000 && taskThresholdItem) {
-          taskThresholdItem.classList.add("is-completed");
-        }
-      }
-
-      async function loadTransactionsAndWithdrawals(uid) {
-        if (!db) return;
-        const tbody = document.getElementById("statementTbody");
-        if (!tbody) return;
-
-        try {
-          // Calculate total withdrawn
-          const wRef = collection(db, "withdrawals");
-          const wQuery = query(wRef, where("uid", "==", uid), where("status", "==", "paid"));
-          const wSnap = await getDocs(wQuery);
-          let totalWithdrawnPaise = 0;
-          wSnap.forEach(d => {
-            totalWithdrawnPaise += (Number(d.data().amountPaise) || 0);
-          });
-          animateRupeeCounter(document.getElementById("valTotalWithdrawn"), totalWithdrawnPaise, 1000);
-
-          // If user has past withdrawals, mark UPI task in onboarding
-          if (!wSnap.empty) {
-            localStorage.setItem("anticash_upi_configured", "true");
-            const taskUpi = document.getElementById("taskUpiItem");
-            if (taskUpi) taskUpi.classList.add("is-completed");
-          }
-
-          // Load Transactions
-          const txRef = collection(db, "users", uid, "transactions");
-          const txQuery = query(txRef, orderBy("createdAt", "desc"), limit(50));
-          const snap = await getDocs(txQuery);
-
-          currentTransactions = [];
-          snap.forEach((doc) => {
-            currentTransactions.push({
-              id: doc.id,
-              ...doc.data()
-            });
-          });
-
-          renderStatementTable();
-        } catch (err) {
-          console.warn("Failed to load wallet statement:", err);
-          tbody.innerHTML = `<tr><td colspan="5" class="empty-table-state">Unable to load activity. Please refresh.</td></tr>`;
-        }
-      }
-
-      function renderStatementTable() {
-        const tbody = document.getElementById("statementTbody");
-        if (!tbody) return;
-
-        const filter = filterSelect ? filterSelect.value : "all";
-
-        let filtered = currentTransactions;
-        if (filter !== "all") {
-          filtered = currentTransactions.filter(tx => (tx.status || "pending").toLowerCase() === filter);
-        }
-
-        if (filtered.length === 0) {
-          tbody.innerHTML = `
-            <tr>
-              <td colspan="5" class="empty-table-state">
-                <p style="margin-bottom: 0.75rem;">No activity recorded yet.</p>
-                <a href="earn.html" class="btn-primary btn-sm">Find new offers</a>
-              </td>
-            </tr>
-          `;
-          return;
-        }
-
-        let html = "";
-        filtered.forEach((tx) => {
-          const dateStr = tx.createdAt?.toDate ? tx.createdAt.toDate().toLocaleDateString("en-IN", {
-            day: "numeric", month: "short", year: "numeric"
-          }) : "Recent";
-
-          const paise = Number(tx.amountPaise) || 0;
-          const isPositive = paise >= 0;
-          const amountFormatted = (isPositive ? "+" : "") + formatRupees(paise);
-          const statusKey = (tx.status || "pending").toLowerCase();
-          const description = tx.type === "withdrawal" ? "UPI Withdrawal" : (tx.description || "Partner Offer Completion");
-
-          html += `
-            <tr>
-              <td class="mono-cell">${dateStr}</td>
-              <td>${escapeHtml(description)}</td>
-              <td>${escapeHtml(tx.network || tx.method || "Partner")}</td>
-              <td><span class="badge-status ${statusKey}">${escapeHtml(tx.status || "pending")}</span></td>
-              <td style="text-align: right;" class="${isPositive ? 'amount-positive' : 'amount-negative'}">${amountFormatted}</td>
-            </tr>
-          `;
-        });
-
-        tbody.innerHTML = html;
-      }
-
-      if (filterSelect) {
-        filterSelect.addEventListener("change", () => renderStatementTable());
-      }
-
-      // Download Statement as CSV
-      if (btnDownloadCsv) {
-        btnDownloadCsv.addEventListener("click", () => {
-          if (!currentTransactions || currentTransactions.length === 0) {
-            alert("No statement records available to export.");
-            return;
-          }
-
-          const headers = ["Date", "Description", "Partner", "Status", "Amount_INR"];
-          const rows = currentTransactions.map(tx => {
-            const dateStr = tx.createdAt?.toDate ? tx.createdAt.toDate().toISOString().split("T")[0] : "Recent";
-            const desc = (tx.type === "withdrawal" ? "UPI Withdrawal" : (tx.description || "Partner Offer Completion")).replace(/"/g, '""');
-            const partner = (tx.network || tx.method || "Partner").replace(/"/g, '""');
-            const status = (tx.status || "pending").replace(/"/g, '""');
-            const inr = ((Number(tx.amountPaise) || 0) / 100).toFixed(2);
-            return `"${dateStr}","${desc}","${partner}","${status}","${inr}"`;
-          });
-
-          const csvContent = [headers.join(","), ...rows].join("\r\n");
-          const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-          const url = URL.createObjectURL(blob);
-          const link = document.createElement("a");
-          link.setAttribute("href", url);
-          link.setAttribute("download", `anticash-statement-${new Date().toISOString().split("T")[0]}.csv`);
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          URL.revokeObjectURL(url);
-        });
-      }
-
-      function escapeHtml(str) {
-        const div = document.createElement("div");
-        div.textContent = str;
-        return div.innerHTML;
-      }
-    });
-  </script>
+    <div class="foot-bottom"><span>&copy; 2026 AntiCash</span><span>Rewards depend on partner confirmation. Not employment, not guaranteed income.</span></div>
+  </div>
+</footer>
+<script src="js/shell.js"></script>
+<script type="module" src="js/dashboard.js"></script>
 </body>
 </html>

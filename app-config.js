@@ -41,6 +41,17 @@ export const APP_CONFIG = {
   ]
 };
 
+/**
+ * True only when an owner UID has been configured AND it matches.
+ * With the placeholder still in place, nobody is the owner (fail closed).
+ * This is for showing or hiding admin UI only. Real protection lives in
+ * firestore.rules and the Cloud Functions.
+ */
+export function isOwnerUid(uid) {
+  const owner = APP_CONFIG.ownerUid;
+  return Boolean(uid) && owner !== "EDIT_ME_OWNER_UID" && uid === owner;
+}
+
 const inrFormatter = new Intl.NumberFormat("en-IN", {
   style: "currency",
   currency: "INR",
@@ -77,3 +88,10 @@ export function getWithdrawalProgress(confirmedBalancePaise) {
     isReady: current >= target
   };
 }
+
+/**
+ * Starting payout rates for short links, in paise per 1,000 valid views.
+ * Keep equal to RATES_PER_1000 in functions/lib.js and RATES in js/home.js.
+ */
+export const LINK_RATES = { india: 5000, tier1: 20000, other: 8000 };
+export const LINK_BASE = "https://anticash.tech/l/";

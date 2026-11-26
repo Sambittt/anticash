@@ -1,748 +1,299 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-auth="loading" data-owner="no">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AntiCash — Complete offers. Get paid to your UPI.</title>
-  <meta name="description" content="Try apps, answer surveys and finish partner offers. Withdraw from Rs 300 straight to your UPI ID in India.">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://anticash.tech/">
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AntiCash | Earn rupees from offers and short links</title>
+  <meta name="description" content="Complete partner offers or share short links and withdraw real rupees to your UPI ID from 300 rupees. Made for users in India.">
+  <meta property="og:title" content="AntiCash | Earn rupees from offers and short links">
+  <meta property="og:description" content="Complete partner offers or share short links and withdraw real rupees to your UPI ID from 300 rupees. Made for users in India.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://anticash.tech/">
-  <meta property="og:title" content="AntiCash — Complete offers. Get paid to your UPI.">
-  <meta property="og:description" content="Try apps, answer surveys and finish partner offers. Withdraw from Rs 300 straight to your UPI ID.">
-
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <meta name="theme-color" content="#F7F5F0">
-  <link rel="stylesheet" href="style.css">
+  <meta property="og:url" content="https://anticash.tech/index.html">
+  <meta name="theme-color" content="#f7f5f0">
+  <link rel="canonical" href="https://anticash.tech/index.html">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/theme.css">
 </head>
 <body>
-  <a href="#main-content" class="skip-link">Skip to main content</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><polyline points="5 12 10 17 19 7"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="g-logo" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></symbol>
+</svg>
+<!-- ================= HEADER ================= -->
+<header class="site-header on-dark" id="siteHeader">
+  <div class="wrap header-inner">
+    <a href="./" class="wordmark" aria-label="AntiCash home">Anti<span>Cash</span></a>
 
-  <!-- Header -->
-  <header class="site-header">
-    <div class="container header-inner">
-      <a href="index.html" class="wordmark">AntiCash</a>
+    <nav class="nav" aria-label="Main" data-show="out">
+      <a href="#products">Products</a>
+      <a href="#how">How it works</a>
+      <a href="#links">Short links</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <nav class="nav" aria-label="Main" data-show="in">
+      <a href="earn.html">Earn</a>
+      <a href="links.html">Links</a>
+      <a href="dashboard.html">Wallet</a>
+      <a href="withdraw.html">Withdraw</a>
+      <a href="contact.html">Help</a>
+    </nav>
 
-      <nav aria-label="Primary navigation">
-        <ul class="nav-menu">
-          <li><a href="earn.html" class="nav-menu-link">Earn</a></li>
-          <li><a href="dashboard.html" class="nav-menu-link">Wallet</a></li>
-          <li><a href="withdraw.html" class="nav-menu-link">Withdraw</a></li>
-          <li><a href="contact.html" class="nav-menu-link">Help</a></li>
-        </ul>
-      </nav>
+    <div class="header-right">
+      <div data-show="loading"><div class="skeleton skel-pill" aria-hidden="true"></div></div>
 
-      <div class="header-right-area">
-        <div class="header-auth-slot" id="navUserArea">
-          <div class="header-skeleton" aria-hidden="true"></div>
+      <button class="btn btn-primary btn-sm hide-sm" data-show="out" data-action="signin" type="button">Sign in</button>
+
+      <div class="header-right" data-show="in" style="gap:12px">
+        <a href="dashboard.html" class="balance-chip" aria-label="Available balance">BALANCE <b class="skeleton" data-field="available-chip" style="min-width:64px;display:inline-block;height:18px">&nbsp;</b></a>
+        <div class="user-menu" id="userMenu">
+          <button class="avatar-btn" type="button" aria-haspopup="true" aria-expanded="false" id="userBtn" aria-label="Account menu">
+            <span class="avatar" data-user-initial>&nbsp;</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" class="ico" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="menu" role="menu">
+            <a href="dashboard.html" role="menuitem">Wallet</a>
+            <a href="earn.html" role="menuitem">Earn</a>
+            <a href="links.html" role="menuitem">Short links</a>
+            <a href="withdraw.html" role="menuitem">Withdraw</a>
+            <a href="admin.html" role="menuitem" data-show="owner">Admin</a>
+            <button type="button" role="menuitem" data-action="signout">Sign out</button>
+          </div>
         </div>
-        <button type="button" class="btn-mobile-nav" id="mobileNavToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobileNavDrawer">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-        </button>
       </div>
-    </div>
-  </header>
 
-  <!-- Mobile Drawer -->
-  <div class="mobile-nav-drawer" id="mobileNavDrawer" aria-label="Mobile navigation">
-    <a href="earn.html" class="mobile-drawer-link">Earn</a>
-    <a href="dashboard.html" class="mobile-drawer-link">Wallet</a>
-    <a href="withdraw.html" class="mobile-drawer-link">Withdraw</a>
-    <a href="contact.html" class="mobile-drawer-link">Help</a>
-    <a href="terms.html" class="mobile-drawer-link">Terms</a>
-    <a href="privacy.html" class="mobile-drawer-link">Privacy</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="drawer" type="button"><span></span></button>
+    </div>
   </div>
+</header>
 
-  <main id="main-content">
-    
-    <!-- 1. Hero Section with Ambient Motion Canvas -->
-    <section class="home-section home-hero-wrap" style="padding-top: 4.5rem; padding-bottom: 4rem;">
-      <canvas id="heroMotionCanvas" class="hero-motion-canvas" aria-hidden="true"></canvas>
+<div class="drawer" id="drawer">
+  <div data-show="out">
+    <a class="dl" href="#products">Products</a>
+    <a class="dl" href="#how">How it works</a>
+    <a class="dl" href="#links">Short links</a>
+    <a class="dl" href="#faq">FAQ</a>
+    <button class="btn btn-primary" type="button" data-action="signin">
+      <span class="g-badge"><svg><use href="#g-logo"/></svg></span> Sign in with Google
+    </button>
+  </div>
+  <div data-show="in">
+    <a class="dl" href="earn.html">Earn</a>
+    <a class="dl" href="links.html">Short links</a>
+    <a class="dl" href="dashboard.html">Wallet</a>
+    <a class="dl" href="withdraw.html">Withdraw</a>
+    <a class="dl" href="contact.html">Help</a>
+    <a class="dl" href="admin.html" data-show="owner">Admin</a>
+    <button class="btn btn-ghost" type="button" data-action="signout">Sign out</button>
+  </div>
+</div>
+<div class="banner" id="bannedBanner" role="alert" hidden>Your account is suspended. Offers and payouts are disabled. Contact support@anticash.tech if you think this is a mistake.</div>
+<main id="main">
 
-      <div class="container">
-        <div class="hero-grid">
-          
-          <!-- Left Column (55% on desktop) -->
-          <div class="hero-text-col" id="heroTextCol">
-            <div class="hero-eyebrow">Rewards for Indian users</div>
-            <h1 class="hero-headline" id="heroHeadline">
-              Complete offers. Get paid to your UPI.
-            </h1>
-            <p class="hero-subtext" id="heroSubtext">
-              Try apps, answer surveys and finish partner offers. Withdraw from Rs 300 straight to your UPI ID.
-            </p>
+<!-- ================= HERO ================= -->
+<section class="hero-dark">
+  <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow rise"><span class="dot"></span>Rewards for Indian users</span>
+      <h1 class="rise" style="--d:1">Earn <span class="grad-text">real rupees.</span><br>Paid to your UPI.</h1>
+      <p class="lead rise" style="--d:2">Finish partner offers or share short links that pay per view. Withdraw from <span class="mono">&#8377;300</span> straight to your UPI ID. No points. No tokens.</p>
 
-            <div class="hero-buttons-row" id="heroButtonsRow">
-              <button type="button" class="btn-primary" id="heroPrimaryBtn">
-                <svg class="google-icon" width="16" height="16" viewBox="0 0 24 24">
-                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
-                </svg>
-                <span>Sign in with Google</span>
-              </button>
-              <a href="#how-it-works" class="btn-link-action">See how it works</a>
-            </div>
+      <div class="actions rise" style="--d:3">
+        <span data-show="loading"><span class="skeleton" style="display:inline-block;width:240px;height:54px;border-radius:12px;opacity:.3"></span></span>
+        <button class="btn btn-glow" type="button" data-show="out" data-action="signin"><span class="g-badge"><svg><use href="#g-logo"/></svg></span>Sign in with Google<svg class="arrow ico" viewBox="0 0 24 24"><use href="#i-arrow"/></svg></button>
+        <a class="btn btn-outline-light" href="#products" data-show="out">See what you can do</a>
+        <a class="btn btn-glow" href="dashboard.html" data-show="in">Open my wallet<svg class="arrow ico" viewBox="0 0 24 24"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn-outline-light" href="links.html" data-show="in">Make a short link</a>
+      </div>
+      <p class="micro rise" style="--d:4" data-show="out">Free to join. We never ask for your UPI PIN or OTP.</p>
+      <p class="micro rise" style="--d:4" data-show="in">Welcome back, <span data-user-name>there</span>. Available: <b class="mono" style="color:var(--mint)" data-field="available">&nbsp;</b></p>
 
-            <div class="hero-trust-note" id="heroTrustNote">
-              Free to join. We never ask for your UPI PIN or OTP.
-            </div>
+      <div class="chips-row rise" style="--d:5">
+        <span class="chip"><i></i>Minimum &#8377;300</span>
+        <span class="chip"><i></i>UPI payouts</span>
+        <span class="chip"><i></i><span data-config="processingText">24 to 48 business hours</span></span>
+        <span class="chip"><i></i>No points system</span>
+      </div>
+    </div>
+
+    <div class="stage3d rise" style="--d:3" id="stage" aria-label="Sample wallet illustration. Not real earnings.">
+      <span class="coin" style="top:40px;left:14%;--t:7s;--dx:18px;--dy:-30px">&#8377;</span>
+      <span class="coin" style="top:300px;right:2%;--t:9s;--dl:-2s;--dx:-16px;--dy:-24px;width:34px;height:34px;font-size:15px">&#8377;</span>
+      <span class="coin" style="bottom:20px;left:30%;--t:8s;--dl:-4s;--dx:12px;--dy:-20px;width:28px;height:28px;font-size:13px">&#8377;</span>
+
+      <div class="float-card f1"><span class="ic ic g"><svg class="ico" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4h6v3H9z"/><polyline points="9 14 11 16 15 12"/></svg></span><span>Offer confirmed<small>+&#8377;120.00 sample</small></span></div>
+      <div class="float-card f2"><span class="ic ic v"><svg class="ico" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg></span><span>1,240 link views<small>+&#8377;62.00 sample</small></span></div>
+      <div class="float-card f3"><span class="ic ic c"><svg class="ico" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></span><span>UPI payout sent<small>&#8377;300.00 sample</small></span></div>
+
+      <div class="phone" id="phone">
+        <div class="notch"></div>
+        <div class="screen">
+          <div class="ph-top"><span>AntiCash</span><span style="color:var(--lime)">SAMPLE</span></div>
+          <div class="ph-bal">
+            <small>Available</small>
+            <div class="amt" id="phAmt">&#8377;0.00</div>
+            <div class="ph-bar"><i id="phBar"></i></div>
           </div>
-
-          <!-- Right Column: Interactive Sample Preview Card with Live Rail -->
-          <div class="sample-preview-wrap">
-            <div class="sample-preview-card">
-              <div class="sample-card-header">
-                <span style="font-size: 0.875rem; font-weight: 700;">Wallet statement</span>
-                <span class="sample-tag">Sample view</span>
-              </div>
-
-              <!-- Animated Task-to-UPI Flow Graphic -->
-              <div class="payment-rail-graphic" aria-label="Live payout verification rail">
-                <div class="payment-rail-header">
-                  <span class="payment-rail-title">Live payout lifecycle</span>
-                  <span class="payment-rail-live-badge">
-                    <span class="live-dot-ping"></span>
-                    Verified
-                  </span>
-                </div>
-                <div class="payment-rail-track">
-                  <div class="rail-node complete">
-                    <div class="rail-node-icon" title="Offer completed">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </div>
-                    <span class="rail-node-label">1. Task Done</span>
-                    <span class="rail-node-sub">Offer completed</span>
-                  </div>
-
-                  <div class="rail-connector">
-                    <div class="rail-pulse-line"></div>
-                  </div>
-
-                  <div class="rail-node pending">
-                    <div class="rail-node-icon" title="Standard partner quality audit hold">
-                      <svg class="spin-slow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                    </div>
-                    <span class="rail-node-label">2. Partner Hold</span>
-                    <span class="rail-node-sub">Audit window</span>
-                  </div>
-
-                  <div class="rail-connector second">
-                    <div class="rail-pulse-line"></div>
-                  </div>
-
-                  <div class="rail-node upi">
-                    <div class="rail-node-icon" title="Direct bank transfer via UPI">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-                    </div>
-                    <span class="rail-node-label">3. Direct UPI</span>
-                    <span class="rail-node-sub">Instant to bank</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="sample-metric-row">
-                <div class="sample-metric-item">
-                  <span class="sample-metric-lbl">Available</span>
-                  <span class="sample-metric-val" id="sampleAvailVal">₹340.00</span>
-                </div>
-                <div class="sample-metric-item">
-                  <span class="sample-metric-lbl">Pending</span>
-                  <span class="sample-metric-val" id="samplePendVal" style="color: var(--status-pending-text);">₹120.00</span>
-                </div>
-                <div class="sample-metric-item">
-                  <span class="sample-metric-lbl">Withdrawn</span>
-                  <span class="sample-metric-val" id="sampleWithVal">₹900.00</span>
-                </div>
-              </div>
-
-              <div style="margin-bottom: 1rem;">
-                <div style="display: flex; justify-content: space-between; font-size: 0.75rem; margin-bottom: 0.35rem;">
-                  <span style="color: var(--color-text-secondary); font-weight: 500;">Withdrawal requirement</span>
-                  <span style="font-family: var(--font-mono); font-weight: 600;">₹340.00 of ₹300.00</span>
-                </div>
-                <div class="progress-container" style="margin: 0;">
-                  <div class="progress-fill" id="sampleProgressBarFill" style="width: 100%;"></div>
-                </div>
-              </div>
-
-              <div style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-secondary); margin-bottom: 0.5rem;">
-                Recent activity
-              </div>
-
-              <div class="sample-tx-row">
-                <span>Consumer opinion survey</span>
-                <span class="amount-positive">+₹65.00</span>
-              </div>
-              <div class="sample-tx-row">
-                <span>Financial app trial</span>
-                <span style="font-family: var(--font-mono); color: var(--status-pending-text); font-weight: 600;">+₹180.00</span>
-              </div>
-              <div class="sample-tx-row">
-                <span>UPI withdrawal</span>
-                <span class="amount-negative">-₹300.00</span>
-              </div>
-            </div>
+          <div class="ph-list" id="phList">
+            <div class="ph-row"><span class="ic g"><svg class="ico" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4h6v3H9z"/><polyline points="9 14 11 16 15 12"/></svg></span><span class="t">Survey<small>Shopping habits</small></span><span class="v">+&#8377;35.00</span></div>
+            <div class="ph-row"><span class="ic c"><svg class="ico" viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/></svg></span><span class="t">App offer<small>Reach level 5</small></span><span class="v">+&#8377;120.00</span></div>
+            <div class="ph-row"><span class="ic v"><svg class="ico" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg></span><span class="t">Short link<small>1,240 views</small></span><span class="v">+&#8377;62.00</span></div>
+            <div class="ph-row"><span class="ic g"><svg class="ico" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></span><span class="t">Withdrawal<small>To your UPI ID</small></span><span class="v">&#8377;300.00</span></div>
           </div>
-
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
-    <!-- Marketing wrapper that collapses if user is signed in -->
-    <div id="marketingSectionsWrapper">
+<div class="marq-dark" aria-hidden="true">
+  <div class="marquee-track">
+    <div class="marquee-item"><span>Surveys</span><span>App offers</span><span>Game offers</span><span>Short links</span><span>Video offers</span><span>Product testing</span><span>UPI payouts</span></div>
+    <div class="marquee-item"><span>Surveys</span><span>App offers</span><span>Game offers</span><span>Short links</span><span>Video offers</span><span>Product testing</span><span>UPI payouts</span></div>
+  </div>
+</div>
 
-      <hr class="hairline">
+<!-- ================= PRODUCTS ================= -->
+<section class="section" id="products">
+  <div class="wrap">
+    <div class="section-head reveal" style="max-width:720px;margin-bottom:48px">
+      <span class="eyebrow"><span class="dot"></span>Two ways to earn</span>
+      <h2 class="h2" style="margin-top:16px">One wallet. Two ways to fill it.</h2>
+      <p class="lead" style="margin-top:14px">Both pay into the same balance, and both withdraw to UPI from &#8377;300.</p>
+    </div>
+    <div class="duo">
+      <article class="spot product rew reveal">
+        <span class="tagline">Rewards</span>
+        <h3>Get paid for completing offers.</h3>
+        <p>Install apps, answer surveys and reach game milestones from our research and advertising partners.</p>
+        <ul><li><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg>Pays when the partner confirms</li><li><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg>Offers matched to your phone</li><li><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg>Pending money clears in up to 7 days</li></ul>
+        <div class="mini-art a"><i class="bar-anim" style="left:8%;animation-delay:0s"></i><i class="bar-anim" style="left:24%;animation-delay:-.7s"></i><i class="bar-anim" style="left:40%;animation-delay:-1.4s"></i><i class="bar-anim" style="left:56%;animation-delay:-2.1s"></i><i class="bar-anim" style="left:72%;animation-delay:-2.8s"></i></div>
+        <a class="btn btn-primary go" href="earn.html">Browse offers<svg class="arrow ico" viewBox="0 0 24 24"><use href="#i-arrow"/></svg></a>
+      </article>
+      <article class="spot product lnk reveal" style="--rd:.1s">
+        <span class="tagline">Short links</span>
+        <h3>Share a link. Earn from every real view.</h3>
+        <p>Paste any web address and get a short one. When people open it, they see a short page with ads, then continue.</p>
+        <ul><li><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg>Earnings by visitor country</li><li><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg>Live view counts in your dashboard</li><li><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg>Same wallet and same UPI payout</li></ul>
+        <div class="mini-art b"><div class="url-demo"><div class="long">https://example.com/a/very/long/page?utm=share&amp;id=48213</div><div class="short">anticash.tech/l/x7Kp2q</div></div></div>
+        <a class="btn btn-primary go" href="links.html" style="background:#4a32c4">Make a short link<svg class="arrow ico" viewBox="0 0 24 24"><use href="#i-arrow"/></svg></a>
+      </article>
+    </div>
+  </div>
+</section>
 
-      <!-- 2. Facts Strip -->
-      <section class="container reveal-on-scroll" style="padding-top: 2rem; padding-bottom: 2rem;">
-        <div class="facts-strip-grid">
-          <div class="fact-item reveal-on-scroll reveal-delay-1">
-            <span class="fact-title">Rs 300 minimum withdrawal</span>
-            <span class="fact-sub">Low, reachable threshold</span>
-          </div>
-          <div class="fact-item reveal-on-scroll reveal-delay-2">
-            <span class="fact-title">Payouts by UPI</span>
-            <span class="fact-sub">Direct to your bank account</span>
-          </div>
-          <div class="fact-item reveal-on-scroll reveal-delay-3">
-            <span class="fact-title">Sign in with Google</span>
-            <span class="fact-sub">No passwords to remember</span>
-          </div>
-          <div class="fact-item reveal-on-scroll reveal-delay-4">
-            <span class="fact-title">Free to join</span>
-            <span class="fact-sub">No deposits, ever</span>
-          </div>
-        </div>
-      </section>
+<!-- ================= HOW ================= -->
+<section class="section sect-dark" id="how">
+  <span class="blob b2" style="top:-120px;right:-80px"></span>
+  <div class="wrap">
+    <div class="section-head reveal" style="max-width:720px;margin-bottom:56px">
+      <span class="eyebrow"><span class="dot"></span>How it works</span>
+      <h2 class="h2" style="margin-top:16px">From sign-in to UPI in four steps.</h2>
+    </div>
+    <div class="steps4">
+      <div class="step reveal"><div class="num">01</div><h3>Sign in</h3><p>One tap with Google. Your wallet opens empty and ready.</p></div>
+      <div class="step reveal" style="--rd:.08s"><div class="num">02</div><h3>Earn</h3><p>Finish an offer, or share a short link and let views come in.</p></div>
+      <div class="step reveal" style="--rd:.16s"><div class="num">03</div><h3>Confirm</h3><p>Earnings sit as Pending, up to <span data-config="pendingText">up to 7 days</span>, while partners verify them.</p></div>
+      <div class="step reveal" style="--rd:.24s"><div class="num">04</div><h3>Withdraw</h3><p>From <span class="mono">&#8377;300</span> Available, request UPI. Paid in <span data-config="processingText">24 to 48 business hours</span>.</p></div>
+    </div>
+  </div>
+</section>
 
-      <hr class="hairline">
-
-      <!-- 3. Ways to Earn (2x2 Grid) -->
-      <section class="home-section reveal-on-scroll">
-        <div class="container">
-          <h2 class="section-title">Ways to earn</h2>
-          <p class="section-desc">
-            Partner networks offer varied tasks. Choose campaigns matching your device and preferences.
-          </p>
-
-          <div class="ways-grid-2x2">
-            <!-- 1. Surveys -->
-            <div class="way-card reveal-on-scroll reveal-delay-1">
-              <div class="way-icon-box">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-              </div>
-              <div>
-                <h3 class="way-name">Surveys</h3>
-                <p class="way-text">
-                  Answer consumer questionnaires from market research agencies about products, shopping habits, and media. Questions take between 5 and 20 minutes to complete.
-                </p>
-              </div>
-            </div>
-
-            <!-- 2. App Offers -->
-            <div class="way-card reveal-on-scroll reveal-delay-2">
-              <div class="way-icon-box">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
-              </div>
-              <div>
-                <h3 class="way-name">App offers</h3>
-                <p class="way-text">
-                  Install, register, or test new mobile applications according to specified advertiser criteria. Keep apps open for required test periods to ensure tracking registers.
-                </p>
-              </div>
-            </div>
-
-            <!-- 3. Game Offers -->
-            <div class="way-card reveal-on-scroll reveal-delay-3">
-              <div class="way-icon-box">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="6 3 18 3 21 16 16 21 8 21 3 16 6 3"></polygon><line x1="12" y1="8" x2="12" y2="12"></line><line x1="10" y1="10" x2="14" y2="10"></line></svg>
-              </div>
-              <div>
-                <h3 class="way-name">Game offers</h3>
-                <p class="way-text">
-                  Reach specific gameplay levels or milestones in newly released mobile games. Higher milestone requirements carry proportionally larger reward values.
-                </p>
-              </div>
-            </div>
-
-            <!-- 4. Video & Other Offers -->
-            <div class="way-card reveal-on-scroll reveal-delay-4">
-              <div class="way-icon-box">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
-              </div>
-              <div>
-                <h3 class="way-name">Video and other offers</h3>
-                <p class="way-text">
-                  Watch promotional brand clips, browse web discovery portals, or participate in brand engagement tasks. These offer quick, low-barrier completions throughout the day.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div style="margin-top: 1.5rem; font-size: 0.8125rem; color: var(--color-text-tertiary);">
-            Note: Which offers you see depends on your device and location, and partners can change them at any time.
-          </div>
-        </div>
-      </section>
-
-      <hr class="hairline">
-
-      <!-- 4. How It Works (Numbered Steps) -->
-      <section class="home-section reveal-on-scroll" id="how-it-works">
-        <div class="container">
-          <h2 class="section-title">How it works</h2>
-          <p class="section-desc">
-            Four simple steps from signing up to receiving your UPI payment.
-          </p>
-
-          <div class="steps-stack">
-            <div class="step-row reveal-on-scroll reveal-delay-1">
-              <span class="step-num">01</span>
-              <div>
-                <h3 class="step-heading">Sign in with Google</h3>
-                <p class="step-body">
-                  Create your profile in one click with Google authentication. We enforce a strict one account per person policy to preserve network integrity. No passwords required.
-                </p>
-              </div>
-            </div>
-
-            <div class="step-row reveal-on-scroll reveal-delay-2">
-              <span class="step-num">02</span>
-              <div>
-                <h3 class="step-heading">Pick an offer and complete every requirement</h3>
-                <p class="step-body">
-                  Browse partner offerwalls, select a survey or task, and read all requirements carefully. Complete the task honestly on your personal device without using VPNs or proxies.
-                </p>
-              </div>
-            </div>
-
-            <div class="step-row reveal-on-scroll reveal-delay-3">
-              <span class="step-num">03</span>
-              <div>
-                <h3 class="step-heading">Partner confirms it (Pending hold)</h3>
-                <p class="step-body">
-                  When you finish, the partner records the completion and credits your pending balance. Advertisers audit tasks over a standard review window (up to 7 days) before moving funds to your confirmed balance.
-                </p>
-              </div>
-            </div>
-
-            <div class="step-row reveal-on-scroll reveal-delay-4">
-              <span class="step-num">04</span>
-              <div>
-                <h3 class="step-heading">Request UPI withdrawal once Available reaches Rs 300</h3>
-                <p class="step-body">
-                  Enter your Indian UPI ID on the Withdraw page. Payout requests are verified and disbursed directly to your bank account within 24 to 48 business hours.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <hr class="hairline">
-
-      <!-- 5. Payout Details Table -->
-      <section class="home-section reveal-on-scroll">
-        <div class="container">
-          <h2 class="section-title">Payout details</h2>
-          <p class="section-desc">
-            Transparent breakdown of our payment parameters, processing times, and rules.
-          </p>
-
-          <table class="spec-table" aria-label="Payout specifications">
-            <tbody>
-              <tr>
-                <th scope="row">Minimum withdrawal</th>
-                <td>Rs 300.00 (30,000 paise). Once your confirmed balance reaches this threshold, you can request a transfer.</td>
-              </tr>
-              <tr>
-                <th scope="row">Payout method</th>
-                <td>Direct UPI transfer to your Virtual Payment Address (Google Pay, PhonePe, Paytm, BHIM, or bank UPI).</td>
-              </tr>
-              <tr>
-                <th scope="row">Processing time</th>
-                <td>Withdrawal requests are manually reviewed for fraudulent activity and disbursed within 24 to 48 business hours.</td>
-              </tr>
-              <tr>
-                <th scope="row">Pending period</th>
-                <td>Advertisers hold new completions in pending status for up to 7 days to run quality control and prevent automated fraud.</td>
-              </tr>
-              <tr>
-                <th scope="row">Reversals</th>
-                <td>If an advertiser determines an offer was finished fraudulently, using proxies, or without completing requirements, pending funds are deducted.</td>
-              </tr>
-              <tr>
-                <th scope="row">Accounts</th>
-                <td>Strictly one account per individual. Using VPNs, proxies, emulators, or multiple profiles results in immediate permanent suspension.</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <div style="margin-top: 1.25rem; font-size: 0.8125rem; color: var(--color-text-tertiary);">
-            Disclaimer: Earnings depend on available partner offers. AntiCash is not a job or guaranteed daily income. Complete tasks in your spare time.
-          </div>
-        </div>
-      </section>
-
-      <hr class="hairline">
-
-      <!-- 6. Safety Section: What we will never do -->
-      <section class="home-section">
-        <div class="container">
-          <div class="safety-box">
-            <h2 style="font-size: 1.375rem; font-weight: 700; margin-bottom: 0.5rem;">What we will never do</h2>
-            <p style="color: var(--color-text-secondary); font-size: 0.9375rem; line-height: 1.6;">
-              AntiCash is designed with complete security and transparency. Protect yourself from online impostors by knowing our commitments:
-            </p>
-
-            <ul class="safety-list">
-              <li class="safety-item">
-                <svg class="safety-icon-bullet" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
-                <span><strong>Never ask for your UPI PIN, passwords, or OTP:</strong> We only need your public UPI VPA address to send money to you.</span>
-              </li>
-              <li class="safety-item">
-                <svg class="safety-icon-bullet" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
-                <span><strong>Never ask you to pay money or deposit funds:</strong> AntiCash is 100% free. We never charge registration fees or premium membership upgrades.</span>
-              </li>
-              <li class="safety-item">
-                <svg class="safety-icon-bullet" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
-                <span><strong>Never require side-loading unverified APK files:</strong> All tested applications must be downloaded from official app stores like Google Play.</span>
-              </li>
-              <li class="safety-item">
-                <svg class="safety-icon-bullet" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
-                <span><strong>Never promise fixed daily income:</strong> Rewards fluctuate based on available partner research. We never promise guaranteed salaries.</span>
-              </li>
-            </ul>
-
-            <div style="font-size: 0.875rem; color: var(--color-text-secondary); border-top: 1px solid var(--color-border); padding-top: 1rem;">
-              Encountered suspicious activity? Report it directly to <a href="mailto:support@anticash.tech" style="font-weight: 600;">support@anticash.tech</a>.
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <hr class="hairline">
-
-      <!-- 7. FAQ Accordion (10 Items) -->
-      <section class="home-section">
-        <div class="container">
-          <h2 class="section-title">Frequently asked questions</h2>
-          <p class="section-desc">
-            Specific answers to common questions about payouts, verification, and rules.
-          </p>
-
-          <div class="accordion-list" id="faqAccordion">
-            
-            <!-- Q1 -->
-            <div class="accordion-item">
-              <button type="button" class="accordion-btn" aria-expanded="false" aria-controls="faqPanel1" id="faqBtn1">
-                <span>How do I get paid?</span>
-                <svg class="accordion-icon-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-              </button>
-              <div class="accordion-panel" id="faqPanel1" role="region" aria-labelledby="faqBtn1">
-                Payouts are transferred directly to your Indian UPI address (such as Google Pay, PhonePe, Paytm, or BHIM). Navigate to the Withdraw page, enter your verified UPI ID, and submit your request. Funds are reviewed and deposited to your bank account within 24 to 48 business hours.
-              </div>
-            </div>
-
-            <!-- Q2 -->
-            <div class="accordion-item">
-              <button type="button" class="accordion-btn" aria-expanded="false" aria-controls="faqPanel2" id="faqBtn2">
-                <span>What is the minimum withdrawal amount?</span>
-                <svg class="accordion-icon-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-              </button>
-              <div class="accordion-panel" id="faqPanel2" role="region" aria-labelledby="faqBtn2">
-                The minimum withdrawal amount is Rs 300.00 (30,000 paise). Once your confirmed balance reaches this threshold, the withdrawal form becomes active. There is no fee deducted from your payout.
-              </div>
-            </div>
-
-            <!-- Q3 -->
-            <div class="accordion-item">
-              <button type="button" class="accordion-btn" aria-expanded="false" aria-controls="faqPanel3" id="faqBtn3">
-                <span>What is the difference between available and pending balance?</span>
-                <svg class="accordion-icon-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-              </button>
-              <div class="accordion-panel" id="faqPanel3" role="region" aria-labelledby="faqBtn3">
-                When you finish an offer, earnings initially land in your pending balance. Partner advertisers require a holding period to verify that the submission fulfilled all criteria. Once verified without dispute, the funds automatically transfer to your available balance for withdrawal.
-              </div>
-            </div>
-
-            <!-- Q4 -->
-            <div class="accordion-item">
-              <button type="button" class="accordion-btn" aria-expanded="false" aria-controls="faqPanel4" id="faqBtn4">
-                <span>How long does partner confirmation take?</span>
-                <svg class="accordion-icon-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-              </button>
-              <div class="accordion-panel" id="faqPanel4" role="region" aria-labelledby="faqBtn4">
-                Confirmation typically takes up to 7 days depending on the partner network. Market research surveys and app developers audit completions in batch cycles to filter out automated bots. Once approved, earnings move to your available balance automatically.
-              </div>
-            </div>
-
-            <!-- Q5 -->
-            <div class="accordion-item">
-              <button type="button" class="accordion-btn" aria-expanded="false" aria-controls="faqPanel5" id="faqBtn5">
-                <span>Why can earnings be reversed?</span>
-                <svg class="accordion-icon-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-              </button>
-              <div class="accordion-panel" id="faqPanel5" role="region" aria-labelledby="faqBtn5">
-                Advertisers reserve the right to cancel payouts if an offer was not finished properly. Common reasons include submitting contradictory survey answers, uninstalling an app immediately, or attempting tasks through automated tools. In such cases, the pending reward is reversed.
-              </div>
-            </div>
-
-            <!-- Q6 -->
-            <div class="accordion-item">
-              <button type="button" class="accordion-btn" aria-expanded="false" aria-controls="faqPanel6" id="faqBtn6">
-                <span>Can I use a VPN or proxy?</span>
-                <svg class="accordion-icon-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-              </button>
-              <div class="accordion-panel" id="faqPanel6" role="region" aria-labelledby="faqBtn6">
-                No. Partner networks use fraud detection systems to catch VPNs, proxies, Tor, and IP-altering software. Accounts detected using these services are permanently banned, and all balances are forfeited.
-              </div>
-            </div>
-
-            <!-- Q7 -->
-            <div class="accordion-item">
-              <button type="button" class="accordion-btn" aria-expanded="false" aria-controls="faqPanel7" id="faqBtn7">
-                <span>Can my family members also create accounts?</span>
-                <svg class="accordion-icon-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-              </button>
-              <div class="accordion-panel" id="faqPanel7" role="region" aria-labelledby="faqBtn7">
-                Each member must have their own unique device, Google account, and Indian UPI address. Creating multiple accounts on a single device or sharing accounts is prohibited and leads to an automatic ban.
-              </div>
-            </div>
-
-            <!-- Q8 -->
-            <div class="accordion-item">
-              <button type="button" class="accordion-btn" aria-expanded="false" aria-controls="faqPanel8" id="faqBtn8">
-                <span>What should I do if an offer does not credit?</span>
-                <svg class="accordion-icon-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-              </button>
-              <div class="accordion-panel" id="faqPanel8" role="region" aria-labelledby="faqBtn8">
-                Some offers require up to 24 hours to register on the partner network. If the completion does not appear in your pending statement after 24 hours, contact the support link located directly within that offerwall panel, providing your transaction or screenshot proof.
-              </div>
-            </div>
-
-            <!-- Q9 -->
-            <div class="accordion-item">
-              <button type="button" class="accordion-btn" aria-expanded="false" aria-controls="faqPanel9" id="faqBtn9">
-                <span>Are my earnings taxable?</span>
-                <svg class="accordion-icon-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-              </button>
-              <div class="accordion-panel" id="faqPanel9" role="region" aria-labelledby="faqBtn9">
-                Yes. Rewards received into your bank account constitute taxable income under Indian Income Tax regulations. You are personally responsible for tracking and declaring your earnings.
-              </div>
-            </div>
-
-            <!-- Q10 -->
-            <div class="accordion-item">
-              <button type="button" class="accordion-btn" aria-expanded="false" aria-controls="faqPanel10" id="faqBtn10">
-                <span>Is AntiCash free to use?</span>
-                <svg class="accordion-icon-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-              </button>
-              <div class="accordion-panel" id="faqPanel10" role="region" aria-labelledby="faqBtn10">
-                AntiCash is completely free. We never charge registration fees, subscription costs, or withdrawal processing deductions. Advertisers compensate us for placements, and we share that revenue with you.
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      <hr class="hairline">
-
-      <!-- 8. Closing Band -->
-      <section class="home-section" style="padding-top: 3.5rem; padding-bottom: 5rem;">
-        <div class="container">
-          <div class="cta-band">
-            <h2 style="font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.5rem;">
-              Ready to start?
-            </h2>
-            <p style="color: var(--color-text-secondary); font-size: 1rem; max-width: 500px; margin-bottom: 1.5rem; line-height: 1.6;">
-              Sign in with your Google account and explore available partner tasks today.
-            </p>
-            <button type="button" class="btn-primary" id="closingSigninBtn">
-              <svg class="google-icon" width="16" height="16" viewBox="0 0 24 24">
-                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
-              </svg>
-              <span>Sign in with Google</span>
-            </button>
-          </div>
-        </div>
-      </section>
-
-    </div><!-- End marketing wrapper -->
-
-    <!-- Compact signed-in reminder block (only shown when user is signed in) -->
-    <div id="signedInReminderBlock" style="display: none; padding: 2rem 0 4rem;" class="container">
-      <div class="card" style="padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+<!-- ================= LINKS CALCULATOR ================= -->
+<section class="section" id="links">
+  <div class="wrap">
+    <div class="section-head reveal" style="max-width:720px;margin-bottom:40px">
+      <span class="eyebrow"><span class="dot"></span>Short links</span>
+      <h2 class="h2" style="margin-top:16px">See roughly what a link can earn.</h2>
+      <p class="lead" style="margin-top:14px">This is an estimate at our starting rates. Real earnings depend on how many valid views you get and where they come from.</p>
+    </div>
+    <div class="calc reveal">
+      <div class="in">
         <div>
-          <span style="font-size: 0.9375rem; font-weight: 600;">Need a reminder on how payouts work?</span>
-          <p style="font-size: 0.8125rem; color: var(--color-text-secondary); margin-top: 0.2rem;">Review minimum withdrawal rules, confirmation holds, and account policies.</p>
+          <div class="label" style="margin-bottom:10px">Where are your visitors?</div>
+          <div class="seg" role="group" aria-label="Visitor country">
+            <button type="button" aria-pressed="true" data-tier="india">India</button>
+            <button type="button" aria-pressed="false" data-tier="tier1">US, UK, CA, AU</button>
+            <button type="button" aria-pressed="false" data-tier="other">Elsewhere</button>
+          </div>
         </div>
-        <button type="button" class="btn-secondary btn-sm" id="btnToggleMarketing">Show payout rules</button>
+        <div>
+          <div class="range-row"><span class="label">Valid views per month</span><b id="calcViews">10,000</b></div>
+          <input class="range" id="calcRange" type="range" min="1000" max="500000" step="1000" value="10000" aria-label="Valid views per month" style="margin-top:12px">
+        </div>
+        <p style="font-size:14px;color:var(--ink-3);font-weight:600">Starting rates: <span class="mono" id="calcRates"></span> per 1,000 valid views. Repeat views, bots and blocked visitors do not count.</p>
+      </div>
+      <div class="out">
+        <span class="lab">Estimated per month</span>
+        <div class="big" id="calcOut">&#8377;0</div>
+        <small>An estimate, not a promise.</small>
       </div>
     </div>
+  </div>
+</section>
 
-  </main>
-
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="container footer-columns-grid">
-      <div class="footer-col-brand">
-        <span class="footer-brand">AntiCash</span>
-        <p class="footer-disclaimer" style="max-width: 340px;">
-          Direct UPI rewards for completing verified advertiser surveys and application offers in India.
-        </p>
-      </div>
-
-      <div>
-        <div class="footer-col-title">Product</div>
-        <ul class="footer-col-links">
-          <li><a href="earn.html">Earn</a></li>
-          <li><a href="dashboard.html">Wallet</a></li>
-          <li><a href="withdraw.html">Withdraw</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <div class="footer-col-title">Support</div>
-        <ul class="footer-col-links">
-          <li><a href="contact.html">Help</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <div class="footer-col-title">Legal</div>
-        <ul class="footer-col-links">
-          <li><a href="terms.html">Terms</a></li>
-          <li><a href="privacy.html">Privacy</a></li>
-        </ul>
-      </div>
+<!-- ================= SAFETY ================= -->
+<section class="section sect-dark" id="safety">
+  <div class="wrap">
+    <div class="section-head reveal" style="max-width:720px;margin-bottom:48px">
+      <span class="eyebrow"><span class="dot"></span>Our promises</span>
+      <h2 class="h2" style="margin-top:16px">What we will never do.</h2>
     </div>
-
-    <div class="container footer-bottom-line">
-      <span>AntiCash (anticash.tech).</span>
-      <span>Offers subject to advertiser availability. No guaranteed income.</span>
+    <div class="duo" style="grid-template-columns:repeat(3,1fr)">
+      <div class="spot reveal" style="padding:28px"><h3 style="font-size:20px;margin-bottom:10px">Ask for money or a PIN</h3><p>No joining fee, no payment to withdraw, and never your UPI PIN or an OTP.</p></div>
+      <div class="spot reveal" style="padding:28px;--rd:.08s"><h3 style="font-size:20px;margin-bottom:10px">Show fake numbers</h3><p>Sample screens are labeled. We do not publish made-up earnings or reviews.</p></div>
+      <div class="spot reveal" style="padding:28px;--rd:.16s"><h3 style="font-size:20px;margin-bottom:10px">Hide how it works</h3><p>Partners pay us, and we pay you. Rewards depend on confirmation, and rules are in the <a href="terms.html" style="color:var(--mint);text-decoration:underline">terms</a>.</p></div>
     </div>
-  </footer>
+  </div>
+</section>
 
-  <script type="module">
-    import { initAuth, loginWithGoogle, onUserChange } from "./auth.js";
-    import { formatRupees } from "./app-config.js";
-    import { initMotion } from "./motion.js";
+<!-- ================= FAQ ================= -->
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="section-head reveal" style="text-align:center;margin:0 auto 40px">
+      <span class="eyebrow" style="justify-content:center"><span class="dot"></span>FAQ</span>
+      <h2 class="h2" style="margin-top:16px">Questions people ask.</h2>
+    </div>
+    <div class="qa-list reveal">
+<details class="qa"><summary>Is it free?</summary><div class="a">Yes. Signing up, offers and short links are free. We never ask you to pay to join or to withdraw.</div></details><details class="qa"><summary>How much can I earn?</summary><div class="a">It varies with the offers available to you and the views your links get. We do not promise a figure, and we show no made-up earnings.</div></details><details class="qa"><summary>When is my money Available?</summary><div class="a">New earnings are Pending until the partner confirms them, which can take up to 7 days. Then they move to Available, which counts toward your &#8377;300 minimum.</div></details><details class="qa"><summary>How do withdrawals work?</summary><div class="a">From &#8377;300 Available, enter your UPI ID on the Withdraw page. We review every request and pay within 24 to 48 business hours.</div></details><details class="qa"><summary>How do short links pay?</summary><div class="a">You paste a web address and get a short one. Visitors see a short page with ads, then continue to your link. Valid views earn money by visitor country. Repeat views, bots and blocked destinations do not count.</div></details><details class="qa"><summary>What links are not allowed?</summary><div class="a">Malware, phishing, scams, adult content, pirated material and anything illegal in India. We disable such links, remove their earnings and can ban the account. You can report a link from its page or from the <a href="contact.html#abuse">contact page</a>.</div></details><details class="qa"><summary>Why did an offer reverse?</summary><div class="a">Partners re-check offers. If instructions were not followed, or a VPN or emulator was detected, the partner cancels the reward and we deduct it. See the <a href="terms.html">terms</a>.</div></details><details class="qa"><summary>Is my data safe?</summary><div class="a">We keep only what we need: your Google sign-in details, wallet history and the UPI ID you enter. Only our server-side code can change balances. See the <a href="privacy.html">privacy policy</a>.</div></details>
+    </div>
+  </div>
+</section>
 
-    document.addEventListener("DOMContentLoaded", () => {
-      initAuth();
-      setupFaqAccordion();
-      initMotion();
-
-      const heroPrimaryBtn = document.getElementById("heroPrimaryBtn");
-      const closingSigninBtn = document.getElementById("closingSigninBtn");
-      const heroHeadline = document.getElementById("heroHeadline");
-      const heroSubtext = document.getElementById("heroSubtext");
-      const heroButtonsRow = document.getElementById("heroButtonsRow");
-      const heroTrustNote = document.getElementById("heroTrustNote");
-      const marketingWrapper = document.getElementById("marketingSectionsWrapper");
-      const signedInReminder = document.getElementById("signedInReminderBlock");
-      const toggleMarketingBtn = document.getElementById("btnToggleMarketing");
-
-      if (heroPrimaryBtn) {
-        heroPrimaryBtn.addEventListener("click", () => loginWithGoogle());
-      }
-      if (closingSigninBtn) {
-        closingSigninBtn.addEventListener("click", () => loginWithGoogle());
-      }
-
-      // Handle auth state changes specifically for the home page
-      onUserChange((user, userData, isLoaded) => {
-        if (!isLoaded) {
-          // While auth or firestore is resolving, don't flash UI
-          return;
-        }
-
-        if (user) {
-          // 2. Signed-in state on home page
-          const firstName = (user.displayName || "there").split(" ")[0];
-          const confirmedPaise = userData?.confirmedBalancePaise || 0;
-          const formatted = formatRupees(confirmedPaise);
-
-          heroHeadline.textContent = `Welcome back, ${firstName}`;
-          heroSubtext.innerHTML = `Available balance: <strong style="font-family: var(--font-mono); color: var(--color-text-main); font-size: 1.25rem;">${formatted}</strong>`;
-
-          heroButtonsRow.innerHTML = `
-            <a href="dashboard.html" class="btn-primary">Go to wallet</a>
-            <a href="earn.html" class="btn-secondary">Browse offers</a>
-          `;
-
-          if (heroTrustNote) {
-            heroTrustNote.textContent = `Signed in as ${user.email}`;
-          }
-
-          // Collapse marketing sections into compact reminder link
-          marketingWrapper.style.display = "none";
-          signedInReminder.style.display = "block";
-        } else {
-          // Logged-out state
-          heroHeadline.textContent = "Complete offers. Get paid to your UPI.";
-          heroSubtext.textContent = "Try apps, answer surveys and finish partner offers. Withdraw from Rs 300 straight to your UPI ID.";
-          
-          heroButtonsRow.innerHTML = `
-            <button type="button" class="btn-primary" id="btnDynamicSignin">
-              <svg class="google-icon" width="16" height="16" viewBox="0 0 24 24">
-                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
-              </svg>
-              <span>Sign in with Google</span>
-            </button>
-            <a href="#how-it-works" class="btn-link-action">See how it works</a>
-          `;
-
-          const dynamicBtn = document.getElementById("btnDynamicSignin");
-          if (dynamicBtn) dynamicBtn.addEventListener("click", () => loginWithGoogle());
-
-          if (heroTrustNote) {
-            heroTrustNote.textContent = "Free to join. We never ask for your UPI PIN or OTP.";
-          }
-
-          marketingWrapper.style.display = "block";
-          signedInReminder.style.display = "none";
-        }
-      });
-
-      if (toggleMarketingBtn) {
-        toggleMarketingBtn.addEventListener("click", () => {
-          const isHidden = marketingWrapper.style.display === "none";
-          marketingWrapper.style.display = isHidden ? "block" : "none";
-          toggleMarketingBtn.textContent = isHidden ? "Hide payout rules" : "Show payout rules";
-        });
-      }
-
-      // Accordion setup
-      function setupFaqAccordion() {
-        const buttons = document.querySelectorAll(".accordion-btn");
-        buttons.forEach(btn => {
-          btn.addEventListener("click", () => {
-            const expanded = btn.getAttribute("aria-expanded") === "true";
-            const panelId = btn.getAttribute("aria-controls");
-            const panel = document.getElementById(panelId);
-
-            btn.setAttribute("aria-expanded", String(!expanded));
-            if (panel) {
-              panel.classList.toggle("is-open", !expanded);
-            }
-          });
-        });
-      }
-    });
-  </script>
+<!-- ================= CTA ================= -->
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="cta-grad reveal">
+      <h2>Ready to start?</h2>
+      <p>Sign in with Google and your wallet is ready in seconds.</p>
+      <button class="btn btn-glow" type="button" data-show="out" data-action="signin"><span class="g-badge"><svg><use href="#g-logo"/></svg></span>Sign in with Google</button>
+      <a class="btn btn-glow" href="dashboard.html" data-show="in">Open my wallet</a>
+    </div>
+  </div>
+</section>
+</main>
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a href="index.html" class="wordmark">Anti<span>Cash</span></a>
+        <p class="foot-about">Rewards from partner offers, and short links that pay. Made for users in India.</p>
+      </div>
+      <div><h4>Product</h4><ul><li><a href="earn.html">Rewards</a></li><li><a href="links.html">Short links</a></li><li><a href="index.html#how">How it works</a></li></ul></div>
+      <div><h4>Support</h4><ul><li><a href="contact.html">Contact</a></li><li><a href="index.html#faq">FAQ</a></li><li><a href="about.html">About</a></li></ul></div>
+      <div><h4>Legal</h4><ul><li><a href="terms.html">Terms</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="contact.html#abuse">Report abuse</a></li></ul></div>
+    </div>
+    <div class="foot-bottom"><span>&copy; 2026 AntiCash</span><span>Rewards depend on partner confirmation. Not employment, not guaranteed income.</span></div>
+  </div>
+</footer>
+<script src="js/shell.js"></script>
+<script src="js/home.js"></script>
+<script type="module" src="js/boot.js"></script>
 </body>
 </html>

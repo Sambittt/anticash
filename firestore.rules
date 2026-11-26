@@ -1,70 +1,74 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    
-    // EDIT ME: Replace EDIT_ME_OWNER_UID with your Firebase Auth UID from Firebase Console
+
+    // EDIT ME: replace EDIT_ME_OWNER_UID (inside the quotes, in ONE place) with your Firebase Auth UID.
+    // A real UID is 28 characters. While the 17-character placeholder is in place, nobody is the owner.
+    function ownerUid() {
+      return "EDIT_ME_OWNER_UID";
+    }
     function isOwner() {
-      return request.auth != null && request.auth.uid == "EDIT_ME_OWNER_UID";
+      return request.auth != null
+        && ownerUid().size() >= 20
+        && request.auth.uid == ownerUid();
     }
-
-    function isAuthenticated() {
-      return request.auth != null;
-    }
-
     function isSelf(uid) {
       return request.auth != null && request.auth.uid == uid;
     }
 
-    // 1. User profile documents
+    // 1. Member profile
     match /users/{uid} {
-      // Users can only read their own document; Owner can read all
       allow read: if isSelf(uid) || isOwner();
 
-      // Users can only initialize their document on first Google login with 0 paise
-      allow create: if isSelf(uid) &&
-                       request.resource.data.confirmedBalancePaise == 0 &&
-                       request.resource.data.pendingBalancePaise == 0 &&
-                       request.resource.data.banned == false;
+      // A member may create their own document once, with zero balances and nothing else.
+      allow create: if isSelf(uid)
+        && request.resource.data.keys().hasOnly(['email', 'displayName', 'createdAt', 'confirmedBalancePaise', 'pendingBalancePaise', 'banned'])
+        && request.resource.data.confirmedBalancePaise == 0
+        && request.resource.data.pendingBalancePaise == 0
+        && request.resource.data.banned == false
+        && request.resource.data.createdAt == request.time;
 
-      // Users can NEVER modify confirmedBalancePaise, pendingBalancePaise, or banned from the browser
-      // All balance mutations are strictly managed by Cloud Functions via Admin SDK
-      allow update: if (isSelf(uid) &&
-                       !request.resource.data.diff(resource.data).affectedKeys().hasAny(['confirmedBalancePaise', 'pendingBalancePaise', 'banned'])) ||
-                       isOwner();
+      // A member may only change their display name from the browser.
+      // Balances, ban and review flags are written by Cloud Functions only.
+      allow update: if isSelf(uid)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['displayName']);
 
       allow delete: if false;
 
-      // 2. User transactions subcollection
       match /transactions/{txId} {
-        // Users can read only their own transactions; Owner can read all
         allow read: if isSelf(uid) || isOwner();
-        
-        // Client-side writes are strictly forbidden
-        // All transactions are created by Cloud Functions
         allow write: if false;
       }
     }
 
-    // 3. Withdrawals collection
-    match /withdrawals/{withdrawalId} {
-      // Users can read only their own withdrawal requests; Owner can read all
-      allow read: if (isAuthenticated() && resource.data.uid == request.auth.uid) || isOwner();
-      
-      // Client-side writes are disabled to prevent balance manipulation
-      // Requests must be submitted through the createWithdrawal Cloud Function
-      allow create: if false;
-      allow update: if isOwner();
-      allow delete: if false;
+    // 2. Owner can read every member's transactions (for the admin CSV export)
+    match /{path=**}/transactions/{txId} {
+      allow read: if isOwner();
     }
 
-    // 4. Processed postbacks idempotency collection
-    match /processedPostbacks/{postbackId} {
-      // Only owner can view for audit; writes happen only from Cloud Functions
+    // 3. Withdrawals: created and changed only by Cloud Functions
+    match /withdrawals/{withdrawalId} {
+      allow read: if (request.auth != null && resource.data.uid == request.auth.uid) || isOwner();
+      allow write: if false;
+    }
+
+    // 4. Postback ledger
+    match /processedPostbacks/{id} {
       allow read: if isOwner();
       allow write: if false;
     }
 
-    // Default deny
+    // 5. Short links: members read their own, writes only through Cloud Functions
+    match /links/{code} {
+      allow read: if (request.auth != null && resource.data.ownerUid == request.auth.uid) || isOwner();
+      allow write: if false;
+    }
+
+    // 6. Owner-only operational data
+    match /stats/{day} { allow read: if isOwner(); allow write: if false; }
+    match /reports/{id} { allow read: if isOwner(); allow write: if false; }
+    match /config/{doc} { allow read: if isOwner(); allow write: if false; }
+
     match /{document=**} {
       allow read, write: if false;
     }

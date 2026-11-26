@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" data-auth="loading" data-owner="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Short links | AntiCash</title>
+  <meta name="description" content="Create short links and earn from counted views.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#f7f5f0">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/theme.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><polyline points="5 12 10 17 19 7"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="g-logo" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></symbol>
+</svg>
+<!-- ================= HEADER ================= -->
+<header class="site-header" id="siteHeader">
+  <div class="wrap header-inner">
+    <a href="index.html" class="wordmark" aria-label="AntiCash home">Anti<span>Cash</span></a>
+
+    <nav class="nav" aria-label="Main" data-show="out">
+      <a href="index.html#products">Products</a>
+      <a href="index.html#how">How it works</a>
+      <a href="index.html#links">Short links</a>
+      <a href="index.html#faq">FAQ</a>
+    </nav>
+    <nav class="nav" aria-label="Main" data-show="in">
+      <a href="earn.html">Earn</a>
+      <a href="links.html">Links</a>
+      <a href="dashboard.html">Wallet</a>
+      <a href="withdraw.html">Withdraw</a>
+      <a href="contact.html">Help</a>
+    </nav>
+
+    <div class="header-right">
+      <div data-show="loading"><div class="skeleton skel-pill" aria-hidden="true"></div></div>
+
+      <button class="btn btn-primary btn-sm hide-sm" data-show="out" data-action="signin" type="button">Sign in</button>
+
+      <div class="header-right" data-show="in" style="gap:12px">
+        <a href="dashboard.html" class="balance-chip" aria-label="Available balance">BALANCE <b class="skeleton" data-field="available-chip" style="min-width:64px;display:inline-block;height:18px">&nbsp;</b></a>
+        <div class="user-menu" id="userMenu">
+          <button class="avatar-btn" type="button" aria-haspopup="true" aria-expanded="false" id="userBtn" aria-label="Account menu">
+            <span class="avatar" data-user-initial>&nbsp;</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" class="ico" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="menu" role="menu">
+            <a href="dashboard.html" role="menuitem">Wallet</a>
+            <a href="earn.html" role="menuitem">Earn</a>
+            <a href="links.html" role="menuitem">Short links</a>
+            <a href="withdraw.html" role="menuitem">Withdraw</a>
+            <a href="admin.html" role="menuitem" data-show="owner">Admin</a>
+            <button type="button" role="menuitem" data-action="signout">Sign out</button>
+          </div>
+        </div>
+      </div>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="drawer" type="button"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="drawer" id="drawer">
+  <div data-show="out">
+    <a class="dl" href="index.html#products">Products</a>
+    <a class="dl" href="index.html#how">How it works</a>
+    <a class="dl" href="index.html#links">Short links</a>
+    <a class="dl" href="index.html#faq">FAQ</a>
+    <button class="btn btn-primary" type="button" data-action="signin">
+      <span class="g-badge"><svg><use href="#g-logo"/></svg></span> Sign in with Google
+    </button>
+  </div>
+  <div data-show="in">
+    <a class="dl" href="earn.html">Earn</a>
+    <a class="dl" href="links.html">Short links</a>
+    <a class="dl" href="dashboard.html">Wallet</a>
+    <a class="dl" href="withdraw.html">Withdraw</a>
+    <a class="dl" href="contact.html">Help</a>
+    <a class="dl" href="admin.html" data-show="owner">Admin</a>
+    <button class="btn btn-ghost" type="button" data-action="signout">Sign out</button>
+  </div>
+</div>
+<div class="banner" id="bannedBanner" role="alert" hidden>Your account is suspended. Offers and payouts are disabled. Contact support@anticash.tech if you think this is a mistake.</div>
+<main id="main">
+  <div class="wrap" data-show="loading" aria-hidden="true" style="padding:56px 24px 96px">
+    <div class="skeleton" style="height:16px;width:120px;margin-bottom:22px"></div>
+    <div class="skeleton" style="height:52px;width:min(460px,100%);margin-bottom:28px"></div>
+    <div class="skeleton" style="height:120px;width:100%;margin-bottom:16px"></div>
+    <div class="skeleton" style="height:260px;width:100%"></div>
+  </div>
+  <div class="wrap" data-show="out">
+    <div class="gate rise">
+      <span class="eyebrow"><span class="dot"></span>Members only</span>
+      <h2>Sign in to create short links</h2>
+      <p>Links are tied to your account so we can pay you. It takes a few seconds with Google.</p>
+      <button class="btn btn-primary" type="button" data-action="signin"><span class="g-badge"><svg><use href="#g-logo"/></svg></span>Sign in with Google</button>
+    </div>
+  </div>
+  <div data-show="in">
+    <div class="wrap">
+      <section class="page-head">
+        <span class="eyebrow rise"><span class="dot"></span>Short links</span>
+        <h1 class="rise" style="--d:1;margin-top:18px">Shorten a link. Earn from counted views.</h1>
+        <p class="sub rise" style="--d:2">Visitors see a short page with ads, wait a few seconds, then continue to your link. Counted views are paid by visitor country and added to your Pending balance.</p>
+      </section>
+
+      <div class="page-body">
+        <section class="panel rise" style="--d:3" aria-label="Create a short link">
+          <div class="panel-head" style="margin-bottom:18px"><div><h2>New short link</h2><p>Paste any public web address.</p></div></div>
+          <form id="shortenForm" novalidate>
+            <div class="shorten-box">
+              <input class="input mono" id="urlInput" type="text" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="https://example.com/your-long-link" aria-label="Web address to shorten">
+              <button class="btn btn-primary" type="submit" id="btnShorten">Shorten</button>
+            </div>
+            <div class="alert" id="shortenMsg" role="alert" style="margin-top:14px"></div>
+          </form>
+          <div class="link-out" id="linkOut">
+            <span class="u" id="newShort"></span>
+            <button class="btn btn-primary btn-sm" type="button" id="btnCopyNew">Copy</button>
+          </div>
+        </section>
+
+        <div class="stats rise" style="--d:4">
+          <div><div class="fig-label">Links</div><div class="mono sk" id="statLinks">0</div><div class="hint">Created so far</div></div>
+          <div><div class="fig-label">Counted views</div><div class="mono sk" id="statViews">0</div><div class="hint" id="statViewsHint">Counted views only</div></div>
+          <div><div class="fig-label">Earned from links</div><div class="mono sk" id="statEarned">&#8377;0.00</div><div class="hint">Pending, then Available after up to 7 days</div></div>
+        </div>
+
+        <section class="panel flat rise" style="--d:5" aria-label="Your links">
+          <div class="panel-head"><div><h2>Your links</h2><p>Your latest 100 links.</p></div></div>
+          <div class="table-wrap" style="margin-top:20px">
+            <table class="dt" style="min-width:760px">
+              <thead><tr><th>Short link</th><th>Goes to</th><th class="r">Counted views</th><th class="r">Earned</th><th>Status</th><th class="r">Actions</th></tr></thead>
+              <tbody id="linksTbody"><tr class="skel-row"><td colspan="6"><div class="skeleton" style="height:18px"></div></td></tr></tbody>
+            </table>
+          </div>
+        </section>
+
+        <div class="split rise" style="--d:6">
+          <section class="panel">
+            <div class="panel-head" style="margin-bottom:12px"><div><h2>Starting rates</h2><p>Paid per 1,000 counted views, by where the visitor is.</p></div></div>
+            <table class="dt" style="min-width:0"><tbody>
+              <tr><td>India</td><td class="r num"><b data-rate="india">&#8377;50</b></td></tr>
+              <tr><td>United States, United Kingdom, Canada, Australia</td><td class="r num"><b data-rate="tier1">&#8377;200</b></td></tr>
+              <tr><td>Everywhere else</td><td class="r num"><b data-rate="other">&#8377;80</b></td></tr>
+            </tbody></table>
+            <p style="margin-top:14px;font-size:13.5px;color:var(--ink-3);font-weight:600">These are starting rates, not a guarantee. They can change with what advertisers pay us.</p>
+          </section>
+          <section class="panel">
+            <div class="panel-head" style="margin-bottom:12px"><h2>What counts as a view</h2></div>
+            <ul class="side-list">
+              <li><span class="n">01</span><span>The visitor waits for the timer and clicks continue.</span></li>
+              <li><span class="n">02</span><span>Once per visitor per link per day, from a real browser.</span></li>
+              <li><span class="n">03</span><span>Not counted: your own views, bots, bought or incentivised traffic.</span></li>
+              <li><span class="n">04</span><span>Links to malware, scams, adult or pirated content are disabled and their earnings removed. See the <a href="terms.html#links" style="text-decoration:underline">terms</a>.</span></li>
+            </ul>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a href="index.html" class="wordmark">Anti<span>Cash</span></a>
+        <p class="foot-about">Rewards from partner offers, and short links that pay. Made for users in India.</p>
+      </div>
+      <div><h4>Product</h4><ul><li><a href="earn.html">Rewards</a></li><li><a href="links.html">Short links</a></li><li><a href="index.html#how">How it works</a></li></ul></div>
+      <div><h4>Support</h4><ul><li><a href="contact.html">Contact</a></li><li><a href="index.html#faq">FAQ</a></li><li><a href="about.html">About</a></li></ul></div>
+      <div><h4>Legal</h4><ul><li><a href="terms.html">Terms</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="contact.html#abuse">Report abuse</a></li></ul></div>
+    </div>
+    <div class="foot-bottom"><span>&copy; 2026 AntiCash</span><span>Rewards depend on partner confirmation. Not employment, not guaranteed income.</span></div>
+  </div>
+</footer>
+<script src="js/shell.js"></script>
+<script type="module" src="js/links.js"></script>
+</body>
+</html>

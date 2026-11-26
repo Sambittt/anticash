@@ -1,347 +1,233 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-auth="loading" data-owner="no">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Console — AntiCash</title>
-  <meta name="robots" content="noindex, nofollow">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <meta name="theme-color" content="#F7F5F0">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin | AntiCash</title>
+  <meta name="description" content="Site administration.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#f7f5f0">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/theme.css">
 </head>
 <body>
-  <a href="#main-content" class="skip-link">Skip to main content</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><polyline points="5 12 10 17 19 7"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="g-logo" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></symbol>
+</svg>
+<!-- ================= HEADER ================= -->
+<header class="site-header" id="siteHeader">
+  <div class="wrap header-inner">
+    <a href="index.html" class="wordmark" aria-label="AntiCash home">Anti<span>Cash</span></a>
 
-  <!-- Header -->
-  <header class="site-header">
-    <div class="container header-inner">
-      <a href="index.html" class="wordmark">AntiCash</a>
+    <nav class="nav" aria-label="Main" data-show="out">
+      <a href="index.html#products">Products</a>
+      <a href="index.html#how">How it works</a>
+      <a href="index.html#links">Short links</a>
+      <a href="index.html#faq">FAQ</a>
+    </nav>
+    <nav class="nav" aria-label="Main" data-show="in">
+      <a href="earn.html">Earn</a>
+      <a href="links.html">Links</a>
+      <a href="dashboard.html">Wallet</a>
+      <a href="withdraw.html">Withdraw</a>
+      <a href="contact.html">Help</a>
+    </nav>
 
-      <nav aria-label="Primary navigation">
-        <ul class="nav-menu">
-          <li><a href="earn.html" class="nav-menu-link">Earn</a></li>
-          <li><a href="dashboard.html" class="nav-menu-link">Wallet</a></li>
-          <li><a href="admin.html" class="nav-menu-link active">Admin</a></li>
-        </ul>
-      </nav>
+    <div class="header-right">
+      <div data-show="loading"><div class="skeleton skel-pill" aria-hidden="true"></div></div>
 
-      <div class="header-right-area">
-        <div class="header-auth-slot" id="navUserArea">
-          <div class="header-skeleton" aria-hidden="true"></div>
-        </div>
-        <button type="button" class="btn-mobile-nav" id="mobileNavToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobileNavDrawer">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-        </button>
-      </div>
-    </div>
-  </header>
+      <button class="btn btn-primary btn-sm hide-sm" data-show="out" data-action="signin" type="button">Sign in</button>
 
-  <!-- Mobile Drawer -->
-  <div class="mobile-nav-drawer" id="mobileNavDrawer" aria-label="Mobile navigation">
-    <a href="earn.html" class="mobile-drawer-link">Earn</a>
-    <a href="dashboard.html" class="mobile-drawer-link">Wallet</a>
-    <a href="withdraw.html" class="mobile-drawer-link">Withdraw</a>
-    <a href="admin.html" class="mobile-drawer-link">Admin</a>
-    <a href="contact.html" class="mobile-drawer-link">Help</a>
-  </div>
-
-  <main id="main-content" class="container" style="padding-top: 2.5rem; padding-bottom: 5rem;">
-    <div id="accessDeniedPanel" style="display: none; text-align: center; padding: 4rem 1rem;">
-      <h1 style="font-size: 1.5rem; font-weight: 700; color: var(--status-rejected-text); margin-bottom: 0.5rem;">Access denied</h1>
-      <p style="color: var(--color-text-secondary); max-width: 480px; margin: 0 auto 1.5rem; font-size: 0.9375rem;">
-        This page is restricted to the administrator account. Set your owner UID in <code>app-config.js</code>, <code>firestore.rules</code>, and <code>functions/index.js</code>.
-      </p>
-      <a href="dashboard.html" class="btn-secondary">Return to wallet</a>
-    </div>
-
-    <div id="adminPanel" style="display: block;">
-      <div style="margin-bottom: 2rem;">
-        <h1 style="font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.25rem;">Payout administration</h1>
-        <p style="color: var(--color-text-secondary); font-size: 0.9375rem;">
-          Review member UPI withdrawal requests, mark completed transfers, or reject invalid submissions.
-        </p>
-      </div>
-
-      <!-- Metric Cards -->
-      <div class="statement-top-grid" style="margin-bottom: 1.75rem;">
-        <div class="metric-card">
-          <div class="metric-label">Pending review</div>
-          <div class="metric-figure" id="metricPendingAmount">₹0.00</div>
-          <div class="metric-subtext" id="metricPendingCount">0 requests pending</div>
-        </div>
-
-        <div class="metric-card">
-          <div class="metric-label">Total disbursed</div>
-          <div class="metric-figure" id="metricPaidAmount">₹0.00</div>
-          <div class="metric-subtext" id="metricPaidCount">0 payouts completed</div>
-        </div>
-
-        <div class="metric-card">
-          <div class="metric-label">Accounting exports</div>
-          <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap;">
-            <button type="button" class="btn-secondary btn-sm" id="btnExportWithdrawals">Withdrawals CSV</button>
-            <button type="button" class="btn-secondary btn-sm" id="btnExportTransactions">Transactions CSV</button>
+      <div class="header-right" data-show="in" style="gap:12px">
+        <a href="dashboard.html" class="balance-chip" aria-label="Available balance">BALANCE <b class="skeleton" data-field="available-chip" style="min-width:64px;display:inline-block;height:18px">&nbsp;</b></a>
+        <div class="user-menu" id="userMenu">
+          <button class="avatar-btn" type="button" aria-haspopup="true" aria-expanded="false" id="userBtn" aria-label="Account menu">
+            <span class="avatar" data-user-initial>&nbsp;</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" class="ico" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="menu" role="menu">
+            <a href="dashboard.html" role="menuitem">Wallet</a>
+            <a href="earn.html" role="menuitem">Earn</a>
+            <a href="links.html" role="menuitem">Short links</a>
+            <a href="withdraw.html" role="menuitem">Withdraw</a>
+            <a href="admin.html" role="menuitem" data-show="owner">Admin</a>
+            <button type="button" role="menuitem" data-action="signout">Sign out</button>
           </div>
         </div>
       </div>
 
-      <!-- Table Header and Filter -->
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.75rem;">
-        <div style="display: flex; align-items: center; gap: 0.5rem;">
-          <label for="filterStatus" style="font-size: 0.8125rem; font-weight: 600; color: var(--color-text-secondary);">Filter:</label>
-          <select id="filterStatus" class="form-select" style="width: auto; padding: 0.35rem 0.65rem; font-size: 0.8125rem;">
-            <option value="all">All statuses</option>
-            <option value="pending" selected>Pending only</option>
-            <option value="paid">Paid</option>
-            <option value="rejected">Rejected</option>
-          </select>
+      <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="drawer" type="button"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="drawer" id="drawer">
+  <div data-show="out">
+    <a class="dl" href="index.html#products">Products</a>
+    <a class="dl" href="index.html#how">How it works</a>
+    <a class="dl" href="index.html#links">Short links</a>
+    <a class="dl" href="index.html#faq">FAQ</a>
+    <button class="btn btn-primary" type="button" data-action="signin">
+      <span class="g-badge"><svg><use href="#g-logo"/></svg></span> Sign in with Google
+    </button>
+  </div>
+  <div data-show="in">
+    <a class="dl" href="earn.html">Earn</a>
+    <a class="dl" href="links.html">Short links</a>
+    <a class="dl" href="dashboard.html">Wallet</a>
+    <a class="dl" href="withdraw.html">Withdraw</a>
+    <a class="dl" href="contact.html">Help</a>
+    <a class="dl" href="admin.html" data-show="owner">Admin</a>
+    <button class="btn btn-ghost" type="button" data-action="signout">Sign out</button>
+  </div>
+</div>
+<div class="banner" id="bannedBanner" role="alert" hidden>Your account is suspended. Offers and payouts are disabled. Contact support@anticash.tech if you think this is a mistake.</div>
+<main id="main">
+  <div class="wrap" data-show="loading" aria-hidden="true" style="padding:56px 24px 96px">
+    <div class="skeleton" style="height:16px;width:120px;margin-bottom:22px"></div>
+    <div class="skeleton" style="height:52px;width:min(460px,100%);margin-bottom:28px"></div>
+    <div class="skeleton" style="height:120px;width:100%;margin-bottom:16px"></div>
+    <div class="skeleton" style="height:260px;width:100%"></div>
+  </div>
+  <div class="wrap" data-show="out">
+    <div class="gate rise">
+      <span class="eyebrow"><span class="dot"></span>Members only</span>
+      <h2>Sign in</h2>
+      <p>This area is for the site owner.</p>
+      <button class="btn btn-primary" type="button" data-action="signin"><span class="g-badge"><svg><use href="#g-logo"/></svg></span>Sign in with Google</button>
+    </div>
+  </div>
+  <div data-show="in">
+    <div class="wrap">
+      <div data-show="notowner">
+        <div class="gate rise" id="accessDeniedPanel">
+          <span class="eyebrow"><span class="dot"></span>Restricted</span>
+          <h2>This area is for the site owner.</h2>
+          <p>If you are the owner, copy your member ID below into <span class="mono">ownerUid</span> in <span class="mono">app-config.js</span>, in <span class="mono">firestore.rules</span>, and in <span class="mono">functions/.env</span>, then redeploy.</p>
+          <div class="uid-chip"><span class="v" data-user-uid></span></div>
+          <a class="btn btn-ghost" href="dashboard.html">Back to wallet</a>
         </div>
-
-        <button type="button" class="btn-secondary btn-sm" id="btnRefreshAdmin">Refresh list</button>
       </div>
 
-      <!-- Compact Withdrawals Table -->
-      <div class="table-wrap">
-        <table class="statement-table" aria-label="Admin withdrawals table">
-          <thead>
-            <tr>
-              <th scope="col">Date</th>
-              <th scope="col">Withdrawal ID</th>
-              <th scope="col">User UID</th>
-              <th scope="col">UPI ID</th>
-              <th scope="col">Status</th>
-              <th scope="col" style="text-align: right;">Amount</th>
-              <th scope="col" style="text-align: right;">Actions</th>
-            </tr>
-          </thead>
-          <tbody id="adminTbody">
-            <tr>
-              <td colspan="7" class="empty-table-state">Loading withdrawal records...</td>
-            </tr>
-          </tbody>
-        </table>
+      <div data-show="owner" id="adminPanel">
+        <section class="page-head" style="padding-bottom:22px">
+          <span class="eyebrow rise"><span class="dot"></span>Admin</span>
+          <h1 class="rise" style="--d:1;margin-top:18px">Control room.</h1>
+        </section>
+        <div class="page-body">
+          <div class="tabs rise" role="tablist" aria-label="Admin sections" style="--d:2">
+            <button class="tab" role="tab" data-tab="overview" aria-selected="true" type="button">Overview</button>
+            <button class="tab" role="tab" data-tab="withdrawals" aria-selected="false" type="button">Withdrawals</button>
+            <button class="tab" role="tab" data-tab="members" aria-selected="false" type="button">Members</button>
+            <button class="tab" role="tab" data-tab="links" aria-selected="false" type="button">Links</button>
+            <button class="tab" role="tab" data-tab="reports" aria-selected="false" type="button">Reports</button>
+            <button class="tab" role="tab" data-tab="postbacks" aria-selected="false" type="button">Partner log</button>
+          </div>
+
+          <div class="tabpanel" id="tab-overview" role="tabpanel">
+            <div class="kpis">
+              <div class="kpi" style="--c:var(--green)"><div class="fig-label">Members</div><div class="v" id="kMembers">0</div><div class="s">Signed-up accounts</div></div>
+              <div class="kpi" style="--c:var(--violet,#7c5cff)"><div class="fig-label">Short links</div><div class="v" id="kLinks">0</div><div class="s">Created so far</div></div>
+              <div class="kpi" style="--c:var(--amber)"><div class="fig-label">To pay out</div><div class="v" id="kOwed">&#8377;0.00</div><div class="s" id="kOwedSub">&nbsp;</div></div>
+              <div class="kpi" style="--c:var(--red)"><div class="fig-label">Open reports</div><div class="v" id="kReports">0</div><div class="s" id="kReportsSub">&nbsp;</div></div>
+            </div>
+            <section class="panel" style="margin-top:20px">
+              <div class="panel-head" style="margin-bottom:12px"><div><h2>Link traffic, last 14 days</h2><p>Bars show all opens. Counted views are what earn money.</p></div></div>
+              <div class="chart" id="chart"></div>
+              <div class="stats" style="margin-top:22px">
+                <div><div class="fig-label">Opens</div><div class="mono sk" id="sViews">0</div></div>
+                <div><div class="fig-label">Counted views</div><div class="mono sk" id="sValid">0</div></div>
+                <div><div class="fig-label">Credited to members</div><div class="mono sk" id="sCredit">&#8377;0.00</div></div>
+              </div>
+            </section>
+          </div>
+
+          <div class="tabpanel" id="tab-withdrawals" role="tabpanel" hidden>
+            <div class="metrics">
+              <div class="metric"><div class="fig-label">Awaiting payment</div><div class="mono" id="metricPendingAmount">&#8377;0.00</div><div class="hint" id="metricPendingCount">&nbsp;</div></div>
+              <div class="metric"><div class="fig-label">Paid out</div><div class="mono" id="metricPaidAmount">&#8377;0.00</div><div class="hint" id="metricPaidCount">&nbsp;</div></div>
+            </div>
+            <section class="panel flat" style="margin-top:20px">
+              <div class="panel-head">
+                <div class="tool-row">
+                  <select class="select sm" id="filterStatus" aria-label="Filter by status"><option value="pending">Pending</option><option value="all">All</option><option value="paid">Paid</option><option value="rejected">Rejected</option></select>
+                  <button class="btn btn-ghost btn-sm" type="button" id="btnRefreshAdmin">Refresh</button>
+                </div>
+                <div class="tool-row">
+                  <button class="btn btn-ghost btn-sm" type="button" id="btnExportWithdrawals">Withdrawals CSV</button>
+                  <button class="btn btn-ghost btn-sm" type="button" id="btnExportTransactions">Transactions CSV</button>
+                </div>
+              </div>
+              <p class="muted" style="margin-top:12px;font-size:14px">Pay each request to the UPI ID shown, then mark it Paid. Reject returns the money to the member.</p>
+              <div class="table-wrap" style="margin-top:16px">
+                <table class="dt" style="min-width:820px">
+                  <thead><tr><th>Date</th><th>Request</th><th>Member</th><th>UPI ID</th><th>Status</th><th class="r">Amount</th><th class="r">Action</th></tr></thead>
+                  <tbody id="adminTbody"><tr class="skel-row"><td colspan="7"><div class="skeleton" style="height:18px"></div></td></tr></tbody>
+                </table>
+              </div>
+            </section>
+          </div>
+
+          <div class="tabpanel" id="tab-members" role="tabpanel" hidden>
+            <section class="panel flat">
+              <div class="panel-head">
+                <div class="tool-row"><input class="input search" id="userSearch" type="search" placeholder="Search email, name or ID" aria-label="Search members"><button class="btn btn-ghost btn-sm" type="button" id="btnRefreshUsers">Refresh</button></div>
+              </div>
+              <div class="table-wrap" style="margin-top:20px"><table class="dt" style="min-width:760px"><thead><tr><th>Joined</th><th>Member</th><th>ID</th><th class="r">Available</th><th>Status</th><th class="r">Action</th></tr></thead><tbody id="usersTbody"><tr class="skel-row"><td colspan="6"><div class="skeleton" style="height:18px"></div></td></tr></tbody></table></div>
+            </section>
+          </div>
+
+          <div class="tabpanel" id="tab-links" role="tabpanel" hidden>
+            <section class="panel flat">
+              <div class="panel-head">
+                <div class="tool-row"><input class="input search" id="linkSearch" type="search" placeholder="Search code, site or owner ID" aria-label="Search links"><button class="btn btn-ghost btn-sm" type="button" id="btnRefreshLinks">Refresh</button></div>
+                <form class="tool-row" id="blockForm"><input class="input mono" id="blockInput" type="text" placeholder="badsite.com" autocomplete="off" aria-label="Domain to block" style="height:40px;width:200px"><button class="btn btn-danger btn-sm" type="submit">Block site</button></form>
+              </div>
+              <p class="muted" style="margin-top:12px;font-size:14px">Blocked sites: <span class="mono" id="blockedHosts">None yet</span></p>
+              <div class="table-wrap" style="margin-top:20px"><table class="dt" style="min-width:760px"><thead><tr><th>Code</th><th>Goes to</th><th>Owner</th><th class="r">Counted / opens</th><th class="r">Earned</th><th>Status</th><th class="r">Action</th></tr></thead><tbody id="linksAdminTbody"><tr class="skel-row"><td colspan="7"><div class="skeleton" style="height:18px"></div></td></tr></tbody></table></div>
+            </section>
+          </div>
+
+          <div class="tabpanel" id="tab-reports" role="tabpanel" hidden>
+            <section class="panel flat">
+              <div class="panel-head"><div><h2>Open reports</h2><p>Sent by visitors from the countdown page.</p></div><button class="btn btn-ghost btn-sm" type="button" id="btnRefreshReports">Refresh</button></div>
+              <div class="table-wrap" style="margin-top:20px"><table class="dt" style="min-width:760px"><thead><tr><th>Date</th><th>Link</th><th>Reason</th><th class="r">Action</th></tr></thead><tbody id="reportsTbody"><tr class="skel-row"><td colspan="4"><div class="skeleton" style="height:18px"></div></td></tr></tbody></table></div>
+            </section>
+          </div>
+
+          <div class="tabpanel" id="tab-postbacks" role="tabpanel" hidden>
+            <section class="panel flat">
+              <div class="panel-head"><div><h2>Partner notices</h2><p>The latest 100 completion and reversal notices from offer partners.</p></div></div>
+              <div class="table-wrap" style="margin-top:20px"><table class="dt" style="min-width:760px"><thead><tr><th>Received</th><th>Partner</th><th>Transaction</th><th>Member</th><th class="r">Amount</th><th>Result</th></tr></thead><tbody id="postbackTbody"><tr class="skel-row"><td colspan="6"><div class="skeleton" style="height:18px"></div></td></tr></tbody></table></div>
+            </section>
+          </div>
+        </div>
       </div>
     </div>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container footer-bottom-line" style="margin-top: 0; padding-top: 0; border-top: none;">
-      <span>AntiCash Administration Console.</span>
-      <span>Confidential records for tax reporting.</span>
+  </div>
+</main>
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a href="index.html" class="wordmark">Anti<span>Cash</span></a>
+        <p class="foot-about">Rewards from partner offers, and short links that pay. Made for users in India.</p>
+      </div>
+      <div><h4>Product</h4><ul><li><a href="earn.html">Rewards</a></li><li><a href="links.html">Short links</a></li><li><a href="index.html#how">How it works</a></li></ul></div>
+      <div><h4>Support</h4><ul><li><a href="contact.html">Contact</a></li><li><a href="index.html#faq">FAQ</a></li><li><a href="about.html">About</a></li></ul></div>
+      <div><h4>Legal</h4><ul><li><a href="terms.html">Terms</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="contact.html#abuse">Report abuse</a></li></ul></div>
     </div>
-  </footer>
-
-  <script type="module">
-    import { initAuth, requireAuth, onUserChange, db, functions } from "./auth.js";
-    import { formatRupees, APP_CONFIG } from "./app-config.js";
-    import { collection, query, orderBy, getDocs, collectionGroup } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-    import { httpsCallable } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-functions.js";
-
-    document.addEventListener("DOMContentLoaded", () => {
-      initAuth();
-      requireAuth({ requireAdmin: true });
-
-      const adminPanel = document.getElementById("adminPanel");
-      const accessDenied = document.getElementById("accessDeniedPanel");
-      const tbody = document.getElementById("adminTbody");
-      const filterSelect = document.getElementById("filterStatus");
-      const refreshBtn = document.getElementById("btnRefreshAdmin");
-      const exportWithdrawalsBtn = document.getElementById("btnExportWithdrawals");
-      const exportTransactionsBtn = document.getElementById("btnExportTransactions");
-
-      let cachedWithdrawals = [];
-
-      onUserChange((user) => {
-        if (!user) return;
-        if (user.uid !== APP_CONFIG.ownerUid && APP_CONFIG.ownerUid !== "EDIT_ME_OWNER_UID") {
-          adminPanel.style.display = "none";
-          accessDenied.style.display = "block";
-          return;
-        }
-        loadAdminRecords();
-      });
-
-      filterSelect.addEventListener("change", () => renderTable());
-      refreshBtn.addEventListener("click", () => loadAdminRecords());
-
-      async function loadAdminRecords() {
-        if (!db) return;
-        tbody.innerHTML = `<tr><td colspan="7" class="empty-table-state">Fetching withdrawals...</td></tr>`;
-
-        try {
-          const wRef = collection(db, "withdrawals");
-          const q = query(wRef, orderBy("createdAt", "desc"));
-          const snap = await getDocs(q);
-
-          cachedWithdrawals = [];
-          let pendingCount = 0;
-          let pendingTotal = 0;
-          let paidCount = 0;
-          let paidTotal = 0;
-
-          snap.forEach(d => {
-            const data = d.data();
-            const w = { id: d.id, ...data };
-            cachedWithdrawals.push(w);
-
-            const amt = Number(w.amountPaise) || 0;
-            if (w.status === "pending") {
-              pendingCount++;
-              pendingTotal += amt;
-            } else if (w.status === "paid") {
-              paidCount++;
-              paidTotal += amt;
-            }
-          });
-
-          document.getElementById("metricPendingAmount").textContent = formatRupees(pendingTotal);
-          document.getElementById("metricPendingCount").textContent = `${pendingCount} requests pending`;
-          document.getElementById("metricPaidAmount").textContent = formatRupees(paidTotal);
-          document.getElementById("metricPaidCount").textContent = `${paidCount} payouts completed`;
-
-          renderTable();
-        } catch (err) {
-          console.warn("Error fetching admin records:", err);
-          tbody.innerHTML = `<tr><td colspan="7" class="empty-table-state">Failed to load records: ${escapeHtml(err.message)}</td></tr>`;
-        }
-      }
-
-      function renderTable() {
-        const filter = filterSelect.value;
-        let list = cachedWithdrawals;
-        if (filter !== "all") {
-          list = cachedWithdrawals.filter(w => (w.status || "pending").toLowerCase() === filter);
-        }
-
-        if (list.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="7" class="empty-table-state">No matching withdrawal records.</td></tr>`;
-          return;
-        }
-
-        let html = "";
-        list.forEach(w => {
-          const dateStr = w.createdAt?.toDate ? w.createdAt.toDate().toLocaleDateString("en-IN", {
-            day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit"
-          }) : "Recent";
-          const statusKey = (w.status || "pending").toLowerCase();
-          const amountFormatted = formatRupees(w.amountPaise || 0);
-
-          let actionButtons = "";
-          if (statusKey === "pending") {
-            actionButtons = `
-              <button type="button" class="btn-success btn-action-paid" data-id="${w.id}">Mark Paid</button>
-              <button type="button" class="btn-danger btn-action-reject" data-id="${w.id}">Reject</button>
-            `;
-          } else {
-            actionButtons = `<span style="font-size: 0.75rem; color: var(--color-text-tertiary);">Processed</span>`;
-          }
-
-          html += `
-            <tr>
-              <td class="mono-cell">${dateStr}</td>
-              <td class="mono-cell" title="${escapeHtml(w.id)}">${escapeHtml(w.id.slice(0, 8))}...</td>
-              <td class="mono-cell" title="${escapeHtml(w.uid || '')}">${escapeHtml((w.uid || '').slice(0, 8))}...</td>
-              <td class="mono-cell">${escapeHtml(w.upiId || '')}</td>
-              <td><span class="badge-status ${statusKey}">${escapeHtml(w.status || 'pending')}</span></td>
-              <td style="text-align: right;" class="mono-cell">${amountFormatted}</td>
-              <td style="text-align: right; white-space: nowrap;">${actionButtons}</td>
-            </tr>
-          `;
-        });
-
-        tbody.innerHTML = html;
-        bindActions();
-      }
-
-      function bindActions() {
-        document.querySelectorAll(".btn-action-paid").forEach(btn => {
-          btn.addEventListener("click", () => handleStatusChange(btn.dataset.id, "paid"));
-        });
-        document.querySelectorAll(".btn-action-reject").forEach(btn => {
-          btn.addEventListener("click", () => handleStatusChange(btn.dataset.id, "rejected"));
-        });
-      }
-
-      async function handleStatusChange(withdrawalId, targetStatus) {
-        if (!confirm(`Are you sure you want to mark withdrawal ${withdrawalId} as ${targetStatus.toUpperCase()}?`)) {
-          return;
-        }
-
-        try {
-          if (!functions) throw new Error("Functions backend not connected.");
-          const processFn = httpsCallable(functions, "processWithdrawalAdmin");
-          await processFn({ withdrawalId, action: targetStatus });
-          alert(`Withdrawal marked as ${targetStatus}.`);
-          loadAdminRecords();
-        } catch (err) {
-          alert(`Action failed: ${err.message}`);
-        }
-      }
-
-      // Export Withdrawals CSV
-      exportWithdrawalsBtn.addEventListener("click", () => {
-        if (cachedWithdrawals.length === 0) {
-          alert("No records to export.");
-          return;
-        }
-
-        const headers = ["Withdrawal_ID", "Date", "UID", "UPI_ID", "Status", "Amount_INR"];
-        const rows = cachedWithdrawals.map(w => {
-          const dateStr = w.createdAt?.toDate ? w.createdAt.toDate().toISOString() : "";
-          const inr = ((Number(w.amountPaise) || 0) / 100).toFixed(2);
-          return `"${w.id}","${dateStr}","${w.uid || ''}","${w.upiId || ''}","${w.status || 'pending'}","${inr}"`;
-        });
-
-        downloadCsvFile(`anticash-withdrawals-${new Date().toISOString().split("T")[0]}.csv`, [headers.join(","), ...rows].join("\r\n"));
-      });
-
-      // Export Transactions CSV
-      exportTransactionsBtn.addEventListener("click", async () => {
-        exportTransactionsBtn.disabled = true;
-        exportTransactionsBtn.textContent = "Exporting...";
-
-        try {
-          const txGroup = collectionGroup(db, "transactions");
-          const snap = await getDocs(query(txGroup, orderBy("createdAt", "desc")));
-
-          const headers = ["Transaction_ID", "Date", "Description", "Network", "Status", "Amount_INR"];
-          const rows = [];
-          snap.forEach(d => {
-            const tx = d.data();
-            const dateStr = tx.createdAt?.toDate ? tx.createdAt.toDate().toISOString() : "";
-            const desc = (tx.description || tx.type || "").replace(/"/g, '""');
-            const net = (tx.network || tx.method || "").replace(/"/g, '""');
-            const inr = ((Number(tx.amountPaise) || 0) / 100).toFixed(2);
-            rows.push(`"${d.id}","${dateStr}","${desc}","${net}","${tx.status || ''}","${inr}"`);
-          });
-
-          downloadCsvFile(`anticash-all-transactions-${new Date().toISOString().split("T")[0]}.csv`, [headers.join(","), ...rows].join("\r\n"));
-        } catch (err) {
-          alert(`Export failed: ${err.message}`);
-        } finally {
-          exportTransactionsBtn.disabled = false;
-          exportTransactionsBtn.textContent = "Transactions CSV";
-        }
-      });
-
-      function downloadCsvFile(filename, content) {
-        const blob = new Blob([content], { type: "text/csv;charset=utf-8;" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-      }
-
-      function escapeHtml(str) {
-        const div = document.createElement("div");
-        div.textContent = str;
-        return div.innerHTML;
-      }
-    });
-  </script>
+    <div class="foot-bottom"><span>&copy; 2026 AntiCash</span><span>Rewards depend on partner confirmation. Not employment, not guaranteed income.</span></div>
+  </div>
+</footer>
+<script src="js/shell.js"></script>
+<script type="module" src="js/admin.js"></script>
 </body>
 </html>
