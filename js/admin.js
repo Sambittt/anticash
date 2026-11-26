@@ -205,7 +205,7 @@ lBody.addEventListener("click", async (e) => {
       if (!confirm(`Block ${k.dataset.block}? Every link to this site is disabled and new links to it are refused.`)) return;
       k.disabled = true;
       const r = await call("adminBlockHost", { host: k.dataset.block });
-      showToast(`Blocked. ${r.disabled} links disabled.`, "success");
+      showToast(`Blocked. ${r.disabled || 0} links disabled.`, "success");
       loadLinks();
     }
   } catch (err) { showToast(err.message || "Action failed", "error"); loadLinks(); }
@@ -217,7 +217,7 @@ $("blockForm").addEventListener("submit", async (e) => {
   try {
     const r = await call("adminBlockHost", { host });
     $("blockInput").value = "";
-    showToast(`Blocked ${host}. ${r.disabled} links disabled.`, "success");
+    showToast(`Blocked ${host}. ${r.disabled || 0} links disabled.`, "success");
     loadLinks();
   } catch (err) { showToast(err.message || "Could not block that site", "error"); }
 });

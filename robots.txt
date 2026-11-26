@@ -4,5 +4,7 @@ Disallow: /dashboard.html
 Disallow: /earn.html
 Disallow: /withdraw.html
 Disallow: /admin.html
+Disallow: /links.html
+Disallow: /go.html
 
 Sitemap: https://anticash.tech/sitemap.xml

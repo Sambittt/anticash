@@ -1,196 +1,284 @@
 <!DOCTYPE html>
 <html lang="en" data-auth="loading" data-owner="no">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Withdraw | AntiCash</title>
   <meta name="description" content="Request a UPI withdrawal from your AntiCash wallet.">
   <meta name="robots" content="noindex">
-  <meta name="theme-color" content="#f7f5f0">
+  <meta name="theme-color" content="#070b1a">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://firestore.googleapis.com">
   <link rel="preload" href="fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/ibm-plex-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/app.css">
   <link rel="stylesheet" href="css/theme.css">
 </head>
+
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
-  <symbol id="i-check" viewBox="0 0 24 24"><polyline points="5 12 10 17 19 7"/></symbol>
-  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
-  <symbol id="g-logo" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></symbol>
-</svg>
-<!-- ================= HEADER ================= -->
-<header class="site-header" id="siteHeader">
-  <div class="wrap header-inner">
-    <a href="index.html" class="wordmark" aria-label="AntiCash home">Anti<span>Cash</span></a>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-arrow" viewBox="0 0 24 24">
+      <path d="M5 12h14M13 6l6 6-6 6" />
+    </symbol>
+    <symbol id="i-check" viewBox="0 0 24 24">
+      <polyline points="5 12 10 17 19 7" />
+    </symbol>
+    <symbol id="i-x" viewBox="0 0 24 24">
+      <path d="M6 6l12 12M18 6L6 18" />
+    </symbol>
+    <symbol id="g-logo" viewBox="0 0 48 48">
+      <path fill="#EA4335"
+        d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
+      <path fill="#4285F4"
+        d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
+      <path fill="#FBBC05"
+        d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
+      <path fill="#34A853"
+        d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
+    </symbol>
+  </svg>
+  <!-- ================= HEADER ================= -->
+  <header class="site-header" id="siteHeader">
+    <div class="wrap header-inner">
+      <a href="index.html" class="wordmark" aria-label="AntiCash home">Anti<span>Cash</span></a>
 
-    <nav class="nav" aria-label="Main" data-show="out">
-      <a href="index.html#products">Products</a>
-      <a href="index.html#how">How it works</a>
-      <a href="index.html#links">Short links</a>
-      <a href="index.html#faq">FAQ</a>
-    </nav>
-    <nav class="nav" aria-label="Main" data-show="in">
-      <a href="earn.html">Earn</a>
-      <a href="links.html">Links</a>
-      <a href="dashboard.html">Wallet</a>
-      <a href="withdraw.html">Withdraw</a>
-      <a href="contact.html">Help</a>
-    </nav>
+      <nav class="nav" aria-label="Main" data-show="out">
+        <a href="index.html#products">Products</a>
+        <a href="index.html#how">How it works</a>
+        <a href="index.html#links">Short links</a>
+        <a href="index.html#faq">FAQ</a>
+      </nav>
+      <nav class="nav" aria-label="Main" data-show="in">
+        <a href="earn.html">Earn</a>
+        <a href="links.html">Links</a>
+        <a href="dashboard.html">Wallet</a>
+        <a href="withdraw.html">Withdraw</a>
+        <a href="contact.html">Help</a>
+      </nav>
 
-    <div class="header-right">
-      <div data-show="loading"><div class="skeleton skel-pill" aria-hidden="true"></div></div>
+      <div class="header-right">
+        <div data-show="loading">
+          <div class="skeleton skel-pill" aria-hidden="true"></div>
+        </div>
 
-      <button class="btn btn-primary btn-sm hide-sm" data-show="out" data-action="signin" type="button">Sign in</button>
+        <button class="btn btn-primary btn-sm hide-sm" data-show="out" data-action="signin" type="button">Sign
+          in</button>
 
-      <div class="header-right" data-show="in" style="gap:12px">
-        <a href="dashboard.html" class="balance-chip" aria-label="Available balance">BALANCE <b class="skeleton" data-field="available-chip" style="min-width:64px;display:inline-block;height:18px">&nbsp;</b></a>
-        <div class="user-menu" id="userMenu">
-          <button class="avatar-btn" type="button" aria-haspopup="true" aria-expanded="false" id="userBtn" aria-label="Account menu">
-            <span class="avatar" data-user-initial>&nbsp;</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" class="ico" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="menu" role="menu">
-            <a href="dashboard.html" role="menuitem">Wallet</a>
-            <a href="earn.html" role="menuitem">Earn</a>
-            <a href="links.html" role="menuitem">Short links</a>
-            <a href="withdraw.html" role="menuitem">Withdraw</a>
-            <a href="admin.html" role="menuitem" data-show="owner">Admin</a>
-            <button type="button" role="menuitem" data-action="signout">Sign out</button>
+        <div class="header-right" data-show="in" style="gap:12px">
+          <a href="dashboard.html" class="balance-chip" aria-label="Available balance">BALANCE <b class="skeleton"
+              data-field="available-chip" style="min-width:64px;display:inline-block;height:18px">&nbsp;</b></a>
+          <div class="user-menu" id="userMenu">
+            <button class="avatar-btn" type="button" aria-haspopup="true" aria-expanded="false" id="userBtn"
+              aria-label="Account menu">
+              <span class="avatar" data-user-initial>&nbsp;</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" class="ico" aria-hidden="true">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </button>
+            <div class="menu" role="menu">
+              <a href="dashboard.html" role="menuitem">Wallet</a>
+              <a href="earn.html" role="menuitem">Earn</a>
+              <a href="links.html" role="menuitem">Short links</a>
+              <a href="withdraw.html" role="menuitem">Withdraw</a>
+              <a href="admin.html" role="menuitem" data-show="owner">Admin</a>
+              <button type="button" role="menuitem" data-action="signout">Sign out</button>
+            </div>
           </div>
         </div>
+
+        <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="drawer"
+          type="button"><span></span></button>
       </div>
+    </div>
+  </header>
 
-      <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="drawer" type="button"><span></span></button>
+  <div class="drawer" id="drawer">
+    <div data-show="out">
+      <a class="dl" href="index.html#products">Products</a>
+      <a class="dl" href="index.html#how">How it works</a>
+      <a class="dl" href="index.html#links">Short links</a>
+      <a class="dl" href="index.html#faq">FAQ</a>
+      <button class="btn btn-primary" type="button" data-action="signin">
+        <span class="g-badge"><svg>
+            <use href="#g-logo" />
+          </svg></span> Sign in with Google
+      </button>
+    </div>
+    <div data-show="in">
+      <a class="dl" href="earn.html">Earn</a>
+      <a class="dl" href="links.html">Short links</a>
+      <a class="dl" href="dashboard.html">Wallet</a>
+      <a class="dl" href="withdraw.html">Withdraw</a>
+      <a class="dl" href="contact.html">Help</a>
+      <a class="dl" href="admin.html" data-show="owner">Admin</a>
+      <button class="btn btn-ghost" type="button" data-action="signout">Sign out</button>
     </div>
   </div>
-</header>
-
-<div class="drawer" id="drawer">
-  <div data-show="out">
-    <a class="dl" href="index.html#products">Products</a>
-    <a class="dl" href="index.html#how">How it works</a>
-    <a class="dl" href="index.html#links">Short links</a>
-    <a class="dl" href="index.html#faq">FAQ</a>
-    <button class="btn btn-primary" type="button" data-action="signin">
-      <span class="g-badge"><svg><use href="#g-logo"/></svg></span> Sign in with Google
-    </button>
-  </div>
-  <div data-show="in">
-    <a class="dl" href="earn.html">Earn</a>
-    <a class="dl" href="links.html">Short links</a>
-    <a class="dl" href="dashboard.html">Wallet</a>
-    <a class="dl" href="withdraw.html">Withdraw</a>
-    <a class="dl" href="contact.html">Help</a>
-    <a class="dl" href="admin.html" data-show="owner">Admin</a>
-    <button class="btn btn-ghost" type="button" data-action="signout">Sign out</button>
-  </div>
-</div>
-<div class="banner" id="bannedBanner" role="alert" hidden>Your account is suspended. Offers and payouts are disabled. Contact support@anticash.tech if you think this is a mistake.</div>
-<main id="main">
-  <div class="wrap" data-show="loading" aria-hidden="true" style="padding:56px 24px 96px">
-    <div class="skeleton" style="height:16px;width:120px;margin-bottom:22px"></div>
-    <div class="skeleton" style="height:52px;width:min(460px,100%);margin-bottom:28px"></div>
-    <div class="skeleton" style="height:120px;width:100%;margin-bottom:16px"></div>
-    <div class="skeleton" style="height:260px;width:100%"></div>
-  </div>
-  <div class="wrap" data-show="out">
-    <div class="gate rise">
-      <span class="eyebrow"><span class="dot"></span>Members only</span>
-      <h2>Sign in to withdraw</h2>
-      <p>Withdrawals are paid from your wallet, so you need to be signed in.</p>
-      <button class="btn btn-primary" type="button" data-action="signin"><span class="g-badge"><svg><use href="#g-logo"/></svg></span>Sign in with Google</button>
+  <div class="banner" id="bannedBanner" role="alert" hidden>Your account is suspended. Offers and payouts are disabled.
+    Contact support@anticash.tech if you think this is a mistake.</div>
+  <main id="main">
+    <div class="wrap" data-show="loading" aria-hidden="true" style="padding:56px 24px 96px">
+      <div class="skeleton" style="height:16px;width:120px;margin-bottom:22px"></div>
+      <div class="skeleton" style="height:52px;width:min(460px,100%);margin-bottom:28px"></div>
+      <div class="skeleton" style="height:120px;width:100%;margin-bottom:16px"></div>
+      <div class="skeleton" style="height:260px;width:100%"></div>
     </div>
-  </div>
-  <div data-show="in">
-    <div class="wrap">
-      <section class="page-head">
-        <span class="eyebrow rise"><span class="dot"></span>Withdraw</span>
-        <h1 class="rise" style="--d:1;margin-top:18px">Withdraw to your UPI ID.</h1>
-        <p class="sub rise" style="--d:2">Minimum <span class="mono">&#8377;300</span>. We review each request before paying, which takes <span data-config="processingText">24 to 48 business hours</span>.</p>
-      </section>
+    <div class="wrap" data-show="out">
+      <div class="gate rise">
+        <span class="eyebrow"><span class="dot"></span>Members only</span>
+        <h2>Sign in to withdraw</h2>
+        <p>Withdrawals are paid from your wallet, so you need to be signed in.</p>
+        <button class="btn btn-primary" type="button" data-action="signin"><span class="g-badge"><svg>
+              <use href="#g-logo" />
+            </svg></span>Sign in with Google</button>
+      </div>
+    </div>
+    <div data-show="in">
+      <div class="wrap">
+        <section class="page-head">
+          <span class="eyebrow rise"><span class="dot"></span>Withdraw</span>
+          <h1 class="rise" style="--d:1;margin-top:18px">Withdraw to your UPI ID.</h1>
+          <p class="sub rise" style="--d:2">Minimum <span class="mono">&#8377;300</span>. We review each request before
+            paying, which takes <span data-config="processingText">24 to 48 business hours</span>.</p>
+        </section>
 
-      <div class="page-body">
-        <div class="split">
-          <section class="panel rise" style="--d:3">
-            <div class="panel-head" style="margin-bottom:22px">
-              <div><h2>New request</h2><p>Available to withdraw: <b class="mono skeleton" id="withdrawConfirmedDisplay" style="display:inline-block;min-width:90px">&nbsp;</b></p></div>
-            </div>
+        <div class="page-body">
+          <div class="split">
+            <section class="panel rise" style="--d:3">
+              <div class="panel-head" style="margin-bottom:22px">
+                <div>
+                  <h2>New request</h2>
+                  <p>Available to withdraw: <b class="mono skeleton" id="withdrawConfirmedDisplay"
+                      style="display:inline-block;min-width:90px">&nbsp;</b></p>
+                </div>
+              </div>
 
-            <div class="notice-box" id="thresholdNotice" style="margin-bottom:22px" hidden>
-              <div style="flex:1">
-                <b id="thresholdNoticeMsg">You need &#8377;300 in Available to withdraw.</b>
-                <div class="bar" style="margin-top:12px;background:#f0e0bd"><i id="thresholdProgressBar" style="background:var(--amber)"></i></div>
-                <div class="bar-meta" style="color:#7a5112"><span id="thresholdFractionText"></span><span class="mono">&#8377;300</span></div>
+              <div class="notice-box" id="thresholdNotice" style="margin-bottom:22px" hidden>
+                <div style="flex:1">
+                  <b id="thresholdNoticeMsg">You need &#8377;300 in Available to withdraw.</b>
+                  <div class="bar" style="margin-top:12px;background:#f0e0bd"><i id="thresholdProgressBar"
+                      style="background:var(--amber)"></i></div>
+                  <div class="bar-meta" style="color:#7a5112"><span id="thresholdFractionText"></span><span
+                      class="mono">&#8377;300</span></div>
+                </div>
+              </div>
+
+              <form class="form" id="withdrawForm" novalidate>
+                <fieldset id="withdrawFieldset" disabled>
+                  <div class="field">
+                    <label for="upiInput">UPI ID</label>
+                    <input class="input mono" id="upiInput" name="upi" type="text" inputmode="email" autocomplete="off"
+                      autocapitalize="off" spellcheck="false" placeholder="name@bank">
+                    <span class="help">Check it carefully. A payment to a wrong UPI ID may not be recoverable.</span>
+                  </div>
+                  <div class="field">
+                    <label for="amountInput">Amount</label>
+                    <div class="amount-group">
+                      <span class="pre">&#8377;</span>
+                      <input id="amountInput" name="amount" type="number" inputmode="decimal" min="300" step="0.01"
+                        placeholder="300">
+                      <button class="max" type="button" id="btnMaxWithdraw">Max</button>
+                    </div>
+                    <span class="help">Whole rupees or paise, up to your Available balance.</span>
+                  </div>
+                  <label class="check"><input type="checkbox" id="confirmCheckbox"><span>I confirm this UPI ID is
+                      correct and active, and that this is my own account.</span></label>
+                  <div class="alert" id="alertBox" role="alert"></div>
+                  <button class="btn btn-primary" type="submit" id="btnSubmitWithdraw" disabled>Request
+                    withdrawal</button>
+                </fieldset>
+              </form>
+            </section>
+
+            <aside class="panel rise" style="--d:4">
+              <div class="panel-head" style="margin-bottom:16px">
+                <h2>What happens next</h2>
+              </div>
+              <ol class="side-list">
+                <li><span class="n">01</span><span><b>You send the request.</b> The amount leaves Available straight
+                    away.</span></li>
+                <li><span class="n">02</span><span><b>We review it.</b> This takes <span data-config="processingText">24
+                      to 48 business hours</span>.</span></li>
+                <li><span class="n">03</span><span><b>We pay your UPI ID.</b> The request shows as Paid. If we reject
+                    it, the money returns to Available.</span></li>
+              </ol>
+              <p style="margin-top:22px;font-size:13.5px;color:var(--ink-3);font-weight:600">One pending request at a
+                time. We never ask for your UPI PIN or an OTP.</p>
+            </aside>
+          </div>
+
+          <section class="panel flat rise" style="--d:5" aria-label="Past requests">
+            <div class="panel-head">
+              <div>
+                <h2>Your requests</h2>
               </div>
             </div>
-
-            <form class="form" id="withdrawForm" novalidate>
-              <fieldset id="withdrawFieldset" disabled>
-                <div class="field">
-                  <label for="upiInput">UPI ID</label>
-                  <input class="input mono" id="upiInput" name="upi" type="text" inputmode="email" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="name@bank">
-                  <span class="help">Check it carefully. A payment to a wrong UPI ID may not be recoverable.</span>
-                </div>
-                <div class="field">
-                  <label for="amountInput">Amount</label>
-                  <div class="amount-group">
-                    <span class="pre">&#8377;</span>
-                    <input id="amountInput" name="amount" type="number" inputmode="decimal" min="300" step="0.01" placeholder="300">
-                    <button class="max" type="button" id="btnMaxWithdraw">Max</button>
-                  </div>
-                  <span class="help">Whole rupees or paise, up to your Available balance.</span>
-                </div>
-                <label class="check"><input type="checkbox" id="confirmCheckbox"><span>I confirm this UPI ID is correct and active, and that this is my own account.</span></label>
-                <div class="alert" id="alertBox" role="alert"></div>
-                <button class="btn btn-primary" type="submit" id="btnSubmitWithdraw" disabled>Request withdrawal</button>
-              </fieldset>
-            </form>
+            <div class="table-wrap" style="margin-top:20px">
+              <table class="dt">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>UPI ID</th>
+                    <th>Status</th>
+                    <th class="r">Amount</th>
+                  </tr>
+                </thead>
+                <tbody id="userWithdrawalsTbody">
+                  <tr class="skel-row">
+                    <td colspan="4">
+                      <div class="skeleton" style="height:18px"></div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </section>
-
-          <aside class="panel rise" style="--d:4">
-            <div class="panel-head" style="margin-bottom:16px"><h2>What happens next</h2></div>
-            <ol class="side-list">
-              <li><span class="n">01</span><span><b>You send the request.</b> The amount leaves Available straight away.</span></li>
-              <li><span class="n">02</span><span><b>We review it.</b> This takes <span data-config="processingText">24 to 48 business hours</span>.</span></li>
-              <li><span class="n">03</span><span><b>We pay your UPI ID.</b> The request shows as Paid. If we reject it, the money returns to Available.</span></li>
-            </ol>
-            <p style="margin-top:22px;font-size:13.5px;color:var(--ink-3);font-weight:600">One pending request at a time. We never ask for your UPI PIN or an OTP.</p>
-          </aside>
         </div>
-
-        <section class="panel flat rise" style="--d:5" aria-label="Past requests">
-          <div class="panel-head"><div><h2>Your requests</h2></div></div>
-          <div class="table-wrap" style="margin-top:20px">
-            <table class="dt">
-              <thead><tr><th>Date</th><th>UPI ID</th><th>Status</th><th class="r">Amount</th></tr></thead>
-              <tbody id="userWithdrawalsTbody">
-                <tr class="skel-row"><td colspan="4"><div class="skeleton" style="height:18px"></div></td></tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
       </div>
     </div>
-  </div>
-</main>
-<!-- ================= FOOTER ================= -->
-<footer class="footer">
-  <div class="wrap">
-    <div class="foot-grid">
-      <div>
-        <a href="index.html" class="wordmark">Anti<span>Cash</span></a>
-        <p class="foot-about">Rewards from partner offers, and short links that pay. Made for users in India.</p>
+  </main>
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="foot-grid">
+        <div>
+          <a href="index.html" class="wordmark">Anti<span>Cash</span></a>
+          <p class="foot-about">Rewards from partner offers, and short links that pay. Made for users in India.</p>
+        </div>
+        <div>
+          <h4>Product</h4>
+          <ul>
+            <li><a href="earn.html">Rewards</a></li>
+            <li><a href="links.html">Short links</a></li>
+            <li><a href="index.html#how">How it works</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Support</h4>
+          <ul>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="index.html#faq">FAQ</a></li>
+            <li><a href="about.html">About</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="terms.html">Terms</a></li>
+            <li><a href="privacy.html">Privacy</a></li>
+            <li><a href="contact.html#abuse">Report abuse</a></li>
+          </ul>
+        </div>
       </div>
-      <div><h4>Product</h4><ul><li><a href="earn.html">Rewards</a></li><li><a href="links.html">Short links</a></li><li><a href="index.html#how">How it works</a></li></ul></div>
-      <div><h4>Support</h4><ul><li><a href="contact.html">Contact</a></li><li><a href="index.html#faq">FAQ</a></li><li><a href="about.html">About</a></li></ul></div>
-      <div><h4>Legal</h4><ul><li><a href="terms.html">Terms</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="contact.html#abuse">Report abuse</a></li></ul></div>
+      <div class="foot-bottom"><span>&copy; 2026 AntiCash</span><span>Rewards depend on partner confirmation. Not
+          employment, not guaranteed income.</span></div>
     </div>
-    <div class="foot-bottom"><span>&copy; 2026 AntiCash</span><span>Rewards depend on partner confirmation. Not employment, not guaranteed income.</span></div>
-  </div>
-</footer>
-<script src="js/shell.js"></script>
-<script type="module" src="js/withdraw.js"></script>
+  </footer>
+  <script src="js/shell.js"></script>
+  <script type="module" src="js/withdraw.js"></script>
 </body>
+
 </html>

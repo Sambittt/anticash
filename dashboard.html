@@ -6,9 +6,12 @@
   <title>Wallet | AntiCash</title>
   <meta name="description" content="Your AntiCash wallet: balances, progress to the minimum withdrawal, and statement.">
   <meta name="robots" content="noindex">
-  <meta name="theme-color" content="#f7f5f0">
+  <meta name="theme-color" content="#070b1a">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://firestore.googleapis.com">
   <link rel="preload" href="fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/ibm-plex-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/app.css">
   <link rel="stylesheet" href="css/theme.css">
@@ -112,15 +115,43 @@
         <p class="sub rise" style="--d:2">New earnings show as Pending until the partner confirms them. Only Available money counts toward your <span class="mono">&#8377;300</span> minimum.</p>
         <div class="row-actions rise" style="--d:3">
           <a class="btn btn-primary" href="earn.html">Browse offers<svg class="arrow ico" viewBox="0 0 24 24"><use href="#i-arrow"/></svg></a>
+          <a class="btn btn-ghost" href="links.html">Short links</a>
           <a class="btn btn-ghost" id="btnRequestWithdrawalLink" href="withdraw.html">Withdraw</a>
         </div>
       </section>
 
       <div class="page-body">
         <div class="stats rise" style="--d:3">
-          <div><div class="fig-label">Available</div><div class="mono skeleton sk" data-field="available">&nbsp;</div><div class="hint">Confirmed and ready to withdraw</div></div>
-          <div><div class="fig-label">Pending</div><div class="mono skeleton sk" data-field="pending">&nbsp;</div><div class="hint">Waiting for partner confirmation</div></div>
-          <div><div class="fig-label">Withdrawn</div><div class="mono skeleton sk" id="valTotalWithdrawn">&nbsp;</div><div class="hint">Paid out to your UPI ID</div></div>
+          <div>
+            <div class="fig-label">Available
+              <span class="tip-wrap">
+                <button type="button" class="tip-btn" aria-label="About Available balance">?</button>
+                <span class="tip-pop">Confirmed earnings ready to withdraw to your UPI ID once you reach &#8377;300.</span>
+              </span>
+            </div>
+            <div class="mono skeleton sk" data-field="available">&nbsp;</div>
+            <div class="hint">Confirmed and ready to withdraw</div>
+          </div>
+          <div>
+            <div class="fig-label">Pending
+              <span class="tip-wrap">
+                <button type="button" class="tip-btn" aria-label="About Pending balance">?</button>
+                <span class="tip-pop">Held up to 7 days while partners verify tasks or link views. Moves to Available once cleared.</span>
+              </span>
+            </div>
+            <div class="mono skeleton sk" data-field="pending">&nbsp;</div>
+            <div class="hint">Waiting for partner confirmation</div>
+          </div>
+          <div>
+            <div class="fig-label">Withdrawn
+              <span class="tip-wrap">
+                <button type="button" class="tip-btn" aria-label="About Withdrawn total">?</button>
+                <span class="tip-pop">Total rupees already paid out to your UPI ID.</span>
+              </span>
+            </div>
+            <div class="mono skeleton sk" id="valTotalWithdrawn">&nbsp;</div>
+            <div class="hint">Paid out to your UPI ID</div>
+          </div>
         </div>
 
         <section class="panel progress-panel rise" style="--d:4" aria-label="Progress to minimum withdrawal">
@@ -138,7 +169,7 @@
             <button class="btn btn-ghost btn-sm" type="button" id="btnDismissOnboarding">Dismiss</button>
           </div>
           <div class="checklist">
-            <div class="ck" id="taskBrowseOffersItem"><span class="dot"><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><div><b>Browse the offers</b><span class="t">See what is open for your phone and location.</span></div><a class="btn btn-ghost btn-sm" href="earn.html">Open</a></div>
+            <div class="ck" id="taskBrowseOffersItem"><span class="dot"><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><div><b>Browse offers or create a short link</b><span class="t">See partner offers open for your phone, or share a paid link.</span></div><div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn btn-ghost btn-sm" href="earn.html">Offers</a><a class="btn btn-ghost btn-sm" href="links.html">Links</a></div></div>
             <div class="ck" id="taskThresholdItem"><span class="dot"><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><div><b>Reach &#8377;300 in Available</b><span class="t">Pending money moves to Available once confirmed.</span></div></div>
             <div class="ck" id="taskUpiItem"><span class="dot"><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><div><b>Request your first withdrawal</b><span class="t">Enter your UPI ID and confirm. We review each request.</span></div><a class="btn btn-ghost btn-sm" href="withdraw.html">Open</a></div>
           </div>

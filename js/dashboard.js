@@ -96,7 +96,7 @@ function render() {
   const f = filterSelect.value;
   const list = f === "all" ? transactions : transactions.filter((t) => (t.status || "pending").toLowerCase() === f);
   if (!list.length) {
-    tbody.innerHTML = `<tr><td colspan="5" class="empty"><p>${transactions.length ? "Nothing matches this filter." : "No activity yet."}</p>${transactions.length ? "" : '<a href="earn.html" class="btn btn-primary btn-sm">Find offers</a>'}</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="5" class="empty"><p>${transactions.length ? "Nothing matches this filter." : "No activity yet. Start with an offer or share a short link."}</p>${transactions.length ? "" : '<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><a href="earn.html" class="btn btn-primary btn-sm">Find offers</a><a href="links.html" class="btn btn-ghost btn-sm">Make a short link</a></div>'}</td></tr>`;
     return;
   }
   tbody.innerHTML = list.map((tx) => {
